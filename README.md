@@ -2,7 +2,7 @@
 Orbital Project for mobile AR app
 
 ## Introduction
-Navigating a large campus like NUS can be daunting for visitors. Our Augmented Reality (AR) app will provide seamless navigation assistance, guiding users to key points of interest, facilities, amenities, and nearby attractions through intuitive AR markers and directional cues. Furthermore, by gamifying the campus exploration experience, we aim to make it more enjoyable and engaging for visitors. Users will embark on quests and challenges that encourage them to explore different parts of the campus while discovering interesting landmarks and hidden gems.
+Navigating a large campus like NUS can be daunting for visitors. Our Augmented Reality (AR) app provides seamless navigation assistance, guiding users to key points of interest, facilities, amenities, and nearby attractions through intuitive AR markers and directional cues. Furthermore, by gamifying the campus exploration experience, we aim to make it more enjoyable and engaging for visitors. Users will embark on quests and challenges that encourage them to explore different parts of the campus while discovering interesting landmarks and hidden gems.
 
 ## Features
 <ol>
