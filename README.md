@@ -25,11 +25,11 @@ Games (Customisable quests and customisable games for people who are extremely h
 Adventure race (challenges -> start off with segments of NUS that are all uncaptured,  your team captures segments of NUS from those challenges, winner based on points) <br>
 Mini quiz (matchmaking) - kahoot -> (e.g name the location based on the picture) <br>
 Hide and seek (take turns to hide and seek, 10 minutes to choose hiding spot, afterwards hider cannot move within 50 metres radius, seeker can ask for hints to find where the hider is, however each hint reducesduces time from the seeker (2 minutes), 20 minutes time limit) <br>
-<br>
+
 ## Tech Stack
-Swift - Swift is the official language for macOS and iOS development. Due to the prevalence of iPhones among the NUS student population, we would like to develop our app to cater to the iOS community, which would benefit a large number of the student population, which is our target audience
-Firebase - Firebase is a real-time NoSQL database, which provides email/password authentication solutions, and is highly compatible with Swift.
-ARKit - ARKit is Apple's official augmented reality framework. By offerring motion tracking, object detection, and scene understanding features, and being highly compatible with swift, ARKit serves as our go-to augmented reality framework.
+Swift - Swift is the official language for macOS and iOS development. Due to the prevalence of iPhones among the NUS student population, we would like to develop our app to cater to the iOS community, which would benefit a large number of the student population, which is our target audience <br>
+Firebase - Firebase is a real-time NoSQL database, which provides email/password authentication solutions, and is highly compatible with Swift. <br>
+ARKit - ARKit is Apple's official augmented reality framework. By offerring motion tracking, object detection, and scene understanding features, and being highly compatible with swift, ARKit serves as our go-to augmented reality framework. <br>
 
 ## Documented Progress
 Stage 1 (02/06/2024) - Finished account signup and login features on frontend, backend and in database.
