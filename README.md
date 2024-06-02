@@ -5,34 +5,35 @@ Orbital Project for mobile AR app
 Navigating a large campus like NUS can be daunting for visitors. Our Augmented Reality (AR) app will provide seamless navigation assistance, guiding users to key points of interest, facilities, amenities, and nearby attractions through intuitive AR markers and directional cues. Furthermore, by gamifying the campus exploration experience, we aim to make it more enjoyable and engaging for visitors. Users will embark on quests and challenges that encourage them to explore different parts of the campus while discovering interesting landmarks and hidden gems.
 
 ## Features
-<li>
-  <ol>User login/authentication page (with email/Apple Id login)</ol>
-  <ol>Single Player mode: 
-    <li>
-      <ul> Map (segment NUS into multiple segments) -> choose where you want to start </ul>
-      <ul> Level system -> level up, you can unlock new segments </ul>
-      <ul> Quests up to certain level (level 30) -> main quests </ul>
-      <ul> Repetitive quests that show up (take photo of chicken) -> daily tasks </ul>
-      <ul> Main UI: interactive map around NUS (mini profile at the top right corner + a circle emoji thingy to show where you at on the map) </ul>
-      <ul> Profile can be expanded (click on it) -> show completed quests, exp/levels -> completed quests, exp, levels </ul>
-      <ul> Settings to log out and to change profile (near the profile page) </ul>
-      <ul> Seasonal quests </ul>
-      <ul> Community quests (admin + user account) </ul>
-    </li>
-  </ol>
-<ol> Multiplayer mode: (a button to enter from singleplayer map) 
-  <li>
-    <ul> Gain exp for completion </ul>
-    <ul> Create/join party </ul>
-    <ul> Games (Customisable quests and customisable games for people who are extremely hardcore): 
-      <li>
-        <ul> Adventure race (challenges -> start off with segments of NUS that are all uncaptured,  your team captures segments of NUS from those challenges, winner based on points) </ul>
-        <ul> Mini quiz (matchmaking) - kahoot -> (e.g name the location based on the picture) </ul>
-        <ul> Hide and seek (take turns to hide and seek, 10 minutes to choose hiding spot, afterwards hider cannot move within 50 metres radius, seeker can ask for hints to find where the hider is, however each hint reducesduces time from the seeker (2 minutes), 20 minutes time limit) </ul>
-      </li>
+<ol>
+  <li>User login/authentication page (with email/Apple Id login)</li>
+  <li>Single Player mode: 
+    <ul>
+      <li> Map (segment NUS into multiple segments) -> choose where you want to start </li>
+      <li> Level system -> level up, you can unlock new segments </li>
+      <li> Quests up to certain level (level 30) -> main quests </li>
+      <li> Repetitive quests that show up (take photo of chicken) -> daily tasks </li>
+      <li> Main UI: interactive map around NUS (mini profile at the top right corner + a circle emoji thingy to show where you at on the map) </li>
+      <li> Profile can be expanded (click on it) -> show completed quests, exp/levels -> completed quests, exp, levels </li>
+      <li> Settings to log out and to change profile (near the profile page) </li>
+      <li> Seasonal quests </li>
+      <li> Community quests (admin + user account) </li>
+    </ul>
   </li>
-  </ol>
-</li>
+<li> Multiplayer mode: (a button to enter from singleplayer map) 
+  <ul>
+    <li> Gain exp for completion </li>
+    <li> Create/join party </li>
+    <li> Games (Customisable quests and customisable games for people who are extremely hardcore): 
+      <ul>
+        <li> Adventure race (challenges -> start off with segments of NUS that are all uncaptured,  your team captures segments of NUS from those challenges, winner based on points) </li>
+        <li> Mini quiz (matchmaking) - kahoot -> (e.g name the location based on the picture) </li>
+        <li> Hide and seek (take turns to hide and seek, 10 minutes to choose hiding spot, afterwards hider cannot move within 50 metres radius, seeker can ask for hints to find where the hider is, however each hint reducesduces time from the seeker (2 minutes), 20 minutes time limit) </li>
+      </ul>
+  </li>
+  </ul>
+  </li>
+</ol>
 
 ## Tech Stack
 Swift - Swift is the official language for macOS and iOS development. Due to the prevalence of iPhones among the NUS student population, we would like to develop our app to cater to the iOS community, which would benefit a large number of the student population, which is our target audience <br>
