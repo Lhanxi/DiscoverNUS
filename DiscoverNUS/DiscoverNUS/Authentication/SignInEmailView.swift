@@ -12,15 +12,6 @@ final class SignInEmailViewModel: ObservableObject {
     @Published var email = ""
     @Published var password = ""
     
-    func signUp() async throws {
-        guard !email.isEmpty, !password.isEmpty else {
-            print("No email or password found.")
-            return
-        }
-        
-        let _ = try await AuthenticationManager.shared.createUser(email: email, password: password)
-    }
-    
     func signIn() async throws {
         guard !email.isEmpty, !password.isEmpty else {
             print("No email or password found.")
@@ -37,27 +28,38 @@ struct SignInEmailView: View {
     @Binding var showSignInView: Bool
     
     var body: some View {
-        VStack {
-            TextField("Email...", text: $viewModel.email)
-                .padding()
-                .background(Color.gray.opacity(0.4))
-                .cornerRadius(10)
+        VStack(spacing: 20)  {
+            VStack(alignment: .leading, spacing: 5) {
+                Text("Email")
+                    .font(.headline)
+                TextField("Email", text: $viewModel.email)
+                    .padding()
+                    .background(Color.gray.opacity(0.4))
+                    .cornerRadius(10)
+                    .foregroundColor(.gray)
+                    .autocapitalization(/*@START_MENU_TOKEN@*/.none/*@END_MENU_TOKEN@*/)
+            }
             
-            SecureField("Password...", text: $viewModel.password)
-                .padding()
-                .background(Color.gray.opacity(0.4))
-                .cornerRadius(10)
+            VStack(alignment: .leading, spacing: 5) {
+                Text("Password")
+                    .font(.headline)
+                SecureField("Password", text: $viewModel.password)
+                    .padding()
+                    .background(Color.gray.opacity(0.4))
+                    .cornerRadius(10)
+                    .foregroundColor(.gray)
+                    .autocapitalization(/*@START_MENU_TOKEN@*/.none/*@END_MENU_TOKEN@*/)
+            }
+            
+            HStack {
+                Text("Forgot Password?")
+                    .foregroundColor(.gray)
+                    .font(.system(size: 15))
+                Spacer()
+            }
             
             Button {
                 Task {
-                    do {
-                        try await viewModel.signUp()
-                        showSignInView = false
-                        return
-                    } catch {
-                        print(error)
-                    }
-                    
                     do {
                         try await viewModel.signIn()
                         showSignInView = false
@@ -68,13 +70,16 @@ struct SignInEmailView: View {
                 }
                 
             } label: {
-                Text("Sign In With Email")
-                    .font(.headline)
-                    .foregroundColor(.white)
-                    .frame(height: 55)
-                    .frame(maxWidth: .infinity)
-                    .background(Color.blue)
-                    .cornerRadius(10)
+                HStack {
+                    Spacer()
+                    Text("Sign In")
+                        .font(.headline)
+                        .foregroundColor(.white)
+                        .frame(height: 55)
+                        .frame(maxWidth: 150)
+                        .background(Color.orange)
+                        .cornerRadius(25)
+                }
             }
             
             Spacer()
