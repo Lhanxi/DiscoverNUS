@@ -7,9 +7,9 @@ Navigating a large campus like NUS can be daunting for visitors. Our Augmented R
 ## Features
 1. User login/authentication page (with email/Apple Id login)
 
-2. Single Player mode:
-Map (segment NUS into multiple segments) -> choose where you want to start
-Level system -> level up, you can unlock new segments
+2. Single Player mode: <br>
+Map (segment NUS into multiple segments) -> choose where you want to start <br>
+Level system -> level up, you can unlock new segments <br>
 Quests up to certain level (level 30) -> main quests
 Repetitive quests that show up (take photo of chicken) -> daily tasks
 Main UI: interactive map around NUS (mini profile at the top right corner + a circle emoji thingy to show where you at on the map)
