@@ -50,6 +50,14 @@ struct SignInEmailView: View {
                     .foregroundColor(.gray)
                     .autocapitalization(/*@START_MENU_TOKEN@*/.none/*@END_MENU_TOKEN@*/)
             }
+            
+            HStack {
+                Text("Forgot Password?")
+                    .foregroundColor(.gray)
+                    .font(.system(size: 15))
+                Spacer()
+            }
+            
             Button {
                 Task {
                     do {
