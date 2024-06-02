@@ -11,22 +11,43 @@ struct AuthenticationView: View {
     
     @Binding var showSignInView: Bool
     var body: some View {
-        VStack {
+        VStack(spacing: 20) {
+            
+            Text("DiscoverNUS")
+            .font(.title)
+            .bold()
+            .frame(maxWidth: .infinity, alignment: .center)
+            
             NavigationLink {
                 SignInEmailView(showSignInView: $showSignInView)
             } label: {
-                Text("Sign In With Email")
+                Text("Login")
                     .font(.headline)
                     .foregroundColor(.white)
                     .frame(height: 55)
-                    .frame(maxWidth: .infinity)
-                    .background(Color.blue)
-                    .cornerRadius(10)
+                    .frame(maxWidth: 250)
+                    .background(Color.orange)
+                    .cornerRadius(20)
+            }
+            
+            NavigationLink {
+                SignUpEmailView(showSignInView: $showSignInView)
+            } label: {
+                Text("Sign Up")
+                    .font(.headline)
+                    .foregroundColor(Color.orange)
+                    .frame(height: 55)
+                    .frame(maxWidth: 250)
+                    .background(Color.white)
+                    .cornerRadius(20)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 20)
+                            .stroke(Color.orange, lineWidth: 2)
+                    )
             }
             Spacer()
         }
         .padding()
-        .navigationTitle("Sign In")
     }
 }
 

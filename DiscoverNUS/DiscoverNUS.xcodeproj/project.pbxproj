@@ -20,6 +20,7 @@
 		4DC87F8C2C0C5DB3005F6F12 /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DC87F862C0C5DB2005F6F12 /* RootView.swift */; };
 		4DC87F8D2C0C5DB3005F6F12 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DC87F872C0C5DB2005F6F12 /* SettingsView.swift */; };
 		4DC87F8E2C0C5DB3005F6F12 /* SignInEmailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DC87F882C0C5DB2005F6F12 /* SignInEmailView.swift */; };
+		4DC87F902C0C9C8D005F6F12 /* SignUpEmailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DC87F8F2C0C9C8D005F6F12 /* SignUpEmailView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,6 +35,7 @@
 		4DC87F862C0C5DB2005F6F12 /* RootView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
 		4DC87F872C0C5DB2005F6F12 /* SettingsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		4DC87F882C0C5DB2005F6F12 /* SignInEmailView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignInEmailView.swift; sourceTree = "<group>"; };
+		4DC87F8F2C0C9C8D005F6F12 /* SignUpEmailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpEmailView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -92,6 +94,7 @@
 			children = (
 				4DC87F842C0C5DB2005F6F12 /* AuthenticationManager.swift */,
 				4DC87F852C0C5DB2005F6F12 /* AuthenticationView.swift */,
+				4DC87F8F2C0C9C8D005F6F12 /* SignUpEmailView.swift */,
 				4DC87F862C0C5DB2005F6F12 /* RootView.swift */,
 				4DC87F872C0C5DB2005F6F12 /* SettingsView.swift */,
 				4DC87F882C0C5DB2005F6F12 /* SignInEmailView.swift */,
@@ -179,6 +182,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4DC87F8A2C0C5DB3005F6F12 /* AuthenticationManager.swift in Sources */,
+				4DC87F902C0C9C8D005F6F12 /* SignUpEmailView.swift in Sources */,
 				4DC87F652C0C5AB2005F6F12 /* ContentView.swift in Sources */,
 				4DC87F8B2C0C5DB3005F6F12 /* AuthenticationView.swift in Sources */,
 				4DC87F8D2C0C5DB3005F6F12 /* SettingsView.swift in Sources */,
