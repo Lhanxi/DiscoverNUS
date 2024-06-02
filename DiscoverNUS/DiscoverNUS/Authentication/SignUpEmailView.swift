@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import UIKit
 
 @MainActor
 final class SignUpEmailViewModel: ObservableObject {
@@ -29,16 +28,29 @@ struct SignUpEmailView: View {
     @Binding var showSignInView: Bool
     
     var body: some View {
-        VStack {
-            TextField("Email", text: $viewModel.email)
-                .padding()
-                .background(Color.gray.opacity(0.4))
-                .cornerRadius(10)
+        VStack(spacing: 20) {
+             VStack(alignment: .leading, spacing: 5) {
+                 Text("Email")
+                     .font(.headline)
+                 TextField("Email", text: $viewModel.email)
+                     .padding()
+                     .background(Color.gray.opacity(0.4))
+                     .cornerRadius(10)
+                     .foregroundColor(.gray)
+                     .autocapitalization(/*@START_MENU_TOKEN@*/.none/*@END_MENU_TOKEN@*/)
+             }
+             
+             VStack(alignment: .leading, spacing: 5) {
+                 Text("Password")
+                     .font(.headline)
+                 SecureField("Password", text: $viewModel.password)
+                     .padding()
+                     .background(Color.gray.opacity(0.4))
+                     .cornerRadius(10)
+                     .foregroundColor(.gray)
+                     .autocapitalization(/*@START_MENU_TOKEN@*/.none/*@END_MENU_TOKEN@*/)
+             }
             
-            SecureField("Password", text: $viewModel.password)
-                .padding()
-                .background(Color.gray.opacity(0.4))
-                .cornerRadius(10)
             
             Button {
                 Task {
@@ -52,13 +64,17 @@ struct SignUpEmailView: View {
                 }
                 
             } label: {
-                Text("Sign Up With Email")
-                    .font(.headline)
-                    .foregroundColor(.white)
-                    .frame(height: 55)
-                    .frame(maxWidth: 200)
-                    .background(Color.orange)
-                    .cornerRadius(20)
+                HStack {
+                    Spacer()
+                    Text("Sign Up")
+                        .font(.headline)
+                        .foregroundColor(.white)
+                        .frame(height: 55)
+                        .frame(maxWidth: 150)
+                        .background(Color.orange)
+                        .cornerRadius(25)
+                }
+                
             }
             
             Spacer()
