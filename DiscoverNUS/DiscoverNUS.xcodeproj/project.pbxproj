@@ -21,6 +21,10 @@
 		4DC87F8D2C0C5DB3005F6F12 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DC87F872C0C5DB2005F6F12 /* SettingsView.swift */; };
 		4DC87F8E2C0C5DB3005F6F12 /* SignInEmailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DC87F882C0C5DB2005F6F12 /* SignInEmailView.swift */; };
 		4DC87F902C0C9C8D005F6F12 /* SignUpEmailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DC87F8F2C0C9C8D005F6F12 /* SignUpEmailView.swift */; };
+		4DC87F922C0ED8EF005F6F12 /* ForgotPasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DC87F912C0ED8EF005F6F12 /* ForgotPasswordView.swift */; };
+		4DC87F952C0EE6FB005F6F12 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 4DC87F942C0EE6FB005F6F12 /* FirebaseFirestore */; };
+		4DC87F972C0EE705005F6F12 /* FirebaseFirestoreSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 4DC87F962C0EE705005F6F12 /* FirebaseFirestoreSwift */; };
+		4DC87F992C1053E5005F6F12 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4DC87F982C1053E5005F6F12 /* Main.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,6 +40,8 @@
 		4DC87F872C0C5DB2005F6F12 /* SettingsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		4DC87F882C0C5DB2005F6F12 /* SignInEmailView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignInEmailView.swift; sourceTree = "<group>"; };
 		4DC87F8F2C0C9C8D005F6F12 /* SignUpEmailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpEmailView.swift; sourceTree = "<group>"; };
+		4DC87F912C0ED8EF005F6F12 /* ForgotPasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPasswordView.swift; sourceTree = "<group>"; };
+		4DC87F982C1053E5005F6F12 /* Main.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -43,7 +49,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4DC87F972C0EE705005F6F12 /* FirebaseFirestoreSwift in Frameworks */,
 				4DC87F762C0C5C82005F6F12 /* FirebaseAnalyticsSwift in Frameworks */,
+				4DC87F952C0EE6FB005F6F12 /* FirebaseFirestore in Frameworks */,
 				4DC87F782C0C5C82005F6F12 /* FirebaseAuth in Frameworks */,
 				4DC87F742C0C5C82005F6F12 /* FirebaseAnalytics in Frameworks */,
 			);
@@ -57,6 +65,7 @@
 			children = (
 				4DC87F612C0C5AB2005F6F12 /* DiscoverNUS */,
 				4DC87F602C0C5AB2005F6F12 /* Products */,
+				4DC87F932C0EE6FB005F6F12 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -77,6 +86,7 @@
 				4DC87F892C0C5DB2005F6F12 /* Authentication */,
 				4DC87F662C0C5AB4005F6F12 /* Assets.xcassets */,
 				4DC87F682C0C5AB4005F6F12 /* Preview Content */,
+				4DC87F982C1053E5005F6F12 /* Main.storyboard */,
 			);
 			path = DiscoverNUS;
 			sourceTree = "<group>";
@@ -97,9 +107,17 @@
 				4DC87F8F2C0C9C8D005F6F12 /* SignUpEmailView.swift */,
 				4DC87F862C0C5DB2005F6F12 /* RootView.swift */,
 				4DC87F872C0C5DB2005F6F12 /* SettingsView.swift */,
+				4DC87F912C0ED8EF005F6F12 /* ForgotPasswordView.swift */,
 				4DC87F882C0C5DB2005F6F12 /* SignInEmailView.swift */,
 			);
 			path = Authentication;
+			sourceTree = "<group>";
+		};
+		4DC87F932C0EE6FB005F6F12 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -122,6 +140,8 @@
 				4DC87F732C0C5C82005F6F12 /* FirebaseAnalytics */,
 				4DC87F752C0C5C82005F6F12 /* FirebaseAnalyticsSwift */,
 				4DC87F772C0C5C82005F6F12 /* FirebaseAuth */,
+				4DC87F942C0EE6FB005F6F12 /* FirebaseFirestore */,
+				4DC87F962C0EE705005F6F12 /* FirebaseFirestoreSwift */,
 			);
 			productName = DiscoverNUS;
 			productReference = 4DC87F5F2C0C5AB2005F6F12 /* DiscoverNUS.app */;
@@ -171,6 +191,7 @@
 				4DC87F6A2C0C5AB4005F6F12 /* Preview Assets.xcassets in Resources */,
 				4DC87F672C0C5AB4005F6F12 /* Assets.xcassets in Resources */,
 				4DC87F712C0C5BAC005F6F12 /* GoogleService-Info.plist in Resources */,
+				4DC87F992C1053E5005F6F12 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -188,6 +209,7 @@
 				4DC87F8D2C0C5DB3005F6F12 /* SettingsView.swift in Sources */,
 				4DC87F632C0C5AB2005F6F12 /* DiscoverNUSApp.swift in Sources */,
 				4DC87F8C2C0C5DB3005F6F12 /* RootView.swift in Sources */,
+				4DC87F922C0ED8EF005F6F12 /* ForgotPasswordView.swift in Sources */,
 				4DC87F8E2C0C5DB3005F6F12 /* SignInEmailView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -419,6 +441,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 4DC87F722C0C5C82005F6F12 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseAuth;
+		};
+		4DC87F942C0EE6FB005F6F12 /* FirebaseFirestore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4DC87F722C0C5C82005F6F12 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseFirestore;
+		};
+		4DC87F962C0EE705005F6F12 /* FirebaseFirestoreSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4DC87F722C0C5C82005F6F12 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseFirestoreSwift;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

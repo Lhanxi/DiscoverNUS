@@ -14,23 +14,20 @@ final class SettingsViewModel: ObservableObject {
         try AuthenticationManager.shared.signOut()
     }
     
-    func resetPassword() async throws {
-        let authUser = try AuthenticationManager.shared.getAuthenticatedUser()
-        
-        guard let email = authUser.email else{
-            throw URLError(.fileDoesNotExist)
-        }
-        
-        try await AuthenticationManager.shared.resetPassword(email: email)
-    }
-    
     func updateEmail() async throws{
         let email = "hello123@gmail.com"
         try await AuthenticationManager.shared.updateEmail(email: email)
     }
     
     func updatePassword() async throws{
-        let password = "Hello123"
+        let authUser = try AuthenticationManager.shared.getAuthenticatedUser()
+        
+        guard let _ = authUser.email else{
+            throw URLError(.fileDoesNotExist)
+        }
+        
+        let password = ""
+        
         try await AuthenticationManager.shared.updatePassword(password: password)
     }
 }
@@ -66,32 +63,24 @@ struct SettingsView: View {
 extension SettingsView {
     private var emailSection: some View {
         Section {
-            Button("Reset Password") {
+            
+            Button("Update Email") {
                 Task {
                     do {
-                        try await viewModel.resetPassword()
-                        print("PASSWORD RESET")
+                        try await viewModel.updateEmail()
+                        print("EMAIL UPDATED")
                     } catch {
                         print(error)
                     }
                 }
             }
+
             
             Button("Update Password") {
                 Task {
                     do {
                         try await viewModel.updatePassword()
                         print("PASSWORD UPDATED")
-                    } catch {
-                        print(error)
-                    }
-                }
-            }
-            Button("Update email") {
-                Task {
-                    do {
-                        try await viewModel.updateEmail()
-                        print("EMAIL UPDATED")
                     } catch {
                         print(error)
                     }
