@@ -7,6 +7,7 @@
 
 import SwiftUI
 import Firebase
+import GoogleMaps
 
 @main
 struct SwiftFireBaseApp: App {
@@ -25,6 +26,7 @@ class AppDelegate: NSObject, UIApplicationDelegate {
         FirebaseApp.configure()
         print("Configured Firebase!")
 
+        GMSServices.provideAPIKey(GoogleMapConfigHolder.googleMapAPIKey)
         return true
     }
 }
