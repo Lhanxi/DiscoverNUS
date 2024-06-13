@@ -11,7 +11,6 @@ import FirebaseAuth
 
 //basic UI and functions for google maps
 struct MapsView: UIViewRepresentable {
-    var quests: (Quest, Quest, Quest)
     let boundCoords = (south: 1.28000, west: 103.76711, north: 1.30239, east: 103.78788)
     let boundRegion = GMSCoordinateBounds(
         coordinate: CLLocationCoordinate2D(latitude: 1.28000, longitude: 103.76711),
@@ -35,7 +34,7 @@ struct HomePage: View {
     
     var body: some View {
         ZStack {
-            MapsView(quests: self.getUserQuests())
+            MapsView()
                 .edgesIgnoringSafeArea(.all)
             VStack {
                 HStack {
@@ -65,7 +64,4 @@ struct HomePage: View {
     
     //pass in tuple of quests and then pin the quests on google maps
     //dynamically change the number of allowed quests later
-    func getUserQuests() -> (Quest, Quest, Quest) {
-        //placeholder before editing database
-    }
 }
