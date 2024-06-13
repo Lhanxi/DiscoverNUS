@@ -49,6 +49,16 @@ struct SettingsView: View {
         List {
             //image retrieved from database and stored in homepage
             Image("person.fill")
+            Button("Log out") {
+                Task {
+                    do {
+                        try viewModel.signOut()
+                        showSignInView = true
+                    } catch {
+                        print(error)
+                    }
+                }
+            }
             if viewModel.authProviders.contains(.email) {
                 emailSection
             }
@@ -60,6 +70,9 @@ struct SettingsView: View {
     }
 }
 
+#Preview {
+    SettingsView(showSignInView: .constant(false))
+}
 
 extension SettingsView {
     private var emailSection: some View {

@@ -36,6 +36,7 @@
 		4DC87F992C1053E5005F6F12 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4DC87F982C1053E5005F6F12 /* Main.storyboard */; };
 		4DC87F9C2C10AB0F005F6F12 /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = 4DC87F9B2C10AB0F005F6F12 /* GoogleSignIn */; };
 		4DC87F9E2C10AB0F005F6F12 /* GoogleSignInSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 4DC87F9D2C10AB0F005F6F12 /* GoogleSignInSwift */; };
+		4DC87FA12C10AC85005F6F12 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4DC87FA02C10AC85005F6F12 /* GoogleService-Info.plist */; };
 		4DC87FA42C10B021005F6F12 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DC87FA32C10B021005F6F12 /* Utilities.swift */; };
 		4DC87FA62C10B70B005F6F12 /* SignInGoogle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DC87FA52C10B70B005F6F12 /* SignInGoogle.swift */; };
 /* End PBXBuildFile section */
@@ -64,6 +65,7 @@
 		4DC87F912C0ED8EF005F6F12 /* ForgotPasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPasswordView.swift; sourceTree = "<group>"; };
 		4DC87F982C1053E5005F6F12 /* Main.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		4DC87F9F2C10AB57005F6F12 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		4DC87FA02C10AC85005F6F12 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		4DC87FA32C10B021005F6F12 /* Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
 		4DC87FA52C10B70B005F6F12 /* SignInGoogle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInGoogle.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -126,6 +128,10 @@
 				4DC87F9F2C10AB57005F6F12 /* Info.plist */,
 				19D16CD22C140FC100133B59 /* GoogleService-Info.plist */,
 				4DC87F622C0C5AB2005F6F12 /* DiscoverNUSApp.swift */,
+				4DC87FA22C10AFE8005F6F12 /* Utilities */,
+				4DC87F9F2C10AB57005F6F12 /* Info.plist */,
+				4DC87F622C0C5AB2005F6F12 /* DiscoverNUSApp.swift */,
+				4DC87FA02C10AC85005F6F12 /* GoogleService-Info.plist */,
 				4DC87F642C0C5AB2005F6F12 /* ContentView.swift */,
 				4DC87F892C0C5DB2005F6F12 /* Authentication */,
 				4DC87F662C0C5AB4005F6F12 /* Assets.xcassets */,
@@ -251,6 +257,8 @@
 				4DC87F6A2C0C5AB4005F6F12 /* Preview Assets.xcassets in Resources */,
 				19D16CD32C140FC100133B59 /* GoogleService-Info.plist in Resources */,
 				4DC87F672C0C5AB4005F6F12 /* Assets.xcassets in Resources */,
+				4DC87F672C0C5AB4005F6F12 /* Assets.xcassets in Resources */,
+				4DC87FA12C10AC85005F6F12 /* GoogleService-Info.plist in Resources */,
 				4DC87F992C1053E5005F6F12 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -275,6 +283,11 @@
 				4DC87F8D2C0C5DB3005F6F12 /* SettingsView.swift in Sources */,
 				19D16CDC2C14634F00133B59 /* ProfilePictureHandler.swift in Sources */,
 				19D16CDA2C142BC400133B59 /* PlayerModel.swift in Sources */,
+				4DC87F902C0C9C8D005F6F12 /* SignUpEmailView.swift in Sources */,
+				4DC87FA62C10B70B005F6F12 /* SignInGoogle.swift in Sources */,
+				4DC87F652C0C5AB2005F6F12 /* ContentView.swift in Sources */,
+				4DC87F8B2C0C5DB3005F6F12 /* AuthenticationView.swift in Sources */,
+				4DC87F8D2C0C5DB3005F6F12 /* SettingsView.swift in Sources */,
 				4DC87F632C0C5AB2005F6F12 /* DiscoverNUSApp.swift in Sources */,
 				4DC87F8C2C0C5DB3005F6F12 /* RootView.swift in Sources */,
 				4DC87F922C0ED8EF005F6F12 /* ForgotPasswordView.swift in Sources */,

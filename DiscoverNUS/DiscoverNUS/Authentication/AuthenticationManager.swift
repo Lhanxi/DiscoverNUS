@@ -9,6 +9,7 @@ import Foundation
 import FirebaseAuth
 import FirebaseFirestore
 import SwiftUI
+=======
 
 struct AuthDataResultModel {
     let uid: String
