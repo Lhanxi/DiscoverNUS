@@ -22,72 +22,94 @@ final class SignInEmailViewModel: ObservableObject {
     }
 }
 
+
 struct SignInEmailView: View {
     
     @StateObject private var viewModel = SignInEmailViewModel()
     @Binding var showSignInView: Bool
+    @State private var navigateToForgotPassword = false
     
     var body: some View {
-        VStack(spacing: 20)  {
-            VStack(alignment: .leading, spacing: 5) {
-                Text("Email")
-                    .font(.headline)
-                TextField("Email", text: $viewModel.email)
-                    .padding()
-                    .background(Color.gray.opacity(0.4))
-                    .cornerRadius(10)
-                    .foregroundColor(.gray)
-                    .autocapitalization(/*@START_MENU_TOKEN@*/.none/*@END_MENU_TOKEN@*/)
-            }
-            
-            VStack(alignment: .leading, spacing: 5) {
-                Text("Password")
-                    .font(.headline)
-                SecureField("Password", text: $viewModel.password)
-                    .padding()
-                    .background(Color.gray.opacity(0.4))
-                    .cornerRadius(10)
-                    .foregroundColor(.gray)
-                    .autocapitalization(/*@START_MENU_TOKEN@*/.none/*@END_MENU_TOKEN@*/)
-            }
-            
-            HStack {
-                Text("Forgot Password?")
-                    .foregroundColor(.gray)
-                    .font(.system(size: 15))
-                Spacer()
-            }
-            
-            Button {
-                Task {
-                    do {
-                        try await viewModel.signIn()
-                        showSignInView = false
-                        return
-                    } catch {
-                        print(error)
+        NavigationView {
+            VStack(spacing: 20)  {
+                VStack(alignment: .leading, spacing: 5) {
+                    Text("Email")
+                        .font(.headline)
+                    TextField("Email", text: $viewModel.email)
+                        .padding()
+                        .background(Color.gray.opacity(0.4))
+                        .cornerRadius(10)
+                        .foregroundColor(.gray)
+                        .autocapitalization(.none)
+                }
+                
+                VStack(alignment: .leading, spacing: 5) {
+                    Text("Password")
+                        .font(.headline)
+                    SecureField("Password", text: $viewModel.password)
+                        .padding()
+                        .background(Color.gray.opacity(0.4))
+                        .cornerRadius(10)
+                        .foregroundColor(.gray)
+                        .autocapitalization(.none)
+                }
+                
+                HStack {
+                    NavigationLink(
+                        destination: ForgotPasswordView(),
+                        isActive: $navigateToForgotPassword) {
+                        EmptyView()
+                    }
+                    .navigationBarHidden(true)
+                    
+                    Text("Forgot Password?")
+                        .foregroundColor(.gray)
+                        .font(.system(size: 15))
+                        .onTapGesture {
+                            navigateToForgotPassword = true
+                        }
+                    Spacer()
+                }
+
+                
+                Button {
+                    Task {
+                        do {
+                            try await viewModel.signIn()
+                            showSignInView = false
+                            return
+                        } catch {
+                            print(error)
+                        }
+                    }
+                } label: {
+                    HStack {
+                        Spacer()
+                        Text("Sign In")
+                            .font(.headline)
+                            .foregroundColor(.white)
+                            .frame(height: 55)
+                            .frame(maxWidth: 150)
+                            .background(Color.orange)
+                            .cornerRadius(25)
                     }
                 }
                 
-            } label: {
-                HStack {
-                    Spacer()
-                    Text("Sign In")
-                        .font(.headline)
-                        .foregroundColor(.white)
-                        .frame(height: 55)
-                        .frame(maxWidth: 150)
-                        .background(Color.orange)
-                        .cornerRadius(25)
-                }
+                Spacer()
             }
-            
-            Spacer()
+            .padding()
+            .navigationTitle("Sign In With Email")
         }
-        .padding()
-        .navigationTitle("Sign In With Email")
+        .onAppear {
+            navigateToForgotPassword = false
+        }
     }
 }
+
+#Preview {
+    SignInEmailView(showSignInView: .constant(false))
+}
+
 
 #Preview {
     SignInEmailView(showSignInView: .constant(false))
