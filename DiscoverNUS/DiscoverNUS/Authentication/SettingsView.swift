@@ -47,6 +47,8 @@ struct SettingsView: View {
     
     var body: some View {
         List {
+            //image retrieved from database and stored in homepage
+            Image("person.fill")
             Button("Log out") {
                 Task {
                     do {
@@ -72,7 +74,6 @@ struct SettingsView: View {
     SettingsView(showSignInView: .constant(false))
 }
 
-
 extension SettingsView {
     private var emailSection: some View {
         Section {
@@ -88,7 +89,6 @@ extension SettingsView {
                 }
             }
 
-            
             Button("Update Password") {
                 Task {
                     do {

@@ -16,6 +16,7 @@ struct RootView: View {
         ZStack {
             if !showSignInView {
                 NavigationStack {
+                    HomePage(showSignInView: $showSignInView)
                     SettingsView(showSignInView: $showSignInView)
                 }
             }
