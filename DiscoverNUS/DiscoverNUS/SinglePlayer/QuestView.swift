@@ -9,27 +9,27 @@ import SwiftUI
 
 //UI structure for quests
 struct QuestView: View {
-    let title: String
-    let imageName: String
-    let text: String
+    let quest: Quest
+    @Binding var showSignInView: Bool
+    var playerInfo: Player
     
     var body: some View {
         VStack {
-            Text(title)
+            Text(quest.title)
                 .padding()
             
-            Image(systemName: imageName)
+            Image(uiImage: quest.image)
                 .resizable()
                 .aspectRatio(contentMode: .fit)
                 .frame(width: 100, height: 100)
                 .padding()
             
-            Text(text)
+            Text(quest.description)
                 .padding()
             
-            Button(action: {
-                //placeholder for submit quest and starting timer and displaying timer
-                print("button is pressed")
+            //placeholder for timer for now, replace later
+            NavigationLink(destination: {
+                StartQuest(quest: quest, timer: 300, showSignInView: $showSignInView, playerInfo: playerInfo)
             }) {
                 Text("Start Quest")
             }
@@ -42,6 +42,3 @@ struct QuestView: View {
     }
 }
 
-#Preview {
-    QuestView(title: "hi", imageName:"hi", text:"hi")
-}

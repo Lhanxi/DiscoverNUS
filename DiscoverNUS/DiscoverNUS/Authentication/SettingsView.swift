@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import FirebaseAuth
 
 @MainActor
 final class SettingsViewModel: ObservableObject {
@@ -22,21 +23,34 @@ final class SettingsViewModel: ObservableObject {
         try AuthenticationManager.shared.signOut()
     }
     
-    func updateEmail() async throws{
-        let email = "hello123@gmail.com"
-        try await AuthenticationManager.shared.updateEmail(email: email)
-    }
-    
-    func updatePassword() async throws{
-        let authUser = try AuthenticationManager.shared.getAuthenticatedUser()
+    func updatePassword(currentPassword: String, newPassword: String, confirmPassword: String) throws {
+        let authUser = Auth.auth().currentUser!
         
-        guard let _ = authUser.email else{
+        guard let userEmail = authUser.email else{
             throw URLError(.fileDoesNotExist)
         }
         
-        let password = ""
+        let credential = EmailAuthProvider.credential(withEmail: userEmail, password: currentPassword)
         
-        try await AuthenticationManager.shared.updatePassword(password: password)
+        authUser.reauthenticate(with: credential) { authResult, error in
+            if let error = error {
+                //throw error for user authentication error
+                print("unable to authenticate user")
+            } else if confirmPassword != newPassword {
+                //throw some error
+                print("password not the same lmao")
+            } else {
+                authUser.updatePassword(to: newPassword) { error in
+                    if let error = error {
+                        //throw some error later on
+                        print(error.localizedDescription)
+                    } else {
+                        //idk
+                        print("success")
+                    }
+                }
+            }
+        }
     }
 }
 
@@ -49,18 +63,10 @@ struct SettingsView: View {
         List {
             //image retrieved from database and stored in homepage
             Image("person.fill")
-            Button("Log out") {
-                Task {
-                    do {
-                        try viewModel.signOut()
-                        showSignInView = true
-                    } catch {
-                        print(error)
-                    }
-                }
-            }
             if viewModel.authProviders.contains(.email) {
-                emailSection
+                NavigationLink(destination: UpdatePasswordView()) {
+                    Text("Update Password")
+                }
             }
         }
         .onAppear {
@@ -70,38 +76,8 @@ struct SettingsView: View {
     }
 }
 
+/*
 #Preview {
     SettingsView(showSignInView: .constant(false))
 }
-
-extension SettingsView {
-    private var emailSection: some View {
-        Section {
-            
-            Button("Update Email") {
-                Task {
-                    do {
-                        try await viewModel.updateEmail()
-                        print("EMAIL UPDATED")
-                    } catch {
-                        print(error)
-                    }
-                }
-            }
-
-            
-            Button("Update Password") {
-                Task {
-                    do {
-                        try await viewModel.updatePassword()
-                        print("PASSWORD UPDATED")
-                    } catch {
-                        print(error)
-                    }
-                }
-            }
-        } header: {
-            Text("Email functions")
-        }
-    }
-}
+*/

@@ -9,7 +9,7 @@ import Foundation
 import FirebaseAuth
 import FirebaseFirestore
 import SwiftUI
-=======
+import UIKit
 
 struct AuthDataResultModel {
     let uid: String
@@ -40,17 +40,17 @@ final class AuthenticationManager {
         return AuthDataResultModel(user: user)
     }
     
-    func getProvider() throws -> [AuthProviderOption]{
+    func getProvider() throws -> [AuthProviderOption] {
         guard let providerData = Auth.auth().currentUser?.providerData else {
             throw URLError(.badServerResponse)
         }
         
         var providers: [AuthProviderOption] = []
         for provider in providerData {
-            if let option = AuthProviderOption(rawValue: provider.providerID){
+            if let option = AuthProviderOption(rawValue: provider.providerID) {
                 providers.append(option)
             } else {
-                assertionFailure("Provider option not found: \(provider.providerID) ")
+                assertionFailure("Provider option not found: \(provider.providerID)")
             }
         }
         return providers
@@ -60,42 +60,42 @@ final class AuthenticationManager {
         try Auth.auth().signOut()
     }
     
-    func getUserDocument(userId: String, completion: @escaping (Player) -> Void) {
+    func getUserDocument(profile: ImageHandler, userId: String) async throws -> Player {
         let db = Firestore.firestore()
-        let userRef = db.collection("users").document(userId)
-        let thisPlayer: Player
+        let collectionRef = db.collection("users")
+        let userRef = collectionRef.document(userId)
         
-        userRef.getDocument {(document, error) in
-            if let error = error {
-                fatalError("Firestore Error: \(error.localizedDescription)")
-            } else if let document = document {
-                if document.exists {
-                    let data = document.data()
-                    if let id = data?["id"] as? String,
-                       let level = data?["level"] as? Int,
-                       let quests = data?["quests"] as? (String, String, String),
-                       let multiplayerGamesPlayed = data?["GamesPlayed"] as? Int,
-                       let multiplayerGamesWon = data?["GamesWon"] as? Int {
-                        let thisPlayer = Player(id: id, level: level, /*temp */image: UIImage(imageLiteralResourceName: "default_person"), quests: quests, multiplayerGamesPlayed: multiplayerGamesPlayed, multiplayerGamesWon: multiplayerGamesWon)
-                        completion(thisPlayer)
-                    } //might want to throw error here for uncompleted results
-                } else {
-                    let data: [String: Any] = [
-                        "id": userId,
-                        "level": 1,
-                        "quests": ["hi", "hi", "hi"],
-                        "GamesPlayed": 0,
-                        "GamesWon": 0
-                    ]
-                    userRef.setData(data) { error in
-                        if let error = error {
-                            fatalError("Firestore Error: \(error.localizedDescription)")
-                        } else {
-                            self.getUserDocument(userId: userId, completion: completion)
-                        }
-                    }
-                }
+        let userImage: UIImage = await profile.getImageAsync(url: userId) ?? UIImage(systemName: "person.fill")!
+
+        let document = try await userRef.getDocument()
+        
+        if let data = document.data() {
+            if let id = data["id"] as? String,
+               let level = data["level"] as? Int,
+               let quests = data["quests"] as? [String],
+               let multiplayerGamesPlayed = data["GamesPlayed"] as? Int,
+               let multiplayerGamesWon = data["GamesWon"] as? Int {
+                
+                return Player(id: id,
+                              level: level,
+                              image: Image(uiImage: userImage),
+                              quests: quests,
+                              multiplayerGamesPlayed: multiplayerGamesPlayed,
+                              multiplayerGamesWon: multiplayerGamesWon)
+            } else {
+                throw URLError(.badServerResponse)
             }
+        } else {
+            let data: [String: Any] = [
+                "id": userId,
+                "level": 1,
+                "quests": [],
+                "GamesPlayed": 0,
+                "GamesWon": 0
+            ]
+            
+            try await userRef.setData(data)
+            return try await getUserDocument(profile: profile, userId: userId)
         }
     }
 }
@@ -118,13 +118,6 @@ extension AuthenticationManager {
     func resetPassword(email: String) async throws {
            let auth = Auth.auth()
            try await auth.sendPasswordReset(withEmail: email)
-    }
-    
-    func updatePassword(password: String) async throws {
-        guard let user = Auth.auth().currentUser else {
-            throw URLError(.badServerResponse)
-        }
-        try await user.updatePassword(to: password)
     }
     
     func updateEmail(email: String) async throws {

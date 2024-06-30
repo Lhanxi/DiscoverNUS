@@ -8,27 +8,52 @@
 
 
 import SwiftUI
+import FirebaseAuth
+
+@MainActor
+final class RootViewModel: ObservableObject {
+    @Published var playerInfo: Player?
+    @Published var showSignInView: Bool = false
+    
+    func loadUserInfo() async {
+        do {
+            if let authUser = try? AuthenticationManager.shared.getAuthenticatedUser() {
+                self.showSignInView = false
+                self.playerInfo = try await AuthenticationManager.shared.getUserDocument(profile: ImageHandler(), userId: authUser.uid)
+            } else {
+                self.showSignInView = true
+            }
+        } catch {
+            print("Error loading user info: \(error.localizedDescription)")
+        }
+    }
+}
+
 
 struct RootView: View {
+    @StateObject private var viewModel = RootViewModel()
     
-    @State private var showSignInView: Bool = false
     var body: some View {
         ZStack {
-            if !showSignInView {
-                NavigationStack {
-                    HomePage(showSignInView: $showSignInView)
-                    SettingsView(showSignInView: $showSignInView)
+            if !viewModel.showSignInView {
+                if let playerInfo = viewModel.playerInfo {
+                    NavigationStack {
+                        HomePage(showSignInView: $viewModel.showSignInView, playerInfo: playerInfo)
+                        SettingsView(showSignInView: $viewModel.showSignInView)
+                    }
+                } else {
+                    Text("Loading...")
                 }
             }
         }
         .onAppear {
-            let authUser = try? AuthenticationManager.shared.getAuthenticatedUser()
-            self.showSignInView = authUser == nil
-            
+            Task {
+                await viewModel.loadUserInfo()
+            }
         }
-        .fullScreenCover(isPresented: $showSignInView) {
+        .fullScreenCover(isPresented: $viewModel.showSignInView) {
             NavigationStack {
-                AuthenticationView(showSignInView: $showSignInView)
+                AuthenticationView(showSignInView: $viewModel.showSignInView)
             }
         }
     }

@@ -8,13 +8,19 @@
 import SwiftUI
 
 //data structure of player
-struct Player {
-    let id: String
+struct Player: Equatable {
+    let id: String?
     var level: Int
-    var image: UIImage
-    var quests: (String, String, String)
+    var image: Image // URL to the player's image
+    var quests: [String]
     var multiplayerGamesPlayed: Int
     var multiplayerGamesWon: Int
+} 
+
+extension Player {
+    static func == (lhs: Player, rhs: Player) -> Bool {
+        return lhs.level == rhs.level && lhs.image == rhs.image && lhs.quests == rhs.quests
+    }
 }
 
 //UI structure of player model
@@ -22,6 +28,7 @@ struct PlayerModelView: View {
     @State private var isDropDownVisible = false
     @StateObject private var viewModel = SettingsViewModel()
     @Binding var showSignInView: Bool
+    var playerInfo: Player
     
     var body: some View {
         GeometryReader { geometry in
@@ -48,15 +55,19 @@ struct PlayerModelView: View {
                 
                 if isDropDownVisible {
                     VStack {
-                        Spacer()
-                        Button(action: {
-                            self.isDropDownVisible.toggle()
-                            //navigate to settingspage
-                        }) {
-                            Text("Change Profile")
-                                .foregroundColor(Color.white)
+                        if viewModel.authProviders.contains(.email) {
+                            Spacer()
+                            
+                            NavigationLink(destination: SettingsView(showSignInView: $showSignInView)) {
+                                Text("Update Profile")
+                                    .foregroundColor(Color.white)
+                            }.onTapGesture {
+                                self.isDropDownVisible.toggle()
+                            }
                         }
+                        
                         Spacer()
+                        
                         Button(action: {
                             self.isDropDownVisible.toggle()
                             do {
@@ -69,6 +80,7 @@ struct PlayerModelView: View {
                             Text("logout")
                                 .foregroundColor(Color.white)
                         }
+                        
                         Spacer()
                     }
                     .frame(width: finalSize, height: finalSize * 0.5)

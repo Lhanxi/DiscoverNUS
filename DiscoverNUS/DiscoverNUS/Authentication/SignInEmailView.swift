@@ -109,8 +109,3 @@ struct SignInEmailView: View {
 #Preview {
     SignInEmailView(showSignInView: .constant(false))
 }
-
-
-#Preview {
-    SignInEmailView(showSignInView: .constant(false))
-}

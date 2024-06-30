@@ -6,5 +6,5 @@
 //
 
 struct GoogleMapConfigHolder {
-    static let googleMapAPIKey = "KEY_HERE"
+    static let googleMapAPIKey = "AIzaSyBmeMHKMbygoNarJIMEUx-zEm9Elruvrvc"
 }
