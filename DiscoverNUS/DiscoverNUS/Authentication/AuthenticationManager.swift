@@ -9,6 +9,7 @@ import Foundation
 import FirebaseAuth
 import FirebaseFirestore
 import SwiftUI
+=======
 
 struct AuthDataResultModel {
     let uid: String
@@ -72,10 +73,10 @@ final class AuthenticationManager {
                     let data = document.data()
                     if let id = data?["id"] as? String,
                        let level = data?["level"] as? Int,
-                       let quests = data?["quests"] as? [String],
+                       let quests = data?["quests"] as? (String, String, String),
                        let multiplayerGamesPlayed = data?["GamesPlayed"] as? Int,
                        let multiplayerGamesWon = data?["GamesWon"] as? Int {
-                        let thisPlayer = Player(id: id, level: level, quests: quests, multiplayerGamesPlayed: multiplayerGamesPlayed, multiplayerGamesWon: multiplayerGamesWon)
+                        let thisPlayer = Player(id: id, level: level, /*temp */image: UIImage(imageLiteralResourceName: "default_person"), quests: quests, multiplayerGamesPlayed: multiplayerGamesPlayed, multiplayerGamesWon: multiplayerGamesWon)
                         completion(thisPlayer)
                     } //might want to throw error here for uncompleted results
                 } else {

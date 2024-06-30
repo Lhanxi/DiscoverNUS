@@ -7,16 +7,16 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		19D16CC82C140CD800133B59 /* PlayerGPS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19D16CC52C140CD700133B59 /* PlayerGPS.swift */; };
+		19D16CC92C140CD800133B59 /* GoogleMapConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19D16CC62C140CD700133B59 /* GoogleMapConfig.swift */; };
+		19D16CCA2C140CD800133B59 /* HomePage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19D16CC72C140CD700133B59 /* HomePage.swift */; };
+		19D16CCD2C140CEA00133B59 /* QuestManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19D16CCB2C140CEA00133B59 /* QuestManager.swift */; };
+		19D16CCE2C140CEA00133B59 /* QuestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19D16CCC2C140CEA00133B59 /* QuestView.swift */; };
 		19D16CD12C140EA200133B59 /* GoogleMaps in Frameworks */ = {isa = PBXBuildFile; productRef = 19D16CD02C140EA200133B59 /* GoogleMaps */; };
 		19D16CD32C140FC100133B59 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 19D16CD22C140FC100133B59 /* GoogleService-Info.plist */; };
 		19D16CD62C1419EC00133B59 /* ARKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 19D16CD42C1419C800133B59 /* ARKit.framework */; };
 		19D16CDA2C142BC400133B59 /* PlayerModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19D16CD92C142BC400133B59 /* PlayerModel.swift */; };
 		19D16CDC2C14634F00133B59 /* ProfilePictureHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19D16CDB2C14634F00133B59 /* ProfilePictureHandler.swift */; };
-		4DA91C752C1B3199007433F4 /* HomePage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DA91C742C1B3199007433F4 /* HomePage.swift */; };
-		4DA91C772C1B31BC007433F4 /* PlayerGPS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DA91C762C1B31BC007433F4 /* PlayerGPS.swift */; };
-		4DA91C792C1B31DD007433F4 /* GoogleMapConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DA91C782C1B31DD007433F4 /* GoogleMapConfig.swift */; };
-		4DA91C7B2C1B3203007433F4 /* QuestManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DA91C7A2C1B3203007433F4 /* QuestManager.swift */; };
-		4DA91C7D2C1B3219007433F4 /* QuestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DA91C7C2C1B3219007433F4 /* QuestView.swift */; };
 		4DC87F632C0C5AB2005F6F12 /* DiscoverNUSApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DC87F622C0C5AB2005F6F12 /* DiscoverNUSApp.swift */; };
 		4DC87F652C0C5AB2005F6F12 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DC87F642C0C5AB2005F6F12 /* ContentView.swift */; };
 		4DC87F672C0C5AB4005F6F12 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4DC87F662C0C5AB4005F6F12 /* Assets.xcassets */; };
@@ -45,15 +45,15 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		19D16CC52C140CD700133B59 /* PlayerGPS.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PlayerGPS.swift; path = ../../../PlayerGPS.swift; sourceTree = "<group>"; };
+		19D16CC62C140CD700133B59 /* GoogleMapConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GoogleMapConfig.swift; path = ../../../GoogleMapConfig.swift; sourceTree = "<group>"; };
+		19D16CC72C140CD700133B59 /* HomePage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HomePage.swift; path = ../../../HomePage.swift; sourceTree = "<group>"; };
+		19D16CCB2C140CEA00133B59 /* QuestManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = QuestManager.swift; path = ../../../QuestManager.swift; sourceTree = "<group>"; };
+		19D16CCC2C140CEA00133B59 /* QuestView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = QuestView.swift; path = ../../../QuestView.swift; sourceTree = "<group>"; };
 		19D16CD22C140FC100133B59 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		19D16CD42C1419C800133B59 /* ARKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ARKit.framework; path = System/Library/Frameworks/ARKit.framework; sourceTree = SDKROOT; };
 		19D16CD92C142BC400133B59 /* PlayerModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerModel.swift; sourceTree = "<group>"; };
 		19D16CDB2C14634F00133B59 /* ProfilePictureHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePictureHandler.swift; sourceTree = "<group>"; };
-		4DA91C742C1B3199007433F4 /* HomePage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePage.swift; sourceTree = "<group>"; };
-		4DA91C762C1B31BC007433F4 /* PlayerGPS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerGPS.swift; sourceTree = "<group>"; };
-		4DA91C782C1B31DD007433F4 /* GoogleMapConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleMapConfig.swift; sourceTree = "<group>"; };
-		4DA91C7A2C1B3203007433F4 /* QuestManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestManager.swift; sourceTree = "<group>"; };
-		4DA91C7C2C1B3219007433F4 /* QuestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestView.swift; sourceTree = "<group>"; };
 		4DC87F5F2C0C5AB2005F6F12 /* DiscoverNUS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DiscoverNUS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4DC87F622C0C5AB2005F6F12 /* DiscoverNUSApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverNUSApp.swift; sourceTree = "<group>"; };
 		4DC87F642C0C5AB2005F6F12 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -99,25 +99,14 @@
 		19D16CC42C140C8C00133B59 /* SinglePlayer */ = {
 			isa = PBXGroup;
 			children = (
+				19D16CCB2C140CEA00133B59 /* QuestManager.swift */,
+				19D16CCC2C140CEA00133B59 /* QuestView.swift */,
+				19D16CC62C140CD700133B59 /* GoogleMapConfig.swift */,
+				19D16CC72C140CD700133B59 /* HomePage.swift */,
+				19D16CC52C140CD700133B59 /* PlayerGPS.swift */,
 				19D16CD92C142BC400133B59 /* PlayerModel.swift */,
-				4DA91C742C1B3199007433F4 /* HomePage.swift */,
-				4DA91C762C1B31BC007433F4 /* PlayerGPS.swift */,
-				4DA91C782C1B31DD007433F4 /* GoogleMapConfig.swift */,
-				4DA91C7A2C1B3203007433F4 /* QuestManager.swift */,
-				4DA91C7C2C1B3219007433F4 /* QuestView.swift */,
 			);
 			path = SinglePlayer;
-			sourceTree = "<group>";
-		};
-		4DA91C7E2C1B3337007433F4 /* MultiPlayer */ = {
-			isa = PBXGroup;
-			children = (
-				4DC9284E2C1FF70F0044DDBA /* MultiPlayerView.swift */,
-				4DC9285A2C2425880044DDBA /* JoinPartyView.swift */,
-				4DC928542C207F2C0044DDBA /* CreatePartyView.swift */,
-				4DC928582C24252A0044DDBA /* PartyView.swift */,
-			);
-			path = MultiPlayer;
 			sourceTree = "<group>";
 		};
 		4DC87F562C0C5AB2005F6F12 = {
@@ -140,9 +129,11 @@
 		4DC87F612C0C5AB2005F6F12 /* DiscoverNUS */ = {
 			isa = PBXGroup;
 			children = (
-				4DA91C7E2C1B3337007433F4 /* MultiPlayer */,
 				19D16CC42C140C8C00133B59 /* SinglePlayer */,
+				4DC87FA22C10AFE8005F6F12 /* Utilities */,
+				4DC87F9F2C10AB57005F6F12 /* Info.plist */,
 				19D16CD22C140FC100133B59 /* GoogleService-Info.plist */,
+				4DC87F622C0C5AB2005F6F12 /* DiscoverNUSApp.swift */,
 				4DC87FA22C10AFE8005F6F12 /* Utilities */,
 				4DC87F9F2C10AB57005F6F12 /* Info.plist */,
 				4DC87F622C0C5AB2005F6F12 /* DiscoverNUSApp.swift */,
@@ -284,6 +275,18 @@
 			buildActionMask = 2147483647;
 			files = (
 				4DC87F8A2C0C5DB3005F6F12 /* AuthenticationManager.swift in Sources */,
+				19D16CC82C140CD800133B59 /* PlayerGPS.swift in Sources */,
+				4DC87F902C0C9C8D005F6F12 /* SignUpEmailView.swift in Sources */,
+				4DC87FA62C10B70B005F6F12 /* SignInGoogle.swift in Sources */,
+				4DC87F652C0C5AB2005F6F12 /* ContentView.swift in Sources */,
+				19D16CCA2C140CD800133B59 /* HomePage.swift in Sources */,
+				4DC87F8B2C0C5DB3005F6F12 /* AuthenticationView.swift in Sources */,
+				19D16CCE2C140CEA00133B59 /* QuestView.swift in Sources */,
+				19D16CCD2C140CEA00133B59 /* QuestManager.swift in Sources */,
+				19D16CC92C140CD800133B59 /* GoogleMapConfig.swift in Sources */,
+				4DC87F8D2C0C5DB3005F6F12 /* SettingsView.swift in Sources */,
+				19D16CDC2C14634F00133B59 /* ProfilePictureHandler.swift in Sources */,
+				19D16CDA2C142BC400133B59 /* PlayerModel.swift in Sources */,
 				4DC87F902C0C9C8D005F6F12 /* SignUpEmailView.swift in Sources */,
 				4DC87FA62C10B70B005F6F12 /* SignInGoogle.swift in Sources */,
 				4DC9284F2C1FF70F0044DDBA /* MultiPlayerView.swift in Sources */,

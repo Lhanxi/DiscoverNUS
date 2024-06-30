@@ -8,54 +8,13 @@
 import SwiftUI
 
 //data structure of player
-struct Player: Identifiable, Codable {
-    let id: String?
+struct Player {
+    let id: String
     var level: Int
-    var imageURL: String // URL to the player's image
-    var quests: [String] 
+    var image: UIImage
+    var quests: (String, String, String)
     var multiplayerGamesPlayed: Int
     var multiplayerGamesWon: Int
-
-    // CodingKeys to map properties to Firestore document fields
-    enum CodingKeys: String, CodingKey {
-        case id
-        case level
-        case imageURL
-        case quests
-        case multiplayerGamesPlayed
-        case multiplayerGamesWon
-    }
-
-    init(id: String? = nil, level: Int = 1, imageURL: String = "", quests: [String] = ["", "", ""], multiplayerGamesPlayed: Int = 0, multiplayerGamesWon: Int = 0) {
-        self.id = id
-        self.level = level
-        self.imageURL = imageURL
-        self.quests = quests
-        self.multiplayerGamesPlayed = multiplayerGamesPlayed
-        self.multiplayerGamesWon = multiplayerGamesWon
-    }
-    
-    // Custom encoding function
-    func encode(to encoder: Encoder) throws {
-        var container = encoder.container(keyedBy: CodingKeys.self)
-        try container.encode(id, forKey: .id)
-        try container.encode(level, forKey: .level)
-        try container.encode(imageURL, forKey: .imageURL)
-        try container.encode(quests, forKey: .quests)
-        try container.encode(multiplayerGamesPlayed, forKey: .multiplayerGamesPlayed)
-        try container.encode(multiplayerGamesWon, forKey: .multiplayerGamesWon)
-    }
-
-    // Custom decoding function
-    init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.id = try container.decodeIfPresent(String.self, forKey: .id)
-        self.level = try container.decode(Int.self, forKey: .level)
-        self.imageURL = try container.decode(String.self, forKey: .imageURL)
-        self.quests = try container.decode([String].self, forKey: .quests)
-        self.multiplayerGamesPlayed = try container.decode(Int.self, forKey: .multiplayerGamesPlayed)
-        self.multiplayerGamesWon = try container.decode(Int.self, forKey: .multiplayerGamesWon)
-    }
 }
 
 //UI structure of player model

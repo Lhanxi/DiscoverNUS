@@ -33,35 +33,35 @@ struct HomePage: View {
     @Binding var showSignInView: Bool
     
     var body: some View {
-        NavigationView {
-            ZStack {
-                MapsView()
-                    .edgesIgnoringSafeArea(.all)
-                VStack {
-                    HStack {
-                        Spacer()
-                        PlayerModelView(showSignInView: $showSignInView)
-                            .padding(.trailing, 10)
-                    }
+        ZStack {
+            MapsView()
+                .edgesIgnoringSafeArea(.all)
+            VStack {
+                HStack {
                     Spacer()
-                    HStack {
-                        NavigationLink(destination: MultiPlayerView()) {
-                            Text("Play Multiplayer")
-                                .foregroundColor(Color.black)
-                                .background(Color.yellow)
-                                .cornerRadius(5)
-                                .font(.system(size: 18))
-                                .padding(10)
-                        }
-                        .padding(30)
+                    PlayerModelView(showSignInView: $showSignInView)
+                        .padding(.trailing, 10)
+                }
+                Spacer()
+                HStack {
+                    Button(action: {
+                        //play multiplayer
+                    }) {
+                        Text("Play Multiplayer")
+                            .foregroundColor(Color.black)
+                            .background(Color.yellow)
+                            .cornerRadius(5)
+                            .font(.system(size: 18))
+                            .padding(10)
                     }
+                    .padding(30)
                 }
             }
         }
     }
     
-    // get relevant user info from firebase and pass to the relevant views
+    //get relevant user info from firebase and pass to the relevant views
     
-    // pass in tuple of quests and then pin the quests on google maps
-    // dynamically change the number of allowed quests later
+    //pass in tuple of quests and then pin the quests on google maps
+    //dynamically change the number of allowed quests later
 }
