@@ -188,7 +188,7 @@ struct PartyView: View {
                     .cornerRadius(8)
             }
             
-            NavigationLink(destination: JoinPartyView(), isActive: $navigateToJoinPartyView) {
+            NavigationLink(destination: MultiPlayerView(), isActive: $navigateToJoinPartyView) {
                 EmptyView()
             }
         }
