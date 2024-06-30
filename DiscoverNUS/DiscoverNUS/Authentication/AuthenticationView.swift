@@ -25,51 +25,62 @@ struct AuthenticationView: View {
     @StateObject private var viewModel = AuthenticationViewModel()
     @Binding var showSignInView: Bool
     var body: some View {
-        VStack(spacing: 20) {
+        VStack(spacing: 0) {
             
-            Text("DiscoverNUS")
-            .font(.title)
-            .bold()
-            .frame(maxWidth: .infinity, alignment: .center)
+            Image(.appLogo)
+                .resizable(capInsets: EdgeInsets(top: 0.0, leading: 0.0, bottom: 0.0, trailing: 0.0))
+                .aspectRatio(contentMode: .fit)
+                .clipShape(RoundedRectangle(cornerRadius: 25))
+                .padding()
             
-            NavigationLink {
-                SignInEmailView(showSignInView: $showSignInView)
-            } label: {
-                Text("Login")
-                    .font(.headline)
-                    .foregroundColor(.white)
-                    .frame(height: 55)
-                    .frame(maxWidth: 250)
-                    .background(Color.orange)
-                    .cornerRadius(20)
-            }
+            Image(.slogan)
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+                .clipShape(RoundedRectangle(cornerRadius: 25))
+                .padding()
+                .offset(y: -30)
             
-            NavigationLink {
-                SignUpEmailView(showSignInView: $showSignInView)
-            } label: {
-                Text("Sign Up")
-                    .font(.headline)
-                    .foregroundColor(Color.orange)
-                    .frame(height: 55)
-                    .frame(maxWidth: 250)
-                    .background(Color.white)
-                    .cornerRadius(20)
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 20)
-                            .stroke(Color.orange, lineWidth: 2)
-                    )
-            }
-            
-            GoogleSignInButton(viewModel: GoogleSignInButtonViewModel(scheme: .dark, style: .icon, state: .normal)) {
-                Task {
-                    do {
-                        try await viewModel.signInGoogle()
-                        showSignInView = false
-                    } catch {
-                        print(error)
+            VStack(spacing: 20) {
+                NavigationLink {
+                    SignInEmailView(showSignInView: $showSignInView)
+                } label: {
+                    Text("Login")
+                        .font(.headline)
+                        .foregroundColor(.white)
+                        .frame(height: 55)
+                        .frame(maxWidth: 250)
+                        .background(Color.orange)
+                        .cornerRadius(20)
+                }
+                
+                NavigationLink {
+                    SignUpEmailView(showSignInView: $showSignInView)
+                } label: {
+                    Text("Sign Up")
+                        .font(.headline)
+                        .foregroundColor(Color.orange)
+                        .frame(height: 55)
+                        .frame(maxWidth: 250)
+                        .background(Color.white)
+                        .cornerRadius(20)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 20)
+                                .stroke(Color.orange, lineWidth: 2)
+                        )
+                }
+                
+                GoogleSignInButton(viewModel: GoogleSignInButtonViewModel(scheme: .dark, style: .icon, state: .normal)) {
+                    Task {
+                        do {
+                            try await viewModel.signInGoogle()
+                            showSignInView = false
+                        } catch {
+                            print(error)
+                        }
                     }
                 }
             }
+
             
             Spacer()
         }

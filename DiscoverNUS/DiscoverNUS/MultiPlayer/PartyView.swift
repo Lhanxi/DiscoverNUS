@@ -7,28 +7,59 @@
 
 import SwiftUI
 import FirebaseFirestore
+import FirebaseAuth
 import Combine
 
 @MainActor
 final class PartyViewModel : ObservableObject {
     @Published var partyCode: String
     @Published var users: [UserModel] = []
+    @Published var currentUser: UserModel?
     private var listener: ListenerRegistration?
-
+    
     struct UserModel: Identifiable {
         var id: String
         var isLeader: Bool
     }
-
+    
     init(partyCode: String) {
         self.partyCode = partyCode
+        fetchCurrentUser()
         fetchUsers()
     }
     
     deinit {
         listener?.remove()
     }
-
+    
+    func fetchCurrentUser() {
+        guard let user = Auth.auth().currentUser else {
+            print("No authenticated user found.")
+            return
+        }
+        
+        let userID = user.uid
+        let db = Firestore.firestore()
+        let userRef = db.collection("Teams").document("DefaultTeam").collection("Parties").document(partyCode).collection("Users").document(userID)
+        
+        userRef.getDocument { document, error in
+            if let error = error {
+                print("Error fetching current user: \(error.localizedDescription)")
+                return
+            }
+            
+            guard let document = document, document.exists, let data = document.data() else {
+                print("Current user document does not exist.")
+                return
+            }
+            
+            self.currentUser = UserModel(
+                id: userID,
+                isLeader: data["isLeader"] as? Bool ?? false
+            )
+        }
+    }
+    
     func fetchUsers() {
         let db = Firestore.firestore()
         let partyRef = db.collection("Teams").document("DefaultTeam").collection("Parties").document(partyCode).collection("Users")
@@ -52,9 +83,18 @@ final class PartyViewModel : ObservableObject {
                 )
             }
             
+            self.updateCurrentUserStatus()
         }
     }
-
+    
+    func updateCurrentUserStatus() {
+        guard let currentUserID = self.currentUser?.id else { return }
+        
+        if let currentUserIndex = self.users.firstIndex(where: { $0.id == currentUserID }) {
+            self.currentUser?.isLeader = self.users[currentUserIndex].isLeader
+        }
+    }
+    
     func deleteParty() {
         let db = Firestore.firestore()
         let partyRef = db.collection("Teams").document("DefaultTeam").collection("Parties").document(partyCode)
@@ -67,28 +107,26 @@ final class PartyViewModel : ObservableObject {
             }
         }
     }
-
+    
     func leaveParty() {
-        do {
-            let user = try AuthenticationManager.shared.getAuthenticatedUser()
-            let userID = user.uid
-            
-            let db = Firestore.firestore()
-            
-            let partyRef = db.collection("Teams").document("DefaultTeam").collection("Parties").document(partyCode)
-            let usersCollectionRef = partyRef.collection("Users")
-            
-            usersCollectionRef.document(userID).delete { error in
-                if let error = error {
-                    print("Error leaving party: \(error.localizedDescription)")
-                } else {
-                    print("Successfully left party")
-                    self.assignNewLeaderIfNeeded()
-                    self.deletePartyIfEmpty()
-                }
+        guard let userID = self.currentUser?.id else {
+            print("Error: No current user")
+            return
+        }
+        
+        let db = Firestore.firestore()
+        
+        let partyRef = db.collection("Teams").document("DefaultTeam").collection("Parties").document(partyCode)
+        let usersCollectionRef = partyRef.collection("Users")
+        
+        usersCollectionRef.document(userID).delete { error in
+            if let error = error {
+                print("Error leaving party: \(error.localizedDescription)")
+            } else {
+                print("Successfully left party")
+                self.assignNewLeaderIfNeeded()
+                self.deletePartyIfEmpty()
             }
-        } catch {
-            print("Error leaving party: \(error.localizedDescription)")
         }
     }
     
@@ -130,7 +168,7 @@ final class PartyViewModel : ObservableObject {
             }
         }
     }
-
+    
     func kickUser(userID: String) {
         let db = Firestore.firestore()
         let partyRef = db.collection("Teams").document("DefaultTeam").collection("Parties").document(partyCode)
@@ -167,11 +205,13 @@ struct PartyView: View {
                         Text("(Leader)")
                             .foregroundColor(.blue)
                     } else {
-                        Button(action: {
-                            viewModel.kickUser(userID: user.id)
-                        }) {
-                            Text("Kick")
-                                .foregroundColor(.red)
+                        if viewModel.currentUser?.isLeader == true {
+                            Button(action: {
+                                viewModel.kickUser(userID: user.id)
+                            }) {
+                                Text("Kick")
+                                    .foregroundColor(.red)
+                            }
                         }
                     }
                 }
@@ -199,5 +239,3 @@ struct PartyView: View {
 #Preview {
     PartyView(partyCode: "testCode")
 }
-
-
