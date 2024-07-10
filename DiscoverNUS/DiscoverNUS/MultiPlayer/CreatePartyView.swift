@@ -56,29 +56,46 @@ struct CreatePartyView: View {
     
     var body: some View {
         NavigationView {
-            VStack {
-                Text("Party Code: \(viewModel.partyCode)")
-                    .padding()
-                
-                Button(action: {
-                    Task {
-                        await viewModel.createParty()
-                        navigateToPartyView = true
-                    }
-                }) 
-                {
-                    Text("Create Party")
+            ZStack{
+                // Background gradient
+                LinearGradient(gradient: Gradient(colors: [Color(red: 1.0, green: 0.9, blue: 0.8), Color(red: 1.0, green: 0.7, blue: 0.6)]), startPoint: .top, endPoint: .bottom)
+                    .edgesIgnoringSafeArea(.all)
+                VStack {
+                    
+                    Text("Party Code: \(viewModel.partyCode)")
                         .padding()
-                        .background(Color.blue)
-                        .foregroundColor(.white)
-                        .cornerRadius(8)
-                }
-                
-                NavigationLink(destination: PartyView(partyCode: viewModel.partyCode), isActive: $navigateToPartyView) {
-                    EmptyView()
+                        .font(.headline)
+
+                    Button(action: {
+                        Task {
+                            await viewModel.createParty()
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 15) {
+                                                navigateToPartyView = true
+                                            }
+                        }
+                    })
+                    {
+                        Text("Create Party")
+                            .font(.headline)
+                            .foregroundColor(Color.white)
+                            .frame(height: 55)
+                            .frame(maxWidth: 200)
+                            .background(
+                                LinearGradient(gradient: Gradient(colors: [Color.orange, Color(red: 1.0, green: 0.5, blue: 0.0)]), startPoint: .topLeading, endPoint: .bottomTrailing)
+                            )
+                            .cornerRadius(20)
+                            .shadow(color: Color.black.opacity(0.2), radius: 10, x: 5, y: 5)
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 20)
+                                    .stroke(Color.white, lineWidth: 2)
+                            )
+                    }
+                    
+                    NavigationLink(destination: PartyView(partyCode: viewModel.partyCode), isActive: $navigateToPartyView) {
+                        EmptyView()
+                    }
                 }
             }
-            .padding()
         }
     }
 }
