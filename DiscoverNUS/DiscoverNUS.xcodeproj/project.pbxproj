@@ -15,7 +15,7 @@
 		19D16CD62C1419EC00133B59 /* ARKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 19D16CD42C1419C800133B59 /* ARKit.framework */; };
 		19D16CDA2C142BC400133B59 /* PlayerModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19D16CD92C142BC400133B59 /* PlayerModel.swift */; };
 		19D16CDC2C14634F00133B59 /* ImageHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19D16CDB2C14634F00133B59 /* ImageHandler.swift */; };
-		4D7557AA2C3131A700A27C62 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4D7557A92C3131A700A27C62 /* GoogleService-Info.plist */; };
+		4D7557AC2C3EECED00A27C62 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4D7557AB2C3EECED00A27C62 /* GoogleService-Info.plist */; };
 		4DA91C752C1B3199007433F4 /* HomePage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DA91C742C1B3199007433F4 /* HomePage.swift */; };
 		4DA91C772C1B31BC007433F4 /* PlayerGPS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DA91C762C1B31BC007433F4 /* PlayerGPS.swift */; };
 		4DA91C792C1B31DD007433F4 /* GoogleMapConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DA91C782C1B31DD007433F4 /* GoogleMapConfig.swift */; };
@@ -54,7 +54,7 @@
 		19D16CD42C1419C800133B59 /* ARKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ARKit.framework; path = System/Library/Frameworks/ARKit.framework; sourceTree = SDKROOT; };
 		19D16CD92C142BC400133B59 /* PlayerModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerModel.swift; sourceTree = "<group>"; };
 		19D16CDB2C14634F00133B59 /* ImageHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageHandler.swift; sourceTree = "<group>"; };
-		4D7557A92C3131A700A27C62 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
+		4D7557AB2C3EECED00A27C62 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		4DA91C742C1B3199007433F4 /* HomePage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePage.swift; sourceTree = "<group>"; };
 		4DA91C762C1B31BC007433F4 /* PlayerGPS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerGPS.swift; sourceTree = "<group>"; };
 		4DA91C782C1B31DD007433F4 /* GoogleMapConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleMapConfig.swift; sourceTree = "<group>"; };
@@ -148,7 +148,7 @@
 		4DC87F612C0C5AB2005F6F12 /* DiscoverNUS */ = {
 			isa = PBXGroup;
 			children = (
-				4D7557A92C3131A700A27C62 /* GoogleService-Info.plist */,
+				4D7557AB2C3EECED00A27C62 /* GoogleService-Info.plist */,
 				4DA91C7E2C1B3337007433F4 /* MultiPlayer */,
 				19D16CC42C140C8C00133B59 /* SinglePlayer */,
 				4DC87FA22C10AFE8005F6F12 /* Utilities */,
@@ -278,7 +278,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4DC87F6A2C0C5AB4005F6F12 /* Preview Assets.xcassets in Resources */,
-				4D7557AA2C3131A700A27C62 /* GoogleService-Info.plist in Resources */,
+				4D7557AC2C3EECED00A27C62 /* GoogleService-Info.plist in Resources */,
 				4DC87F672C0C5AB4005F6F12 /* Assets.xcassets in Resources */,
 				4DC87F672C0C5AB4005F6F12 /* Assets.xcassets in Resources */,
 			);

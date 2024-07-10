@@ -54,37 +54,60 @@ struct JoinPartyView: View {
     
     var body: some View {
         NavigationView {
-            VStack {
-                TextField("Party Code", text: $viewModel.partyCode)
-                    .padding()
-                    .textFieldStyle(RoundedBorderTextFieldStyle())
+            ZStack {
+                // Background gradient
+                LinearGradient(gradient: Gradient(colors: [Color(red: 1.0, green: 0.9, blue: 0.8), Color(red: 1.0, green: 0.7, blue: 0.6)]), startPoint: .top, endPoint: .bottom)
+                    .edgesIgnoringSafeArea(.all)
                 
-                if let errorMessage = viewModel.errorMessage {
-                    Text(errorMessage)
-                        .foregroundColor(.red)
+                VStack(spacing: 30) {
+                    TextField("Enter Party Code", text: $viewModel.partyCode)
                         .padding()
-                }
-                
-                Button(action: {
-                    Task {
-                        await viewModel.joinParty()
-                        if viewModel.errorMessage == nil {
-                            navigateToPartyView = true
-                        }
+                        .background(RoundedRectangle(cornerRadius: 10).fill(Color.white))
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 10)
+                                .stroke(Color.gray, lineWidth: 1)
+                        )
+                        .textFieldStyle(PlainTextFieldStyle())
+                        .frame(height: 50)
+                        .frame(maxWidth: 350)
+                    
+                    if let errorMessage = viewModel.errorMessage {
+                        Text(errorMessage)
+                            .foregroundColor(.red)
+                            .padding()
                     }
-                }) {
-                    Text("Join Party")
-                        .padding()
-                        .background(Color.green)
-                        .foregroundColor(.white)
-                        .cornerRadius(8)
-                }
-                
-                NavigationLink(destination: PartyView(partyCode: viewModel.partyCode), isActive: $navigateToPartyView) {
-                    EmptyView()
+                    
+                    Button(action: {
+                        Task {
+                            await viewModel.joinParty()
+                            if viewModel.errorMessage == nil {
+                                navigateToPartyView = true
+                            }
+                        }
+                    }) {
+                        Text("Join Party")
+                            .font(.headline)
+                            .foregroundColor(Color.white)
+                            .frame(height: 55)
+                            .frame(maxWidth: 150)
+                            .background(
+                                LinearGradient(gradient: Gradient(colors: [Color.orange, Color(red: 1.0, green: 0.5, blue: 0.0)]), startPoint: .topLeading, endPoint: .bottomTrailing)
+                            )
+                            .cornerRadius(20)
+                            .shadow(color: Color.black.opacity(0.2), radius: 10, x: 5, y: 5)
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 20)
+                                    .stroke(Color.white, lineWidth: 2)
+                            )
+                    }
+                    
+                    
+                    
+                    NavigationLink(destination: PartyView(partyCode: viewModel.partyCode), isActive: $navigateToPartyView) {
+                        EmptyView()
+                    }
                 }
             }
-            .padding()
         }
     }
 }
