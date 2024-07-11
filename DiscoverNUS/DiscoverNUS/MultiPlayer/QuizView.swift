@@ -44,6 +44,13 @@ struct QuizView: View {
                 }
             )
         }
+        
+        if let isCorrect = viewModel.isCorrect {
+            Text(isCorrect ? "Correct" : "Wrong")
+                .font(.largeTitle)
+                .foregroundColor(isCorrect ? .green : .red)
+                .padding()
+        }
     }
 }
 

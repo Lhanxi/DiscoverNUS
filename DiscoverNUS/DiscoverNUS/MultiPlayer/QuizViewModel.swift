@@ -44,4 +44,6 @@ final class QuizViewModel: ObservableObject {
         isCorrect = (index == questions[currentQuestionIndex].correctAnswer)
     }
     
+    
+    
 }
