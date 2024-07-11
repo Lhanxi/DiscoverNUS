@@ -22,10 +22,6 @@ struct AnswerButton: View {
                         Image(systemName: "checkmark.circle")
                             .foregroundColor(.green)
                     }
-                    else {
-                        Image(systemName: "checkmark.cross")
-                            .foregroundColor(.red)
-                    }
                 }
             }
         }
@@ -39,23 +35,37 @@ struct QuizView: View {
     var body: some View {
         VStack {
             Text(viewModel.questions[viewModel.currentQuestionIndex].question)
+            ForEach(0..<viewModel.questions[viewModel.currentQuestionIndex].answers.count, id: \.self) { index in
+                AnswerButton(
+                    text: viewModel.questions[viewModel.currentQuestionIndex].answers[index],
+                    isSelected: viewModel.selectedAnswerIndex == index,
+                    isCorrect: viewModel.isCorrect != nil && index == viewModel.questions[viewModel.currentQuestionIndex].correctAnswer,
+                    onTap: {
+                        viewModel.selectAnswer(at: index)
+                    }
+                )
+            }
+            
+            if viewModel.timeRemaining >= 0 {
+                Text("Time Remaining: \(viewModel.timeRemaining)")
+                    .font(.headline)
+                    .padding()
+            } else {
+                Text("Moving onto next question: \(viewModel.transitionTime)")
+                    .font(.headline)
+                    .padding()
+            }
+            
+            if viewModel.timeRemaining <= 0, let isCorrect = viewModel.isCorrect {
+                Text(isCorrect ? "Correct" : "Wrong")
+                    .font(.largeTitle)
+                    .foregroundColor(isCorrect ? .green : .red)
+                    .padding()
+            }
         }
-        ForEach(0..<viewModel.questions[viewModel.currentQuestionIndex].answers.count, id: \.self) { index in
-            AnswerButton(
-                text: viewModel.questions[viewModel.currentQuestionIndex].answers[index],
-                isSelected: viewModel.selectedAnswerIndex == index,
-                isCorrect: viewModel.isCorrect != nil && index == viewModel.questions[viewModel.currentQuestionIndex].correctAnswer,
-                onTap: {
-                    viewModel.selectAnswer(at: index)
-                }
-            )
-        }
-        
-        if let isCorrect = viewModel.isCorrect {
-            Text(isCorrect ? "Correct" : "Wrong")
-                .font(.largeTitle)
-                .foregroundColor(isCorrect ? .green : .red)
-                .padding()
+        .padding()
+        .onAppear {
+            viewModel.startQuiz()
         }
     }
 }

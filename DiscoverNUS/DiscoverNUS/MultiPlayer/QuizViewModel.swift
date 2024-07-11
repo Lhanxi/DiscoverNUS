@@ -21,6 +21,12 @@ final class QuizViewModel: ObservableObject {
     @Published var currentQuestionIndex: Int = 0
     @Published var selectedAnswerIndex: Int? = nil
     @Published var isCorrect: Bool? = nil
+    @Published var timeRemaining: Int = 5
+    @Published var transitionTime: Int = 10
+    @Published var scores: [String: Int] = [:]
+    
+    var timer: AnyCancellable?
+    var currentPlayer: String = "Player 1"
     
     //Update to FireBase in the future
     @Published var questions: [QuestionModel] = [
@@ -36,13 +42,55 @@ final class QuizViewModel: ObservableObject {
         QuestionModel(id: UUID(), question: "Question 10", answers: ["Answer 1", "Answer 2", "Answer 3", "Answer 4"], correctAnswer: 1) //10
     ]
     
-
+    func startQuiz() {
+        startTimer()
+    }
+    
+    func startTimer() {
+        timer?.cancel()
+        timeRemaining = 5
+        timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect().sink { [weak self] _ in
+            guard let self = self else { return }
+            if self.timeRemaining > 0 {
+                self.timeRemaining -= 1
+            } else {
+                self.timeRemaining -= 1
+                self.showCorrectAnswer()
+            }
+        }
+    }
+    
+    func startTransitionTimer() {
+        timer?.cancel()
+        transitionTime = 10
+        timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect().sink { [weak self] _ in
+            guard let self = self else { return }
+            if self.transitionTime > 0 {
+                self.transitionTime -= 1
+            }
+        }
+    }
+    
+    func showCorrectAnswer() {
+        if selectedAnswerIndex == nil {
+            isCorrect = false
+        } else {
+            isCorrect = (selectedAnswerIndex == questions[currentQuestionIndex].correctAnswer)
+            scores[currentPlayer, default: 0] += 1
+        }
+        self.startTransitionTimer()
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 10) {
+            self.moveToNextQuestion()
+        }
+    }
     
     func selectAnswer(at index: Int) {
         guard selectedAnswerIndex == nil else {return}
         selectedAnswerIndex = index
-        isCorrect = (index == questions[currentQuestionIndex].correctAnswer)
-        self.moveToNextQuestion()
+        if self.timeRemaining == 0 {
+            self.moveToNextQuestion()
+        }
     }
     
     func moveToNextQuestion() {
@@ -50,8 +98,7 @@ final class QuizViewModel: ObservableObject {
             currentQuestionIndex += 1
             selectedAnswerIndex = nil
             isCorrect = nil
+            startTimer()
         }
     }
-    
-    
 }
