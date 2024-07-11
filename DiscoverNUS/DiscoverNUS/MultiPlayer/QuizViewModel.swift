@@ -42,8 +42,16 @@ final class QuizViewModel: ObservableObject {
         guard selectedAnswerIndex == nil else {return}
         selectedAnswerIndex = index
         isCorrect = (index == questions[currentQuestionIndex].correctAnswer)
+        self.moveToNextQuestion()
     }
     
+    func moveToNextQuestion() {
+        if currentQuestionIndex < questions.count - 1{
+            currentQuestionIndex += 1
+            selectedAnswerIndex = nil
+            isCorrect = nil
+        }
+    }
     
     
 }

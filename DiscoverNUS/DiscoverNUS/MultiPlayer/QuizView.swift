@@ -18,8 +18,14 @@ struct AnswerButton: View {
             HStack {
                 Text(text)
                 if isSelected {
-                    Image(systemName: "checkmark.circle")
-                        .foregroundColor(isCorrect ? .green : .red)
+                    if isCorrect {
+                        Image(systemName: "checkmark.circle")
+                            .foregroundColor(.green)
+                    }
+                    else {
+                        Image(systemName: "checkmark.cross")
+                            .foregroundColor(.red)
+                    }
                 }
             }
         }
