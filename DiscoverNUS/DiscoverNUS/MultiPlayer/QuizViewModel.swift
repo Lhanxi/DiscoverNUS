@@ -24,6 +24,7 @@ final class QuizViewModel: ObservableObject {
     @Published var timeRemaining: Int = 5
     @Published var transitionTime: Int = 10
     @Published var scores: [String: Int] = [:]
+    @Published var showLeaderBoard: Bool = false
     
     var timer: AnyCancellable?
     var currentPlayer: String = "Player 1"
@@ -76,7 +77,9 @@ final class QuizViewModel: ObservableObject {
             isCorrect = false
         } else {
             isCorrect = (selectedAnswerIndex == questions[currentQuestionIndex].correctAnswer)
-            scores[currentPlayer, default: 0] += 1
+            if isCorrect == true {
+                scores[currentPlayer, default: 0] += 1
+            }
         }
         self.startTransitionTimer()
         
@@ -99,6 +102,8 @@ final class QuizViewModel: ObservableObject {
             selectedAnswerIndex = nil
             isCorrect = nil
             startTimer()
+        } else {
+            showLeaderBoard = true
         }
     }
 }

@@ -18,6 +18,7 @@
 		4D7557AE2C3FD7AA00A27C62 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4D7557AD2C3FD7A900A27C62 /* GoogleService-Info.plist */; };
 		4D7557B02C3FDF5300A27C62 /* QuizView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D7557AF2C3FDF5300A27C62 /* QuizView.swift */; };
 		4D7557B22C3FDF6700A27C62 /* QuizViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D7557B12C3FDF6700A27C62 /* QuizViewModel.swift */; };
+		4D7557B42C404C1900A27C62 /* LeaderBoardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D7557B32C404C1900A27C62 /* LeaderBoardView.swift */; };
 		4DA91C752C1B3199007433F4 /* HomePage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DA91C742C1B3199007433F4 /* HomePage.swift */; };
 		4DA91C772C1B31BC007433F4 /* PlayerGPS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DA91C762C1B31BC007433F4 /* PlayerGPS.swift */; };
 		4DA91C792C1B31DD007433F4 /* GoogleMapConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DA91C782C1B31DD007433F4 /* GoogleMapConfig.swift */; };
@@ -59,6 +60,7 @@
 		4D7557AD2C3FD7A900A27C62 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		4D7557AF2C3FDF5300A27C62 /* QuizView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizView.swift; sourceTree = "<group>"; };
 		4D7557B12C3FDF6700A27C62 /* QuizViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizViewModel.swift; sourceTree = "<group>"; };
+		4D7557B32C404C1900A27C62 /* LeaderBoardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeaderBoardView.swift; sourceTree = "<group>"; };
 		4DA91C742C1B3199007433F4 /* HomePage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePage.swift; sourceTree = "<group>"; };
 		4DA91C762C1B31BC007433F4 /* PlayerGPS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerGPS.swift; sourceTree = "<group>"; };
 		4DA91C782C1B31DD007433F4 /* GoogleMapConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleMapConfig.swift; sourceTree = "<group>"; };
@@ -130,6 +132,7 @@
 				4DC928582C24252A0044DDBA /* PartyView.swift */,
 				4D7557AF2C3FDF5300A27C62 /* QuizView.swift */,
 				4D7557B12C3FDF6700A27C62 /* QuizViewModel.swift */,
+				4D7557B32C404C1900A27C62 /* LeaderBoardView.swift */,
 			);
 			path = MultiPlayer;
 			sourceTree = "<group>";
@@ -319,6 +322,7 @@
 				4DC928552C207F2C0044DDBA /* CreatePartyView.swift in Sources */,
 				4DC87F8B2C0C5DB3005F6F12 /* AuthenticationView.swift in Sources */,
 				4DA91C772C1B31BC007433F4 /* PlayerGPS.swift in Sources */,
+				4D7557B42C404C1900A27C62 /* LeaderBoardView.swift in Sources */,
 				1980E6A02C2EF8FF00AF846B /* StartQuest.swift in Sources */,
 				4DC87F8D2C0C5DB3005F6F12 /* SettingsView.swift in Sources */,
 				4DC87F632C0C5AB2005F6F12 /* DiscoverNUSApp.swift in Sources */,
