@@ -232,22 +232,24 @@ struct PartyView: View {
                     .cornerRadius(8)
             }
             
-            Button(action: {
-                navigateToJoinQuizView = true
-            }) {
-                Text("Start Quiz")
-                    .padding()
-                    .background(Color.blue)
-                    .foregroundColor(.white)
-                    .cornerRadius(20)
+            if viewModel.currentUser?.isLeader == true {
+                Button(action: {
+                    navigateToJoinQuizView = true
+                }) {
+                    Text("Start Quiz")
+                        .padding()
+                        .background(Color.blue)
+                        .foregroundColor(.white)
+                        .cornerRadius(20)
+                }
+                NavigationLink(destination: QuizView(),
+                               isActive: $navigateToJoinQuizView) {
+                    EmptyView()
+                }
             }
+
             
             NavigationLink(destination: MultiPlayerView(), isActive: $navigateToJoinPartyView) {
-                EmptyView()
-            }
-            
-            NavigationLink(destination: QuizView(),
-                           isActive: $navigateToJoinQuizView) {
                 EmptyView()
             }
         }
