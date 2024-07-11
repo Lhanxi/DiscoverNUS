@@ -11,11 +11,13 @@
 		1980E6A22C2EF90D00AF846B /* CompleteQuest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1980E6A12C2EF90D00AF846B /* CompleteQuest.swift */; };
 		1980E6A42C2EFA0200AF846B /* UpdatePassword.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1980E6A32C2EFA0200AF846B /* UpdatePassword.swift */; };
 		1980E6A62C2EFB3800AF846B /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 1980E6A52C2EFB3800AF846B /* FirebaseStorage */; };
-		19C96CB82C3F96AE0060332D /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 19C96CB72C3F96AD0060332D /* GoogleService-Info.plist */; };
 		19D16CD12C140EA200133B59 /* GoogleMaps in Frameworks */ = {isa = PBXBuildFile; productRef = 19D16CD02C140EA200133B59 /* GoogleMaps */; };
 		19D16CD62C1419EC00133B59 /* ARKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 19D16CD42C1419C800133B59 /* ARKit.framework */; };
 		19D16CDA2C142BC400133B59 /* PlayerModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19D16CD92C142BC400133B59 /* PlayerModel.swift */; };
 		19D16CDC2C14634F00133B59 /* ImageHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19D16CDB2C14634F00133B59 /* ImageHandler.swift */; };
+		4D7557AE2C3FD7AA00A27C62 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4D7557AD2C3FD7A900A27C62 /* GoogleService-Info.plist */; };
+		4D7557B02C3FDF5300A27C62 /* QuizView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D7557AF2C3FDF5300A27C62 /* QuizView.swift */; };
+		4D7557B22C3FDF6700A27C62 /* QuizViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D7557B12C3FDF6700A27C62 /* QuizViewModel.swift */; };
 		4DA91C752C1B3199007433F4 /* HomePage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DA91C742C1B3199007433F4 /* HomePage.swift */; };
 		4DA91C772C1B31BC007433F4 /* PlayerGPS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DA91C762C1B31BC007433F4 /* PlayerGPS.swift */; };
 		4DA91C792C1B31DD007433F4 /* GoogleMapConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DA91C782C1B31DD007433F4 /* GoogleMapConfig.swift */; };
@@ -51,10 +53,12 @@
 		1980E69F2C2EF8FF00AF846B /* StartQuest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartQuest.swift; sourceTree = "<group>"; };
 		1980E6A12C2EF90D00AF846B /* CompleteQuest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompleteQuest.swift; sourceTree = "<group>"; };
 		1980E6A32C2EFA0200AF846B /* UpdatePassword.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdatePassword.swift; sourceTree = "<group>"; };
-		19C96CB72C3F96AD0060332D /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		19D16CD42C1419C800133B59 /* ARKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ARKit.framework; path = System/Library/Frameworks/ARKit.framework; sourceTree = SDKROOT; };
 		19D16CD92C142BC400133B59 /* PlayerModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerModel.swift; sourceTree = "<group>"; };
 		19D16CDB2C14634F00133B59 /* ImageHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageHandler.swift; sourceTree = "<group>"; };
+		4D7557AD2C3FD7A900A27C62 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		4D7557AF2C3FDF5300A27C62 /* QuizView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizView.swift; sourceTree = "<group>"; };
+		4D7557B12C3FDF6700A27C62 /* QuizViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizViewModel.swift; sourceTree = "<group>"; };
 		4DA91C742C1B3199007433F4 /* HomePage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePage.swift; sourceTree = "<group>"; };
 		4DA91C762C1B31BC007433F4 /* PlayerGPS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerGPS.swift; sourceTree = "<group>"; };
 		4DA91C782C1B31DD007433F4 /* GoogleMapConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleMapConfig.swift; sourceTree = "<group>"; };
@@ -124,6 +128,8 @@
 				4DC9285A2C2425880044DDBA /* JoinPartyView.swift */,
 				4DC928542C207F2C0044DDBA /* CreatePartyView.swift */,
 				4DC928582C24252A0044DDBA /* PartyView.swift */,
+				4D7557AF2C3FDF5300A27C62 /* QuizView.swift */,
+				4D7557B12C3FDF6700A27C62 /* QuizViewModel.swift */,
 			);
 			path = MultiPlayer;
 			sourceTree = "<group>";
@@ -148,7 +154,7 @@
 		4DC87F612C0C5AB2005F6F12 /* DiscoverNUS */ = {
 			isa = PBXGroup;
 			children = (
-				19C96CB72C3F96AD0060332D /* GoogleService-Info.plist */,
+				4D7557AD2C3FD7A900A27C62 /* GoogleService-Info.plist */,
 				4DA91C7E2C1B3337007433F4 /* MultiPlayer */,
 				19D16CC42C140C8C00133B59 /* SinglePlayer */,
 				4DC87FA22C10AFE8005F6F12 /* Utilities */,
@@ -278,7 +284,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4DC87F6A2C0C5AB4005F6F12 /* Preview Assets.xcassets in Resources */,
-				19C96CB82C3F96AE0060332D /* GoogleService-Info.plist in Resources */,
+				4D7557AE2C3FD7AA00A27C62 /* GoogleService-Info.plist in Resources */,
 				4DC87F672C0C5AB4005F6F12 /* Assets.xcassets in Resources */,
 				4DC87F672C0C5AB4005F6F12 /* Assets.xcassets in Resources */,
 			);
@@ -294,6 +300,7 @@
 				4DC87F8A2C0C5DB3005F6F12 /* AuthenticationManager.swift in Sources */,
 				4DC87F902C0C9C8D005F6F12 /* SignUpEmailView.swift in Sources */,
 				4DC87FA62C10B70B005F6F12 /* SignInGoogle.swift in Sources */,
+				4D7557B22C3FDF6700A27C62 /* QuizViewModel.swift in Sources */,
 				4DC9284F2C1FF70F0044DDBA /* MultiPlayerView.swift in Sources */,
 				4DC87F652C0C5AB2005F6F12 /* ContentView.swift in Sources */,
 				1980E6A42C2EFA0200AF846B /* UpdatePassword.swift in Sources */,
@@ -301,6 +308,7 @@
 				4DC87F8B2C0C5DB3005F6F12 /* AuthenticationView.swift in Sources */,
 				4DC87F8D2C0C5DB3005F6F12 /* SettingsView.swift in Sources */,
 				19D16CDC2C14634F00133B59 /* ImageHandler.swift in Sources */,
+				4D7557B02C3FDF5300A27C62 /* QuizView.swift in Sources */,
 				19D16CDA2C142BC400133B59 /* PlayerModel.swift in Sources */,
 				4DA91C752C1B3199007433F4 /* HomePage.swift in Sources */,
 				4DA91C792C1B31DD007433F4 /* GoogleMapConfig.swift in Sources */,

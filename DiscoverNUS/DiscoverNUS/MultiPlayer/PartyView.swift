@@ -187,12 +187,16 @@ final class PartyViewModel : ObservableObject {
 struct PartyView: View {
     @StateObject private var viewModel: PartyViewModel
     @State private var navigateToJoinPartyView = false
+    @State private var navigateToJoinQuizView = false
     
     init(partyCode: String) {
         _viewModel = StateObject(wrappedValue: PartyViewModel(partyCode: partyCode))
     }
     
     var body: some View {
+        ZStack {
+            
+        }
         VStack {
             Text("The Party Code is: \(viewModel.partyCode)")
                 .padding()
@@ -228,11 +232,25 @@ struct PartyView: View {
                     .cornerRadius(8)
             }
             
+            Button(action: {
+                navigateToJoinQuizView = true
+            }) {
+                Text("Start Quiz")
+                    .padding()
+                    .background(Color.blue)
+                    .foregroundColor(.white)
+                    .cornerRadius(20)
+            }
+            
             NavigationLink(destination: MultiPlayerView(), isActive: $navigateToJoinPartyView) {
                 EmptyView()
             }
+            
+            NavigationLink(destination: QuizView(),
+                           isActive: $navigateToJoinQuizView) {
+                EmptyView()
+            }
         }
-        .padding()
     }
 }
 
