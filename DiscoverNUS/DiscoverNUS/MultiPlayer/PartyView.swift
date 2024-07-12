@@ -11,10 +11,12 @@ import FirebaseAuth
 import Combine
 
 @MainActor
-final class PartyViewModel : ObservableObject {
+final class PartyViewModel: ObservableObject {
     @Published var partyCode: String
     @Published var users: [UserModel] = []
     @Published var currentUser: UserModel?
+    @Published var isKicked: Bool = false  // Add this property
+    
     private var listener: ListenerRegistration?
     
     struct UserModel: Identifiable {
@@ -179,10 +181,14 @@ final class PartyViewModel : ObservableObject {
                 print("Error kicking user: \(error.localizedDescription)")
             } else {
                 print("User kicked out successfully")
+                if userID == self.currentUser?.id {
+                    self.isKicked = true  // Set the kicked status
+                }
             }
         }
     }
 }
+
 
 struct PartyView: View {
     @StateObject private var viewModel: PartyViewModel
@@ -194,9 +200,6 @@ struct PartyView: View {
     }
     
     var body: some View {
-        ZStack {
-            
-        }
         VStack {
             Text("The Party Code is: \(viewModel.partyCode)")
                 .padding()
@@ -242,19 +245,27 @@ struct PartyView: View {
                         .foregroundColor(.white)
                         .cornerRadius(20)
                 }
-                NavigationLink(destination: QuizView(),
-                               isActive: $navigateToJoinQuizView) {
+                NavigationLink(destination: QuizView(), isActive: $navigateToJoinQuizView) {
                     EmptyView()
                 }
             }
-
             
             NavigationLink(destination: MultiPlayerView(), isActive: $navigateToJoinPartyView) {
                 EmptyView()
             }
         }
+        .onChange(of: viewModel.isKicked) { isKicked in
+            if isKicked {
+                navigateToJoinPartyView = true
+            }
+        }
     }
 }
+
+#Preview {
+    PartyView(partyCode: "testCode")
+}
+
 
 #Preview {
     PartyView(partyCode: "testCode")
