@@ -30,6 +30,10 @@ final class CreatePartyViewModel: ObservableObject {
             let user = try AuthenticationManager.shared.getAuthenticatedUser()
             let userID = user.uid
             
+            // Fetch player data using the getUserDocument function
+            let profile = ImageHandler()
+            let player = try await AuthenticationManager.shared.getUserDocument(profile: profile, userId: userID)
+            
             let db = Firestore.firestore()
             
             // Create the Teams collection only if it doesn't exist
@@ -44,7 +48,15 @@ final class CreatePartyViewModel: ObservableObject {
             try await partyRef.setData(["partyID": partyID, "createdBy": userID])
             
             let userRef = partyRef.collection("Users").document(userID)
-            try await userRef.setData(["userID": userID, "isLeader": true])
+            try await userRef.setData([
+                "userID": player.id,
+                "level": player.level,
+                "username": player.username,
+                "quests": player.quests,
+                "multiplayerGamesPlayed": player.multiplayerGamesPlayed,
+                "multiplayerGamesWon": player.multiplayerGamesWon,
+                "isLeader": true
+            ])
             
             generateQRCode(from: partyID)
         } catch {

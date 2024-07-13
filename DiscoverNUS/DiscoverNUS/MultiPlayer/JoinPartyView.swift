@@ -20,6 +20,10 @@ final class JoinPartyViewModel: ObservableObject {
             let user = try AuthenticationManager.shared.getAuthenticatedUser()
             let userID = user.uid
             
+            // Fetch player data using the getUserDocument function
+            let profile = ImageHandler()
+            let player = try await AuthenticationManager.shared.getUserDocument(profile: profile, userId: userID)
+            
             let db = Firestore.firestore()
             
             // Check if the party exists
@@ -33,8 +37,17 @@ final class JoinPartyViewModel: ObservableObject {
                 return
             }
             
+            // Save player data to the party
             let userRef = partyRef.collection("Users").document(userID)
-            try await userRef.setData(["userID": userID, "isLeader": false])
+            try await userRef.setData([
+                "userID": player.id,
+                "level": player.level,
+                "username": player.username,
+                "quests": player.quests,
+                "multiplayerGamesPlayed": player.multiplayerGamesPlayed,
+                "multiplayerGamesWon": player.multiplayerGamesWon,
+                "isLeader": false
+            ])
             
             DispatchQueue.main.async {
                 self.errorMessage = nil
@@ -47,6 +60,7 @@ final class JoinPartyViewModel: ObservableObject {
         }
     }
 }
+
 
 struct JoinPartyView: View {
     @StateObject private var viewModel = JoinPartyViewModel()
