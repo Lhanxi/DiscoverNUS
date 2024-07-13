@@ -8,14 +8,16 @@
 import SwiftUI
 import Firebase
 import FirebaseFirestore
+import QRCode
 
 @MainActor
 final class CreatePartyViewModel: ObservableObject {
     @Published var partyCode: String = ""
+    @Published var qrCodeImage: UIImage?
     
     func generatePartyCode() -> String {
         let letters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
-        return String((0..<6).map{ _ in letters.randomElement()! })
+        return String((0..<6).map { _ in letters.randomElement()! })
     }
     
     func createParty() async {
@@ -44,8 +46,19 @@ final class CreatePartyViewModel: ObservableObject {
             let userRef = partyRef.collection("Users").document(userID)
             try await userRef.setData(["userID": userID, "isLeader": true])
             
+            generateQRCode(from: partyID)
         } catch {
             print("Error creating party: \(error.localizedDescription)")
+        }
+    }
+    
+    func generateQRCode(from string: String) {
+        do {
+            let doc = try QRCode.Document(utf8String: string)
+            let cgImage = try doc.cgImage(dimension: 400)
+            qrCodeImage = UIImage(cgImage: cgImage)
+        } catch {
+            print("Error generating QR code: \(error.localizedDescription)")
         }
     }
 }
@@ -56,7 +69,7 @@ struct CreatePartyView: View {
     
     var body: some View {
         NavigationView {
-            ZStack{
+            ZStack {
                 // Background gradient
                 LinearGradient(gradient: Gradient(colors: [Color(red: 1.0, green: 0.9, blue: 0.8), Color(red: 1.0, green: 0.7, blue: 0.6)]), startPoint: .top, endPoint: .bottom)
                     .edgesIgnoringSafeArea(.all)
@@ -65,16 +78,24 @@ struct CreatePartyView: View {
                     Text("Party Code: \(viewModel.partyCode)")
                         .padding()
                         .font(.headline)
+                    
+                    if let qrCodeImage = viewModel.qrCodeImage {
+                        Image(uiImage: qrCodeImage)
+                            .resizable()
+                            .interpolation(.none)
+                            .scaledToFit()
+                            .frame(width: 200, height: 200)
+                            .padding()
+                    }
 
                     Button(action: {
                         Task {
                             await viewModel.createParty()
                             DispatchQueue.main.asyncAfter(deadline: .now() + 15) {
-                                                navigateToPartyView = true
-                                            }
+                                navigateToPartyView = true
+                            }
                         }
-                    })
-                    {
+                    }) {
                         Text("Create Party")
                             .font(.headline)
                             .foregroundColor(Color.white)

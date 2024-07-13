@@ -17,9 +17,14 @@
 		19C96CB82C3F96AE0060332D /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 19C96CB72C3F96AD0060332D /* GoogleService-Info.plist */; };
 		19C96CBC2C3FFE2B0060332D /* Username.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19C96CBB2C3FFE2B0060332D /* Username.swift */; };
 		19D16CD12C140EA200133B59 /* GoogleMaps in Frameworks */ = {isa = PBXBuildFile; productRef = 19D16CD02C140EA200133B59 /* GoogleMaps */; };
-		19D16CD62C1419EC00133B59 /* ARKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 19D16CD42C1419C800133B59 /* ARKit.framework */; };
 		19D16CDA2C142BC400133B59 /* PlayerModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19D16CD92C142BC400133B59 /* PlayerModel.swift */; };
 		19D16CDC2C14634F00133B59 /* ImageHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19D16CDB2C14634F00133B59 /* ImageHandler.swift */; };
+		4D7558172C4114F500A27C62 /* QRCode in Frameworks */ = {isa = PBXBuildFile; productRef = 4D7558162C4114F500A27C62 /* QRCode */; };
+		4D7558192C4114F500A27C62 /* QRCodeDetector in Frameworks */ = {isa = PBXBuildFile; productRef = 4D7558182C4114F500A27C62 /* QRCodeDetector */; };
+		4D75581B2C4114F500A27C62 /* QRCodeStatic in Frameworks */ = {isa = PBXBuildFile; productRef = 4D75581A2C4114F500A27C62 /* QRCodeStatic */; };
+		4D75581C2C41155B00A27C62 /* QRCodeDetector in Embed Frameworks */ = {isa = PBXBuildFile; productRef = 4D7558182C4114F500A27C62 /* QRCodeDetector */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		4D7558232C41197A00A27C62 /* ARKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 19D16CD42C1419C800133B59 /* ARKit.framework */; };
+		4D75582E2C42681B00A27C62 /* QRScannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D75582D2C42681B00A27C62 /* QRScannerView.swift */; };
 		4DA91C752C1B3199007433F4 /* HomePage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DA91C742C1B3199007433F4 /* HomePage.swift */; };
 		4DA91C772C1B31BC007433F4 /* PlayerGPS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DA91C762C1B31BC007433F4 /* PlayerGPS.swift */; };
 		4DA91C792C1B31DD007433F4 /* GoogleMapConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DA91C782C1B31DD007433F4 /* GoogleMapConfig.swift */; };
@@ -51,6 +56,20 @@
 		4DC9285B2C2425880044DDBA /* JoinPartyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DC9285A2C2425880044DDBA /* JoinPartyView.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		4D75581D2C41155B00A27C62 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				4D75581C2C41155B00A27C62 /* QRCodeDetector in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		1907CB392C40F0D7005739D9 /* QuizView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizView.swift; sourceTree = "<group>"; };
 		1907CB3B2C40F128005739D9 /* QuizViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizViewModel.swift; sourceTree = "<group>"; };
@@ -63,6 +82,9 @@
 		19D16CD42C1419C800133B59 /* ARKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ARKit.framework; path = System/Library/Frameworks/ARKit.framework; sourceTree = SDKROOT; };
 		19D16CD92C142BC400133B59 /* PlayerModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerModel.swift; sourceTree = "<group>"; };
 		19D16CDB2C14634F00133B59 /* ImageHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageHandler.swift; sourceTree = "<group>"; };
+		4D7558252C411A6800A27C62 /* RealityKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RealityKit.framework; path = System/Library/Frameworks/RealityKit.framework; sourceTree = SDKROOT; };
+		4D7558262C411A6900A27C62 /* RealityFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RealityFoundation.framework; path = System/Library/Frameworks/RealityFoundation.framework; sourceTree = SDKROOT; };
+		4D75582D2C42681B00A27C62 /* QRScannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRScannerView.swift; sourceTree = "<group>"; };
 		4DA91C742C1B3199007433F4 /* HomePage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePage.swift; sourceTree = "<group>"; };
 		4DA91C762C1B31BC007433F4 /* PlayerGPS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerGPS.swift; sourceTree = "<group>"; };
 		4DA91C782C1B31DD007433F4 /* GoogleMapConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleMapConfig.swift; sourceTree = "<group>"; };
@@ -96,13 +118,16 @@
 			files = (
 				19D16CD12C140EA200133B59 /* GoogleMaps in Frameworks */,
 				4DC87F972C0EE705005F6F12 /* FirebaseFirestoreSwift in Frameworks */,
+				4D7558172C4114F500A27C62 /* QRCode in Frameworks */,
 				4DC87F762C0C5C82005F6F12 /* FirebaseAnalyticsSwift in Frameworks */,
 				1980E6A62C2EFB3800AF846B /* FirebaseStorage in Frameworks */,
 				4DC87F9E2C10AB0F005F6F12 /* GoogleSignInSwift in Frameworks */,
+				4D7558192C4114F500A27C62 /* QRCodeDetector in Frameworks */,
 				4DC87F952C0EE6FB005F6F12 /* FirebaseFirestore in Frameworks */,
+				4D7558232C41197A00A27C62 /* ARKit.framework in Frameworks */,
 				4DC87F782C0C5C82005F6F12 /* FirebaseAuth in Frameworks */,
-				19D16CD62C1419EC00133B59 /* ARKit.framework in Frameworks */,
 				4DC87F742C0C5C82005F6F12 /* FirebaseAnalytics in Frameworks */,
+				4D75581B2C4114F500A27C62 /* QRCodeStatic in Frameworks */,
 				4DC87F9C2C10AB0F005F6F12 /* GoogleSignIn in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -136,6 +161,7 @@
 				1907CB392C40F0D7005739D9 /* QuizView.swift */,
 				1907CB3B2C40F128005739D9 /* QuizViewModel.swift */,
 				1907CB3D2C40F14C005739D9 /* LeaderBoardView.swift */,
+				4D75582D2C42681B00A27C62 /* QRScannerView.swift */,
 			);
 			path = MultiPlayer;
 			sourceTree = "<group>";
@@ -202,6 +228,8 @@
 		4DC87F932C0EE6FB005F6F12 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				4D7558262C411A6900A27C62 /* RealityFoundation.framework */,
+				4D7558252C411A6800A27C62 /* RealityKit.framework */,
 				19D16CD42C1419C800133B59 /* ARKit.framework */,
 			);
 			name = Frameworks;
@@ -225,6 +253,7 @@
 				4DC87F5B2C0C5AB2005F6F12 /* Sources */,
 				4DC87F5C2C0C5AB2005F6F12 /* Frameworks */,
 				4DC87F5D2C0C5AB2005F6F12 /* Resources */,
+				4D75581D2C41155B00A27C62 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -241,6 +270,9 @@
 				4DC87F9D2C10AB0F005F6F12 /* GoogleSignInSwift */,
 				19D16CD02C140EA200133B59 /* GoogleMaps */,
 				1980E6A52C2EFB3800AF846B /* FirebaseStorage */,
+				4D7558162C4114F500A27C62 /* QRCode */,
+				4D7558182C4114F500A27C62 /* QRCodeDetector */,
+				4D75581A2C4114F500A27C62 /* QRCodeStatic */,
 			);
 			productName = DiscoverNUS;
 			productReference = 4DC87F5F2C0C5AB2005F6F12 /* DiscoverNUS.app */;
@@ -274,6 +306,7 @@
 				4DC87F722C0C5C82005F6F12 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				4DC87F9A2C10AB0F005F6F12 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */,
 				19D16CCF2C140EA200133B59 /* XCRemoteSwiftPackageReference "ios-maps-sdk" */,
+				4D7558152C4114F500A27C62 /* XCRemoteSwiftPackageReference "QRCode" */,
 			);
 			productRefGroup = 4DC87F602C0C5AB2005F6F12 /* Products */;
 			projectDirPath = "";
@@ -307,6 +340,7 @@
 				4DC87F902C0C9C8D005F6F12 /* SignUpEmailView.swift in Sources */,
 				4DC87FA62C10B70B005F6F12 /* SignInGoogle.swift in Sources */,
 				4DC9284F2C1FF70F0044DDBA /* MultiPlayerView.swift in Sources */,
+				4D75582E2C42681B00A27C62 /* QRScannerView.swift in Sources */,
 				4DC87F652C0C5AB2005F6F12 /* ContentView.swift in Sources */,
 				1980E6A42C2EFA0200AF846B /* UpdatePassword.swift in Sources */,
 				1907CB3C2C40F128005739D9 /* QuizViewModel.swift in Sources */,
@@ -467,6 +501,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"DiscoverNUS/Preview Content\"";
@@ -474,11 +509,17 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = DiscoverNUS/Info.plist;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.games";
+				INFOPLIST_KEY_NSCameraUsageDescription = "$(PRODUCT_NAME) This app requires camera for QR Code Scanner.";
+				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = GPS;
+				INFOPLIST_KEY_NSLocationUsageDescription = GPS;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UIStatusBarStyle = UIStatusBarStyleLightContent;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -497,6 +538,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"DiscoverNUS/Preview Content\"";
@@ -504,11 +546,17 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = DiscoverNUS/Info.plist;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.games";
+				INFOPLIST_KEY_NSCameraUsageDescription = "$(PRODUCT_NAME) This app requires camera for QR Code Scanner.";
+				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = GPS;
+				INFOPLIST_KEY_NSLocationUsageDescription = GPS;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UIStatusBarStyle = UIStatusBarStyleLightContent;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -554,6 +602,14 @@
 				version = 9.0.0;
 			};
 		};
+		4D7558152C4114F500A27C62 /* XCRemoteSwiftPackageReference "QRCode" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/dagronf/QRCode.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 20.1.3;
+			};
+		};
 		4DC87F722C0C5C82005F6F12 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/firebase/firebase-ios-sdk.git";
@@ -582,6 +638,21 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 19D16CCF2C140EA200133B59 /* XCRemoteSwiftPackageReference "ios-maps-sdk" */;
 			productName = GoogleMaps;
+		};
+		4D7558162C4114F500A27C62 /* QRCode */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4D7558152C4114F500A27C62 /* XCRemoteSwiftPackageReference "QRCode" */;
+			productName = QRCode;
+		};
+		4D7558182C4114F500A27C62 /* QRCodeDetector */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4D7558152C4114F500A27C62 /* XCRemoteSwiftPackageReference "QRCode" */;
+			productName = QRCodeDetector;
+		};
+		4D75581A2C4114F500A27C62 /* QRCodeStatic */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4D7558152C4114F500A27C62 /* XCRemoteSwiftPackageReference "QRCode" */;
+			productName = QRCodeStatic;
 		};
 		4DC87F732C0C5C82005F6F12 /* FirebaseAnalytics */ = {
 			isa = XCSwiftPackageProductDependency;

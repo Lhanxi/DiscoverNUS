@@ -8,9 +8,10 @@
 import SwiftUI
 import Firebase
 import FirebaseFirestore
+import AVFoundation
 
 @MainActor
-final class JoinPartyViewModel : ObservableObject {
+final class JoinPartyViewModel: ObservableObject {
     @Published var partyCode = ""
     @Published var errorMessage: String?
     
@@ -47,10 +48,10 @@ final class JoinPartyViewModel : ObservableObject {
     }
 }
 
-
 struct JoinPartyView: View {
     @StateObject private var viewModel = JoinPartyViewModel()
     @State private var navigateToPartyView = false
+    @State private var isShowingScanner = false
     
     var body: some View {
         NavigationView {
@@ -101,17 +102,45 @@ struct JoinPartyView: View {
                             )
                     }
                     
-                    
+                    Button(action: {
+                        isShowingScanner = true
+                    }) {
+                        Text("Scan QR Code")
+                            .font(.headline)
+                            .foregroundColor(Color.white)
+                            .frame(height: 55)
+                            .frame(maxWidth: 200)
+                            .background(
+                                LinearGradient(gradient: Gradient(colors: [Color.blue, Color(red: 0.2, green: 0.5, blue: 1.0)]), startPoint: .topLeading, endPoint: .bottomTrailing)
+                            )
+                            .cornerRadius(20)
+                            .shadow(color: Color.black.opacity(0.2), radius: 10, x: 5, y: 5)
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 20)
+                                    .stroke(Color.white, lineWidth: 2)
+                            )
+                    }
                     
                     NavigationLink(destination: PartyView(partyCode: viewModel.partyCode), isActive: $navigateToPartyView) {
                         EmptyView()
                     }
                 }
             }
+            .sheet(isPresented: $isShowingScanner) {
+                QRScannerView(didFindCode: { code in
+                    viewModel.partyCode = code
+                    isShowingScanner = false
+                    Task {
+                        await viewModel.joinParty()
+                        if viewModel.errorMessage == nil {
+                            navigateToPartyView = true
+                        }
+                    }
+                })
+            }
         }
     }
 }
-
 
 #Preview {
     JoinPartyView()
