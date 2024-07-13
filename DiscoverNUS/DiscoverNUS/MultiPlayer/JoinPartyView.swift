@@ -48,7 +48,8 @@ final class JoinPartyViewModel: ObservableObject {
                 "multiplayerGamesWon": player.multiplayerGamesWon,
                 "isLeader": false,
                 "isKicked": false,
-                "inQuiz": false
+                "inQuiz": false,
+                "playerScore": 0
             ])
             
             DispatchQueue.main.async {

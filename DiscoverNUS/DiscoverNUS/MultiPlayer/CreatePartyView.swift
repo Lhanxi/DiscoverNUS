@@ -57,7 +57,8 @@ final class CreatePartyViewModel: ObservableObject {
                 "multiplayerGamesWon": player.multiplayerGamesWon,
                 "isLeader": true,
                 "isKicked": false,
-                "inQuiz": false
+                "inQuiz": false,
+                "playerScore": 0
             ])
             
             generateQRCode(from: partyID)

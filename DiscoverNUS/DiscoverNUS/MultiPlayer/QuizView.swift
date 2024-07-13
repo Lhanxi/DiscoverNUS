@@ -30,12 +30,19 @@ struct AnswerButton: View {
 }
 
 struct QuizView: View {
-    @StateObject private var viewModel = QuizViewModel()
+    @StateObject private var viewModel: QuizViewModel
+    
+    init(partyCode: String) {
+        _viewModel = StateObject(wrappedValue: QuizViewModel(partyCode: partyCode))
+    }
     
     var body: some View {
         NavigationView {
             if viewModel.showLeaderBoard {
-                LeaderBoardView(scores:viewModel.scores)
+                LeaderBoardView(partyCode: viewModel.partyCode)
+                    .onAppear {
+                        viewModel.updateMultiPlayerScores()
+                    }
             } else {
                 VStack {
                     Text(viewModel.questions[viewModel.currentQuestionIndex].question)
@@ -77,5 +84,5 @@ struct QuizView: View {
 }
 
 #Preview {
-    QuizView()
+    QuizView(partyCode: "testCode")
 }

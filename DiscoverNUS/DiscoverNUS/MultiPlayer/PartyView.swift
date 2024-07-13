@@ -31,6 +31,7 @@ final class PartyViewModel: ObservableObject {
         var isLeader: Bool
         var isKicked: Bool
         var inQuiz: Bool
+        var playerScore: Int
     }
 
     init(partyCode: String) {
@@ -74,7 +75,8 @@ final class PartyViewModel: ObservableObject {
                 multiplayerGamesWon: data["multiplayerGamesWon"] as? Int ?? 0,
                 isLeader: data["isLeader"] as? Bool ?? false,
                 isKicked: data["isKicked"] as? Bool ?? false,
-                inQuiz: data["inQuiz"] as? Bool ?? false
+                inQuiz: data["inQuiz"] as? Bool ?? false,
+                playerScore: data["playerScore"] as? Int ?? 0
             )
 
             self.listenForKickedStatus()
@@ -108,7 +110,8 @@ final class PartyViewModel: ObservableObject {
                     multiplayerGamesWon: data["multiplayerGamesWon"] as? Int ?? 0,
                     isLeader: data["isLeader"] as? Bool ?? false,
                     isKicked: data["isKicked"] as? Bool ?? false,
-                    inQuiz: data["inQuiz"] as? Bool ?? false
+                    inQuiz: data["inQuiz"] as? Bool ?? false,
+                    playerScore: data["playerScore"] as? Int ?? 0
                 )
             }
 
@@ -355,7 +358,7 @@ struct PartyView: View {
             MultiPlayerView()
         }
         .fullScreenCover(isPresented: $navigateToJoinQuizView) {
-            QuizView()
+            QuizView(partyCode: viewModel.partyCode)
         }
     }
 }
