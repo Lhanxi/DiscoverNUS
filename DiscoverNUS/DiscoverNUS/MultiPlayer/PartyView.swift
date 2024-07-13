@@ -16,8 +16,10 @@ final class PartyViewModel: ObservableObject {
     @Published var users: [UserRef] = []
     @Published var currentUser: UserRef?
     @Published var isKicked: Bool = false
+    @Published var navigateToQuiz: Bool = false
 
     private var listener: ListenerRegistration?
+    private var currentUserListener: ListenerRegistration?
 
     struct UserRef: Identifiable {
         var id: String
@@ -27,6 +29,8 @@ final class PartyViewModel: ObservableObject {
         var multiplayerGamesPlayed: Int
         var multiplayerGamesWon: Int
         var isLeader: Bool
+        var isKicked: Bool
+        var inQuiz: Bool
     }
 
     init(partyCode: String) {
@@ -37,6 +41,7 @@ final class PartyViewModel: ObservableObject {
 
     deinit {
         listener?.remove()
+        currentUserListener?.remove()
     }
 
     func fetchCurrentUser() {
@@ -67,8 +72,13 @@ final class PartyViewModel: ObservableObject {
                 quests: data["quests"] as? [String] ?? [],
                 multiplayerGamesPlayed: data["multiplayerGamesPlayed"] as? Int ?? 0,
                 multiplayerGamesWon: data["multiplayerGamesWon"] as? Int ?? 0,
-                isLeader: data["isLeader"] as? Bool ?? false
+                isLeader: data["isLeader"] as? Bool ?? false,
+                isKicked: data["isKicked"] as? Bool ?? false,
+                inQuiz: data["inQuiz"] as? Bool ?? false
             )
+
+            self.listenForKickedStatus()
+            self.listenForQuizStatus()
         }
     }
 
@@ -96,7 +106,9 @@ final class PartyViewModel: ObservableObject {
                     quests: data["quests"] as? [String] ?? [],
                     multiplayerGamesPlayed: data["multiplayerGamesPlayed"] as? Int ?? 0,
                     multiplayerGamesWon: data["multiplayerGamesWon"] as? Int ?? 0,
-                    isLeader: data["isLeader"] as? Bool ?? false
+                    isLeader: data["isLeader"] as? Bool ?? false,
+                    isKicked: data["isKicked"] as? Bool ?? false,
+                    inQuiz: data["inQuiz"] as? Bool ?? false
                 )
             }
 
@@ -191,14 +203,82 @@ final class PartyViewModel: ObservableObject {
         let partyRef = db.collection("Teams").document("DefaultTeam").collection("Parties").document(partyCode)
         let usersCollectionRef = partyRef.collection("Users")
 
-        usersCollectionRef.document(userID).delete { error in
+        usersCollectionRef.document(userID).updateData(["isKicked": true]) { error in
             if let error = error {
-                print("Error kicking user: \(error.localizedDescription)")
+                print("Error updating isKicked status: \(error.localizedDescription)")
             } else {
-                print("User kicked out successfully")
-                if userID == self.currentUser?.id {
-                    self.isKicked = true  // Set the kicked status
+                print("User isKicked status updated")
+            }
+        }
+    }
+
+    func startQuiz() {
+        let db = Firestore.firestore()
+        let partyRef = db.collection("Teams").document("DefaultTeam").collection("Parties").document(partyCode).collection("Users")
+
+        partyRef.getDocuments { (querySnapshot, error) in
+            if let error = error {
+                print("Error starting quiz: \(error.localizedDescription)")
+                return
+            }
+
+            guard let documents = querySnapshot?.documents else {
+                print("No documents found")
+                return
+            }
+
+            for document in documents {
+                document.reference.updateData(["inQuiz": true]) { error in
+                    if let error = error {
+                        print("Error updating inQuiz status: \(error.localizedDescription)")
+                    } else {
+                        print("User inQuiz status updated")
+                    }
                 }
+            }
+        }
+    }
+
+    func listenForKickedStatus() {
+        guard let userID = Auth.auth().currentUser?.uid else { return }
+        let db = Firestore.firestore()
+        let userRef = db.collection("Teams").document("DefaultTeam").collection("Parties").document(partyCode).collection("Users").document(userID)
+
+        currentUserListener = userRef.addSnapshotListener { documentSnapshot, error in
+            if let error = error {
+                print("Error listening for kicked status: \(error.localizedDescription)")
+                return
+            }
+
+            guard let document = documentSnapshot, let data = document.data() else {
+                print("No document found for current user")
+                return
+            }
+
+            if let isKicked = data["isKicked"] as? Bool, isKicked {
+                self.isKicked = true
+            }
+        }
+    }
+
+    func listenForQuizStatus() {
+        guard let userID = Auth.auth().currentUser?.uid else { return }
+        let db = Firestore.firestore()
+        let userRef = db.collection("Teams").document("DefaultTeam").collection("Parties").document(partyCode).collection("Users").document(userID)
+
+        userRef.addSnapshotListener { documentSnapshot, error in
+            if let error = error {
+                print("Error listening for quiz status: \(error.localizedDescription)")
+                return
+            }
+
+            guard let document = documentSnapshot, let data = document.data() else {
+                print("No document found for current user")
+                return
+            }
+
+            if let inQuiz = data["inQuiz"] as? Bool, inQuiz {
+                self.navigateToQuiz = true
             }
         }
     }
@@ -251,7 +331,7 @@ struct PartyView: View {
 
             if viewModel.currentUser?.isLeader == true {
                 Button(action: {
-                    navigateToJoinQuizView = true
+                    viewModel.startQuiz()
                 }) {
                     Text("Start Quiz")
                         .padding()
@@ -259,19 +339,23 @@ struct PartyView: View {
                         .foregroundColor(.white)
                         .cornerRadius(20)
                 }
-                NavigationLink(destination: QuizView(), isActive: $navigateToJoinQuizView) {
-                    EmptyView()
-                }
-            }
-
-            NavigationLink(destination: MultiPlayerView(), isActive: $navigateToJoinPartyView) {
-                EmptyView()
             }
         }
         .onChange(of: viewModel.isKicked) { isKicked in
             if isKicked {
                 navigateToJoinPartyView = true
             }
+        }
+        .onChange(of: viewModel.navigateToQuiz) { navigateToQuiz in
+            if navigateToQuiz {
+                navigateToJoinQuizView = true
+            }
+        }
+        .fullScreenCover(isPresented: $navigateToJoinPartyView) {
+            MultiPlayerView()
+        }
+        .fullScreenCover(isPresented: $navigateToJoinQuizView) {
+            QuizView()
         }
     }
 }
