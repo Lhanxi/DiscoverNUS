@@ -91,6 +91,12 @@ struct CreatePartyView: View {
                     .scaledToFill()
                     .edgesIgnoringSafeArea(.all)
                 
+                RoundedRectangle(cornerRadius: 10)
+                    .fill(Color.white)
+                    .frame(width: 350, height: 450)
+                    .shadow(color: Color.black.opacity(0.2), radius: 10, x: 5, y: 5)
+                    .padding(.bottom, 30) // Move upwards by adjusting padding
+                
                 VStack {
                     Text("Party Code: \(viewModel.partyCode)")
                         .padding()
@@ -129,6 +135,7 @@ struct CreatePartyView: View {
                     }
                 }
             }
+            .padding(.top, -50) // Adjust this value to move upwards
         }
     }
 }

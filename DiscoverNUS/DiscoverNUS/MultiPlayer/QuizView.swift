@@ -88,7 +88,7 @@ struct QuizView: View {
                         .font(.headline)
                         .padding(.top)
                     
-                    ProgressView(value: Double(viewModel.timeRemaining > 0 ? viewModel.timeRemaining : viewModel.transitionTime), total: 10.0)
+                    ProgressView(value: Double(viewModel.timeRemaining > 0 ? viewModel.timeRemaining : viewModel.transitionTime), total: 1.0)
                         .padding()
                     
                     Text("\(viewModel.currentQuestionIndex + 1)/\(viewModel.questions.count)")

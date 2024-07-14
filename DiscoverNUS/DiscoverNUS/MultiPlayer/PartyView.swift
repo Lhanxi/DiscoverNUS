@@ -346,7 +346,7 @@ struct PartyView: View {
                     .background(
                         RoundedRectangle(cornerRadius: 15)
                             .stroke(Color.black.opacity(0.1), lineWidth: 1)
-                            .shadow(color: .gray.opacity(0.5), radius: 3, x: 2, y: 2)
+                            .shadow(color: Color.black.opacity(0.4), radius: 10, x: 2, y: 2)
                             .clipShape(RoundedRectangle(cornerRadius: 15))
                     )
 
@@ -409,7 +409,7 @@ struct PartyView: View {
                 .background(Color.white)
                 .listRowInsets(EdgeInsets())
                 .listRowSeparator(.hidden)
-                .padding(.vertical, 4)
+                .padding(.vertical, 8)
             }
             .listStyle(PlainListStyle())
 

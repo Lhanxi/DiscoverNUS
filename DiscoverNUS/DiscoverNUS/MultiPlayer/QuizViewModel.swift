@@ -23,8 +23,8 @@ final class QuizViewModel: ObservableObject {
     @Published var currentQuestionIndex: Int = 0
     @Published var selectedAnswerIndex: Int? = nil
     @Published var isCorrect: Bool? = nil
-    @Published var timeRemaining: Int = 10
-    @Published var transitionTime: Int = 10
+    @Published var timeRemaining: Int = 1
+    @Published var transitionTime: Int = 1
     @Published var showLeaderBoard: Bool = false
     
     @Published var partyCode: String
@@ -43,7 +43,7 @@ final class QuizViewModel: ObservableObject {
         QuestionModel(id: UUID(), question: "Question 8", answers: ["Answer 1", "Answer 2", "Answer 3", "Answer 4"], correctAnswer: 3), // 8
         QuestionModel(id: UUID(), question: "Question 9", answers: ["Answer 1", "Answer 2", "Answer 3", "Answer 4"], correctAnswer: 0), // 9
         QuestionModel(id: UUID(), question: "Question 10", answers: ["Answer 1", "Answer 2", "Answer 3", "Answer 4"], correctAnswer: 1) // 10
-    ].shuffled()
+    ]
     
     init(partyCode: String) {
         self.partyCode = partyCode
@@ -59,7 +59,7 @@ final class QuizViewModel: ObservableObject {
     
     func startTimer() {
         timer?.cancel()
-        timeRemaining = 10
+        timeRemaining = 1
         timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect().sink { [weak self] _ in
             guard let self = self else { return }
             if self.timeRemaining > 0 {
@@ -73,7 +73,7 @@ final class QuizViewModel: ObservableObject {
     
     func startTransitionTimer() {
         timer?.cancel()
-        transitionTime = 10
+        transitionTime = 1
         timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect().sink { [weak self] _ in
             guard let self = self else { return }
             if self.transitionTime > 0 {
@@ -93,7 +93,7 @@ final class QuizViewModel: ObservableObject {
         }
         self.startTransitionTimer()
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 10) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
             self.moveToNextQuestion()
         }
     }

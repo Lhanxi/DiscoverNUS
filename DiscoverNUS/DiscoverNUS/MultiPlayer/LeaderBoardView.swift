@@ -11,7 +11,7 @@ import FirebaseAuth
 import Combine
 
 @MainActor
-final class LeaderBoardViewModel:ObservableObject {
+final class LeaderBoardViewModel: ObservableObject {
     @Published var users: [UserRef] = []
     @Published var navigateLeaveQuiz: Bool = false
     @Published var currentUser: UserRef?
@@ -182,35 +182,69 @@ struct LeaderBoardView: View {
         VStack {
             Text("Leaderboard")
                 .font(.largeTitle)
+                .padding(.top) // Only apply padding to the top
+                .padding([.leading, .trailing]) // Apply padding to the left and right edges
+            
+            Image(.leaderboard)
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+                .clipShape(RoundedRectangle(cornerRadius: 25))
                 .padding()
             
             List {
                 let sortedUsers = viewModel.users.sorted(by: { $0.playerScore > $1.playerScore })
-                let highestScore = sortedUsers.first?.playerScore
+                let rankedUsers = assignRanks(to: sortedUsers)
                 
-                ForEach(sortedUsers, id: \.id) { user in
+                ForEach(rankedUsers, id: \.user.id) { rankedUser in
                     HStack {
-                        Text(user.username)
-                        Spacer()
-                        Text("\(user.playerScore) correct answers")
-                        if user.playerScore == highestScore {
-                            Image(systemName: "crown.fill")
-                                .foregroundColor(.yellow)
+                        ZStack(alignment: .topLeading) {
+                            Image(systemName: "person.circle.fill")
+                                .resizable()
+                                .frame(width: 40, height: 40)
+                                .padding(.leading, 10)
+                            if rankedUser.rank == 1 {
+                                Image(systemName: "crown.fill")
+                                    .resizable()
+                                    .frame(width: 20, height: 20)
+                                    .foregroundColor(Color(hex: "#FFAA00"))
+                                    .rotationEffect(.degrees(-35))
+                                    .offset(x: -8, y: -10)
+                            }
                         }
+                        Text(rankedUser.user.username)
+                        Spacer()
+                        Text("\(rankedUser.user.playerScore) \(rankedUser.user.playerScore == 1 ? "Pt" : "Pts")")
                     }
+                    .padding()
+                    .background(rankBackgroundColor(rank: rankedUser.rank))
+                    .cornerRadius(8)
                 }
+                .listRowSeparator(.hidden)
             }
             .padding()
+            .background(Color.white)
+            .cornerRadius(10)
+            .listStyle(PlainListStyle())
             
             if viewModel.currentUser?.isLeader == true {
                 Button(action: {
                     viewModel.endQuiz()
                 }) {
                     Text("Return to Menu")
-                        .padding()
-                        .background(Color.blue)
-                        .foregroundColor(.white)
-                        .cornerRadius(8)
+                        .font(.headline)
+                        .foregroundColor(Color.white)
+                        .multilineTextAlignment(.center)
+                        .frame(height: 55)
+                        .frame(maxWidth: 250)
+                        .background(
+                            LinearGradient(gradient: Gradient(colors: [Color(hex: "#5687CE"), Color(hex: "#5687CE").opacity(0.8)]), startPoint: .topLeading, endPoint: .bottomTrailing)
+                        )
+                        .cornerRadius(20)
+                        .shadow(color: Color.black.opacity(0.2), radius: 10, x: 5, y: 5)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 20)
+                                .stroke(Color.white, lineWidth: 2)
+                        )
                 }
                 .padding()
             }
@@ -222,6 +256,35 @@ struct LeaderBoardView: View {
         }
         .fullScreenCover(isPresented: $navigateToLeaveQuizView) {
             PartyView(partyCode: viewModel.partyCode)
+        }
+    }
+    
+    private func assignRanks(to users: [LeaderBoardViewModel.UserRef]) -> [(user: LeaderBoardViewModel.UserRef, rank: Int)] {
+        var rankedUsers: [(user: LeaderBoardViewModel.UserRef, rank: Int)] = []
+        var currentRank = 0
+        var lastScore: Int? = nil
+        
+        for user in users {
+            if lastScore == nil || user.playerScore < lastScore! {
+                currentRank += 1
+                lastScore = user.playerScore
+            }
+            rankedUsers.append((user: user, rank: currentRank))
+        }
+        
+        return rankedUsers
+    }
+    
+    private func rankBackgroundColor(rank: Int) -> Color {
+        switch rank {
+        case 1:
+            return Color(hex: "#FDD700")
+        case 2:
+            return Color(hex: "#C0C0C0")
+        case 3:
+            return Color(hex: "#CD7F32")
+        default:
+            return Color(hex: "#EDEDED")
         }
     }
 }
