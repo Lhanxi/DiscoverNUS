@@ -43,10 +43,14 @@ final class QuizViewModel: ObservableObject {
         QuestionModel(id: UUID(), question: "Question 8", answers: ["Answer 1", "Answer 2", "Answer 3", "Answer 4"], correctAnswer: 3), // 8
         QuestionModel(id: UUID(), question: "Question 9", answers: ["Answer 1", "Answer 2", "Answer 3", "Answer 4"], correctAnswer: 0), // 9
         QuestionModel(id: UUID(), question: "Question 10", answers: ["Answer 1", "Answer 2", "Answer 3", "Answer 4"], correctAnswer: 1) // 10
-    ]
+    ].shuffled()
     
     init(partyCode: String) {
         self.partyCode = partyCode
+    }
+    
+    var anySelected: Bool {
+        return selectedAnswerIndex != nil
     }
     
     func startQuiz() {
@@ -88,22 +92,17 @@ final class QuizViewModel: ObservableObject {
             }
         }
         self.startTransitionTimer()
-        self.selectCorrectAnswer()
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 10) {
             self.moveToNextQuestion()
         }
     }
     
-    func selectCorrectAnswer() {
-        selectedAnswerIndex = questions[currentQuestionIndex].correctAnswer
-    }
-    
     func selectAnswer(at index: Int) {
         guard selectedAnswerIndex == nil else { return }
         selectedAnswerIndex = index
         if self.timeRemaining == 0 {
-            self.moveToNextQuestion()
+            self.showCorrectAnswer()
         }
     }
     

@@ -52,7 +52,7 @@ struct MultiPlayerView: View {
                                     .frame(height: 55)
                                     .frame(maxWidth: 250)
                                     .background(
-                                        LinearGradient(gradient: Gradient(colors: [Color(hex: "#A7C7FA"), Color(hex: "#A7C7FA").opacity(0.8)]), startPoint: .topLeading, endPoint: .bottomTrailing)
+                                        LinearGradient(gradient: Gradient(colors: [Color(hex: "#5687CE"), Color(hex: "#5687CE").opacity(0.8)]), startPoint: .topLeading, endPoint: .bottomTrailing)
                                     )
                                     .cornerRadius(20)
                                     .shadow(color: Color.black.opacity(0.2), radius: 10, x: 5, y: 5)
