@@ -79,17 +79,19 @@ final class CreatePartyViewModel: ObservableObject {
 }
 
 struct CreatePartyView: View {
-    @StateObject private var viewModel = CreatePartyViewModel()
+    @ObservedObject var viewModel: CreatePartyViewModel
     @State private var navigateToPartyView = false
     
     var body: some View {
         NavigationView {
             ZStack {
-                // Background gradient
-                LinearGradient(gradient: Gradient(colors: [Color(red: 1.0, green: 0.9, blue: 0.8), Color(red: 1.0, green: 0.7, blue: 0.6)]), startPoint: .top, endPoint: .bottom)
+                // Background image
+                Image("Map")
+                    .resizable()
+                    .scaledToFill()
                     .edgesIgnoringSafeArea(.all)
+                
                 VStack {
-                    
                     Text("Party Code: \(viewModel.partyCode)")
                         .padding()
                         .font(.headline)
@@ -104,14 +106,9 @@ struct CreatePartyView: View {
                     }
 
                     Button(action: {
-                        Task {
-                            await viewModel.createParty()
-                            DispatchQueue.main.asyncAfter(deadline: .now() + 15) {
-                                navigateToPartyView = true
-                            }
-                        }
+                        navigateToPartyView = true
                     }) {
-                        Text("Create Party")
+                        Text("Join Party")
                             .font(.headline)
                             .foregroundColor(Color.white)
                             .frame(height: 55)
@@ -137,6 +134,6 @@ struct CreatePartyView: View {
 }
 
 #Preview {
-    CreatePartyView()
+    CreatePartyView(viewModel: CreatePartyViewModel())
 }
 

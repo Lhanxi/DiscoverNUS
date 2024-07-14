@@ -9,6 +9,7 @@ import SwiftUI
 import FirebaseFirestore
 import FirebaseAuth
 import Combine
+import CoreImage.CIFilterBuiltins
 
 @MainActor
 final class PartyViewModel: ObservableObject {
@@ -99,7 +100,7 @@ final class PartyViewModel: ObservableObject {
                 return
             }
 
-            self.users = documents.compactMap { document in
+            var fetchedUsers = documents.compactMap { document in
                 let data = document.data()
                 return UserRef(
                     id: data["userID"] as? String ?? "",
@@ -115,6 +116,16 @@ final class PartyViewModel: ObservableObject {
                 )
             }
 
+            // Sort users: leader at the top, then alphabetically
+            if let leader = fetchedUsers.first(where: { $0.isLeader }) {
+                fetchedUsers.removeAll { $0.id == leader.id }
+                fetchedUsers.sort { $0.username < $1.username }
+                fetchedUsers.insert(leader, at: 0)
+            } else {
+                fetchedUsers.sort { $0.username < $1.username }
+            }
+
+            self.users = fetchedUsers
             self.updateCurrentUserStatus()
         }
     }
@@ -213,6 +224,14 @@ final class PartyViewModel: ObservableObject {
                 print("User isKicked status updated")
             }
         }
+        
+        usersCollectionRef.document(userID).delete { error in
+            if let error = error {
+                print("Error deleting user: \(error.localizedDescription)")
+            } else {
+                print("User successfully kicked")
+            }
+        }
     }
 
     func startQuiz() {
@@ -285,6 +304,22 @@ final class PartyViewModel: ObservableObject {
             }
         }
     }
+
+    func generateQRCode(from string: String) -> UIImage? {
+        let filter = CIFilter.qrCodeGenerator()
+        let data = Data(string.utf8)
+        filter.setValue(data, forKey: "inputMessage")
+
+        if let outputImage = filter.outputImage {
+            let transform = CGAffineTransform(scaleX: 10, y: 10)
+            let scaledImage = outputImage.transformed(by: transform)
+            let context = CIContext()
+            if let cgImage = context.createCGImage(scaledImage, from: scaledImage.extent) {
+                return UIImage(cgImage: cgImage)
+            }
+        }
+        return nil
+    }
 }
 
 struct PartyView: View {
@@ -297,27 +332,108 @@ struct PartyView: View {
     }
 
     var body: some View {
-        VStack {
-            Text("The Party Code is: \(viewModel.partyCode)")
-                .padding()
+        VStack(spacing: 16) {
+            Text("Waiting for Players...")
+                .font(.title)
+                .padding(.top)
 
-            List(viewModel.users) { user in
-                HStack {
-                    Text(user.username)
-                    Spacer()
-                    if user.isLeader {
-                        Text("(Leader)")
-                            .foregroundColor(.blue)
-                    } else {
-                        if viewModel.currentUser?.isLeader == true {
-                            Button(action: {
-                                viewModel.kickUser(userID: user.id)
-                            }) {
-                                Text("Kick")
-                                    .foregroundColor(.red)
+            ZStack {
+                RoundedRectangle(cornerRadius: 15)
+                    .fill(Color.gray.opacity(0.2))
+                    .frame(width: 350, height: 250)
+                    .shadow(color: .gray, radius: 10, x: 10, y: 10) // Shadow on right and bottom
+                    .shadow(color: .clear, radius: 5, x: -5, y: -5) // No shadow on top and left
+                    .background(
+                        RoundedRectangle(cornerRadius: 15)
+                            .stroke(Color.black.opacity(0.1), lineWidth: 1)
+                            .shadow(color: .gray.opacity(0.5), radius: 3, x: 2, y: 2)
+                            .clipShape(RoundedRectangle(cornerRadius: 15))
+                    )
+
+                VStack {
+                    if let qrCodeImage = viewModel.generateQRCode(from: viewModel.partyCode) {
+                        Image(uiImage: qrCodeImage)
+                            .resizable()
+                            .interpolation(.none)
+                            .scaledToFit()
+                            .frame(width: 150, height: 150)
+                            .padding()
+                    }
+
+                    Text("Party Code: \(viewModel.partyCode)")
+                        .font(.headline)
+                        .padding(.bottom)
+                }
+            }
+
+            List(viewModel.users, id: \.id) { user in
+                ZStack {
+                    RoundedRectangle(cornerRadius: 30)
+                        .fill(Color.gray.opacity(0.2))
+                        .frame(maxWidth: 350, minHeight: 40)
+                        .padding(.horizontal, 8)
+
+                    HStack(spacing: 12) {
+                        Image(systemName: "person.circle.fill")
+                            .resizable()
+                            .frame(width: 36, height: 36)
+                            .clipShape(Circle())
+                            .padding(.leading, 12)
+
+                        Text(user.username)
+                            .font(.body)
+                            .lineLimit(1)
+                            .minimumScaleFactor(0.8)
+
+                        Spacer()
+
+                        if user.isLeader {
+                            Image(systemName: "crown.fill")
+                                .foregroundColor(.yellow)
+                                .padding(.trailing, 12)
+                        } else {
+                            if viewModel.currentUser?.isLeader == true {
+                                Button(action: {
+                                    viewModel.kickUser(userID: user.id)
+                                }) {
+                                    Text("Kick")
+                                        .foregroundColor(.red)
+                                        .padding(.trailing, 12)
+                                }
                             }
                         }
                     }
+                    .padding(.vertical, 12)
+                    .padding(.horizontal, 16)
+                }
+                .background(Color.white)
+                .listRowInsets(EdgeInsets())
+                .listRowSeparator(.hidden)
+                .padding(.vertical, 4)
+            }
+            .listStyle(PlainListStyle())
+
+            Spacer()
+
+            if viewModel.currentUser?.isLeader == true {
+                Button(action: {
+                    viewModel.startQuiz()
+                }) {
+                    Text("Start Quiz")
+                        .font(.headline)
+                        .foregroundColor(Color.white)
+                        .multilineTextAlignment(.center)
+                        .frame(height: 55)
+                        .frame(maxWidth: 250)
+                        .background(
+                            LinearGradient(gradient: Gradient(colors: [Color(hex: "#5687CE"), Color(hex: "#5687CE").opacity(0.8)]), startPoint: .topLeading, endPoint: .bottomTrailing)
+                        )
+                        .cornerRadius(20)
+                        .shadow(color: Color.black.opacity(0.2), radius: 10, x: 5, y: 5)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 20)
+                                .stroke(Color.white, lineWidth: 2)
+                        )
                 }
             }
 
@@ -326,22 +442,19 @@ struct PartyView: View {
                 navigateToJoinPartyView = true
             }) {
                 Text("Leave Party")
-                    .padding()
-                    .background(Color.red)
-                    .foregroundColor(.white)
-                    .cornerRadius(8)
-            }
-
-            if viewModel.currentUser?.isLeader == true {
-                Button(action: {
-                    viewModel.startQuiz()
-                }) {
-                    Text("Start Quiz")
-                        .padding()
-                        .background(Color.blue)
-                        .foregroundColor(.white)
-                        .cornerRadius(20)
-                }
+                    .font(.headline)
+                    .foregroundColor(Color.white)
+                    .frame(height: 55)
+                    .frame(maxWidth: 250)
+                    .background(
+                        LinearGradient(gradient: Gradient(colors: [Color.orange, Color.orange.opacity(0.8)]), startPoint: .topLeading, endPoint: .bottomTrailing)
+                    )
+                    .cornerRadius(20)
+                    .shadow(color: Color.black.opacity(0.2), radius: 10, x: 5, y: 5)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 20)
+                            .stroke(Color.white, lineWidth: 2)
+                    )
             }
         }
         .onChange(of: viewModel.isKicked) { isKicked in
@@ -362,6 +475,7 @@ struct PartyView: View {
         }
     }
 }
+
 
 #Preview {
     PartyView(partyCode: "testCode")
