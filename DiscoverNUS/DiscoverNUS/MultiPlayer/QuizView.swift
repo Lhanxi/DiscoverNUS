@@ -17,42 +17,42 @@ struct AnswerButton: View {
     let onTap: () -> Void
     
     var body: some View {
-           Button(action: {
-               onTap()
-               print("isSelected: \(isSelected)") // Print isSelected value to console
-           }) {
-               HStack {
-                   Text(text)
-                       .foregroundColor(.white)
-                       .padding()
-                       .frame(maxWidth: 350, alignment: .leading)
-                       .background(
-                           determineBackgroundColor()
-                       )
-                       .cornerRadius(10)
-                       .overlay(
-                           HStack {
-                               Spacer()
-                               if isTimeUp && isSelected {
-                                   if isCorrect {
-                                       Image(systemName: "checkmark")
-                                           .foregroundColor(.white)
-                                           .font(.title2)
-                                           .fontWeight(.bold)
-                                   } else if isWrong {
-                                       Image(systemName: "xmark")
-                                           .foregroundColor(.white)
-                                           .font(.title2)
-                                           .fontWeight(.bold)
-                                   }
-                               }
-                           }
-                           .padding(.trailing, 10)
-                       )
-               }
-           }
-           .disabled(anySelected)
-       }
+        Button(action: {
+            onTap()
+            print("isSelected: \(isSelected)") // Print isSelected value to console
+        }) {
+            HStack {
+                Text(text)
+                    .foregroundColor(.white)
+                    .padding()
+                    .frame(maxWidth: 350, alignment: .leading)
+                    .background(
+                        determineBackgroundColor()
+                    )
+                    .cornerRadius(10)
+                    .overlay(
+                        HStack {
+                            Spacer()
+                            if isTimeUp && isSelected {
+                                if isCorrect {
+                                    Image(systemName: "checkmark")
+                                        .foregroundColor(.white)
+                                        .font(.title2)
+                                        .fontWeight(.bold)
+                                } else if isWrong {
+                                    Image(systemName: "xmark")
+                                        .foregroundColor(.white)
+                                        .font(.title2)
+                                        .fontWeight(.bold)
+                                }
+                            }
+                        }
+                        .padding(.trailing, 10)
+                    )
+            }
+        }
+        .disabled(anySelected)
+    }
     
     private func determineBackgroundColor() -> Color {
         if isTimeUp {
@@ -66,7 +66,6 @@ struct AnswerButton: View {
         }
     }
 }
-
 
 struct QuizView: View {
     @StateObject private var viewModel: QuizViewModel
@@ -88,44 +87,42 @@ struct QuizView: View {
                         .font(.headline)
                         .padding(.top)
                     
-                    ProgressView(value: Double(viewModel.timeRemaining > 0 ? viewModel.timeRemaining : viewModel.transitionTime), total: 1.0)
+                    ProgressView(value: Double(viewModel.timeRemaining > 0 ? viewModel.timeRemaining : viewModel.transitionTime), total: 10.0)
                         .padding()
                     
                     Text("\(viewModel.currentQuestionIndex + 1)/\(viewModel.questions.count)")
                         .font(.headline)
                         .padding(.top)
-
-                    Text(viewModel.questions[viewModel.currentQuestionIndex].question)
-                        .font(.title2)
-                        .multilineTextAlignment(.center)
-                        .padding()
-
-                    ForEach(0..<viewModel.questions[viewModel.currentQuestionIndex].answers.count, id: \.self) { index in
-                        AnswerButton(
-                            text: viewModel.questions[viewModel.currentQuestionIndex].answers[index],
-                            isSelected: {
-                                if let selectedAnswerIndex = viewModel.selectedAnswerIndex {
-                                    return selectedAnswerIndex == index
-                                } else {
-                                    return false // Handle the case where selectedAnswerIndex is nil
-                                }
-                            }(),
-                            anySelected: viewModel.anySelected,
-                            isCorrect: index == viewModel.questions[viewModel.currentQuestionIndex].correctAnswer,
-                            isWrong: viewModel.selectedAnswerIndex == index && index != viewModel.questions[viewModel.currentQuestionIndex].correctAnswer,
-                            isTimeUp: viewModel.timeRemaining <= 0,
-                            onTap: {
-                                viewModel.selectAnswer(at: index)
-                            }
-                        )
-                    }
                     
+                    if viewModel.isFetched {
+                        Text(viewModel.questions[viewModel.currentQuestionIndex].question)
+                            .font(.title2)
+                            .multilineTextAlignment(.center)
+                            .padding()
+                        
+                        ForEach(0..<viewModel.questions[viewModel.currentQuestionIndex].answers.count, id: \.self) { index in
+                            AnswerButton(
+                                text: viewModel.questions[viewModel.currentQuestionIndex].answers[index],
+                                isSelected: {
+                                    if let selectedAnswerIndex = viewModel.selectedAnswerIndex {
+                                        return selectedAnswerIndex == index
+                                    } else {
+                                        return false // Handle the case where selectedAnswerIndex is nil
+                                    }
+                                }(),
+                                anySelected: viewModel.anySelected,
+                                isCorrect: index == viewModel.questions[viewModel.currentQuestionIndex].correctAnswer,
+                                isWrong: viewModel.selectedAnswerIndex == index && index != viewModel.questions[viewModel.currentQuestionIndex].correctAnswer,
+                                isTimeUp: viewModel.timeRemaining <= 0,
+                                onTap: {
+                                    viewModel.selectAnswer(at: index)
+                                }
+                            )
+                        }
+                    }
                     Spacer()
                 }
                 .padding()
-                .onAppear {
-                    viewModel.startQuiz()
-                }
             }
         }
     }
