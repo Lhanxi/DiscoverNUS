@@ -25,118 +25,156 @@ extension Player {
     }
 }
 
-//UI structure of player model
+final class PlayerModelViewModel: ObservableObject {
+    @Published var playerInfo: Player?
+    @Published var showSignInView: Bool
+    @Published var authProviders: [AuthProviderOption] = []
+    @Published var email: String = ""
+    
+    init(showSignInView: Bool, playerInfo: Player?) {
+        self.showSignInView = showSignInView
+        self.playerInfo = playerInfo
+        self.getEmail()
+    }
+    
+    func signOut() throws {
+        try AuthenticationManager.shared.signOut()
+    }
+    
+    func loadAuthProviders() {
+        if let providers =  try? AuthenticationManager.shared.getProvider() {
+            authProviders = providers
+        }
+    }
+    
+    func getEmail() {
+        if let userEmail = try? AuthenticationManager.shared.getAuthenticatedUser().email {
+            self.email = userEmail
+        } else {
+
+            self.email = ""
+        }
+    }
+}
+
+// UI structure of player model
 struct PlayerModelView: View {
-    @State private var isDropDownVisible = false
-    @StateObject private var viewModel = SettingsViewModel()
+    @StateObject private var viewModel: PlayerModelViewModel
     @Binding var showSignInView: Bool
     var playerInfo: Player
-    
+    @State private var showLogoutAlert = false
+
+    init(showSignInView: Binding<Bool>, playerInfo: Player) {
+        self._showSignInView = showSignInView
+        self.playerInfo = playerInfo
+        _viewModel = StateObject(wrappedValue: PlayerModelViewModel(showSignInView: showSignInView.wrappedValue, playerInfo: playerInfo))
+    }
+
     var body: some View {
-        GeometryReader { geometry in
-            let widthSize = min(max(geometry.size.width * 0.3, 150), 200)
-            let heightSize = min(max(geometry.size.width * 0.3, 150), 200)
-            let finalSize = max(widthSize, heightSize)
-            VStack(spacing: 0) {
-                ZStack {
-                    Rectangle()
-                        .fill(Color.gray)
-                        .frame(width: finalSize,
-                               height: finalSize)
-                    
-                    playerInfo.image
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(width: finalSize * 0.8,
-                               height: finalSize * 0.8)
+        VStack {
+            UserPhotoPicker(userImage: playerInfo.image, userID: playerInfo.id!)
+
+            Text(playerInfo.username)
+                .foregroundColor(Color.black)
+                .font(.title2)
+                .fontWeight(.bold)
+                .padding(10)
+            
+            Text(viewModel.email)
+                .foregroundColor(Color.black)
+                .font(.system(size: 15))
+                .padding(.bottom,30)
+
+            VStack(spacing: 30) {
+                NavigationLink(destination: SettingsView(showSignInView: $showSignInView, image: playerInfo.image, username: playerInfo.username, userID: playerInfo.id!)) {
+                    HStack {
+                        Image(systemName: "pencil.line")
+                            .foregroundColor(.blue)
+                            .font(Font.system(size: 15, weight: .bold))
+                        Text("Edit Profile")
+                            .foregroundColor(.black)
+                        Spacer()
+                        Image(systemName: "arrow.right")
+                            .foregroundColor(.blue)
+                    }
+                    .padding()
+                    .frame(maxWidth: 330)
+                    .background(Color(UIColor.systemGray6))
+                    .cornerRadius(20)
                 }
-                
-                VStack {
-                    Divider()
-                    Spacer()
-                    HStack{
-                        Text("Username: ")
-                            .foregroundColor(Color.white)
-                            .font(.system(size: 15))
-                            .padding(.leading)
+
+                NavigationLink(destination: UserStatistics(showSignInView: $showSignInView, playerInfo: playerInfo)) {
+                    HStack {
+                        Image(systemName: "scope")
+                            .foregroundColor(.blue)
+                        Text("User Statistics")
+                            .foregroundColor(.black)
                         Spacer()
+                        Image(systemName: "arrow.right")
+                            .foregroundColor(.blue)
                     }
-                    HStack{
-                        Text(playerInfo.username)
-                            .foregroundColor(Color.white)
-                            .font(.system(size: 15))
-                            .padding(.leading)
+                    .padding()
+                    .frame(maxWidth: 330)
+                    .background(Color(UIColor.systemGray6))
+                    .cornerRadius(20)
+                }
+
+                Button(action: {
+                    showLogoutAlert = true
+                }) {
+                    HStack {
+                        Image(systemName: "arrowshape.turn.up.backward")
+                            .foregroundColor(.red)
+                        Text("Logout")
+                            .foregroundColor(.red)
                         Spacer()
+                        Image(systemName: "arrow.right")
+                            .foregroundColor(.red)
                     }
-                    Spacer()
-                    HStack{
-                        Text("Level: \(playerInfo.level)")
-                            .foregroundColor(Color.white)
-                            .font(.system(size: 15))
-                            .padding(.leading)
-                        Spacer()
-                        if isDropDownVisible {
-                            Image(systemName: "chevron.up")
-                                .onTapGesture {
-                                    self.isDropDownVisible.toggle()
-                            }
-                                .padding(.trailing)
-                        } else {
-                            Image(systemName: "chevron.down")
-                                .onTapGesture {
-                                    self.isDropDownVisible.toggle()
-                            }
-                                .padding(.trailing)
-                        }
-                    }
-                    Spacer()
-                }.frame(width: finalSize,
-                        height: finalSize * 0.5)
-                .background(Color.gray)
-                
-                if isDropDownVisible {
-                    VStack(spacing: 0) {
-                        NavigationLink(destination: UserStatistics(playerInfo: playerInfo)) {
-                            Text("User Statistics")
-                                .foregroundColor(Color.white)
-                        }.onTapGesture {
-                            self.isDropDownVisible.toggle()
-                        }.frame(width: finalSize, height: finalSize * 0.25)
-                            .background(Color.gray)
-                        
-                        NavigationLink(destination: SettingsView(showSignInView: $showSignInView, image: playerInfo.image, username: playerInfo.username, userID: playerInfo.id!)) {
-                            Text("Update Profile")
-                                .foregroundColor(Color.white)
-                        }.onTapGesture {
-                            self.isDropDownVisible.toggle()
-                        }.frame(width: finalSize, height: finalSize * 0.25)
-                            .background(Color.gray)
-                        
-                        Button(action: {
-                            self.isDropDownVisible.toggle()
+                    .padding()
+                    .frame(maxWidth: 330)
+                    .background(Color(UIColor.systemGray6))
+                    .cornerRadius(20)
+                }
+                .alert(isPresented: $showLogoutAlert) {
+                    Alert(
+                        title: Text("Confirm Logout"),
+                        message: Text("Are you sure you want to log out?"),
+                        primaryButton: .destructive(Text("Log Out")) {
                             do {
                                 try viewModel.signOut()
                                 showSignInView = true
                             } catch {
                                 print(error)
                             }
-                        }) {
-                            Text("logout")
-                                .foregroundColor(Color.white)
-                        }.frame(width: finalSize, height: finalSize * 0.25)
-                            .background(Color.gray)
-                    }.frame(width: finalSize)
+                        },
+                        secondaryButton: .cancel()
+                    )
                 }
             }
-            .onAppear {
-                viewModel.loadAuthProviders()
-            }
         }
+        .padding()
+        .onAppear {
+            viewModel.loadAuthProviders()
+        }
+        .offset(y:-100)
     }
 }
 
-/*
-#Preview {
-    PlayerModelView()
+struct PlayerModelView_Previews: PreviewProvider {
+    static var previews: some View {
+        // Create a sample player instance
+        let samplePlayer = Player(id: "Sample Player",
+                                  level: 0,
+                                  username: "John",
+                                  exp : 0,
+                                  image: Image(systemName: "person.fill"),
+                                  quests: [],
+                                  multiplayerGamesPlayed: 0,
+                                  multiplayerGamesWon: 0)
+        // Use State for the binding
+        @State var showSignInView = true
+        
+        return PlayerModelView(showSignInView: $showSignInView, playerInfo: samplePlayer)
+    }
 }
-*/

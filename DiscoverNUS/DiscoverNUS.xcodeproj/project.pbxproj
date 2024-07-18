@@ -29,6 +29,9 @@
 		19D16CD62C1419EC00133B59 /* ARKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 19D16CD42C1419C800133B59 /* ARKit.framework */; };
 		19D16CDA2C142BC400133B59 /* PlayerModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19D16CD92C142BC400133B59 /* PlayerModel.swift */; };
 		19D16CDC2C14634F00133B59 /* ImageHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19D16CDB2C14634F00133B59 /* ImageHandler.swift */; };
+		4D7558302C46B82900A27C62 /* MapsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D75582F2C46B82900A27C62 /* MapsView.swift */; };
+		4D7558322C46B84800A27C62 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D7558312C46B84800A27C62 /* ProfileView.swift */; };
+		4D7558342C46BD5700A27C62 /* SinglePlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D7558332C46BD5700A27C62 /* SinglePlayerView.swift */; };
 		4DA91C752C1B3199007433F4 /* HomePage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DA91C742C1B3199007433F4 /* HomePage.swift */; };
 		4DA91C772C1B31BC007433F4 /* PlayerGPS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DA91C762C1B31BC007433F4 /* PlayerGPS.swift */; };
 		4DA91C792C1B31DD007433F4 /* GoogleMapConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DA91C782C1B31DD007433F4 /* GoogleMapConfig.swift */; };
@@ -91,6 +94,9 @@
 		19D16CD42C1419C800133B59 /* ARKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ARKit.framework; path = System/Library/Frameworks/ARKit.framework; sourceTree = SDKROOT; };
 		19D16CD92C142BC400133B59 /* PlayerModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerModel.swift; sourceTree = "<group>"; };
 		19D16CDB2C14634F00133B59 /* ImageHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageHandler.swift; sourceTree = "<group>"; };
+		4D75582F2C46B82900A27C62 /* MapsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapsView.swift; sourceTree = "<group>"; };
+		4D7558312C46B84800A27C62 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
+		4D7558332C46BD5700A27C62 /* SinglePlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SinglePlayerView.swift; sourceTree = "<group>"; };
 		4DA91C742C1B3199007433F4 /* HomePage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePage.swift; sourceTree = "<group>"; };
 		4DA91C762C1B31BC007433F4 /* PlayerGPS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerGPS.swift; sourceTree = "<group>"; };
 		4DA91C782C1B31DD007433F4 /* GoogleMapConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleMapConfig.swift; sourceTree = "<group>"; };
@@ -157,6 +163,9 @@
 				1907CB3F2C412B27005739D9 /* Level System.swift */,
 				1907CB412C413ED7005739D9 /* UserStatistics.swift */,
 				19CA88CE2C42A8D50003BC94 /* Photopicker.swift */,
+				4D75582F2C46B82900A27C62 /* MapsView.swift */,
+				4D7558312C46B84800A27C62 /* ProfileView.swift */,
+				4D7558332C46BD5700A27C62 /* SinglePlayerView.swift */,
 			);
 			path = SinglePlayer;
 			sourceTree = "<group>";
@@ -370,18 +379,21 @@
 				4DC87F652C0C5AB2005F6F12 /* ContentView.swift in Sources */,
 				4DA91C7D2C1B3219007433F4 /* QuestView.swift in Sources */,
 				1907CB3E2C40F14C005739D9 /* LeaderBoardView.swift in Sources */,
+				4D7558302C46B82900A27C62 /* MapsView.swift in Sources */,
 				4DC928552C207F2C0044DDBA /* CreatePartyView.swift in Sources */,
 				4DC87F8B2C0C5DB3005F6F12 /* AuthenticationView.swift in Sources */,
 				4DA91C772C1B31BC007433F4 /* PlayerGPS.swift in Sources */,
 				1980E6A02C2EF8FF00AF846B /* StartQuest.swift in Sources */,
 				4DC87F8D2C0C5DB3005F6F12 /* SettingsView.swift in Sources */,
 				4DC87F632C0C5AB2005F6F12 /* DiscoverNUSApp.swift in Sources */,
+				4D7558322C46B84800A27C62 /* ProfileView.swift in Sources */,
 				4DC928592C24252A0044DDBA /* PartyView.swift in Sources */,
 				4DC87F8C2C0C5DB3005F6F12 /* RootView.swift in Sources */,
 				4DA91C7B2C1B3203007433F4 /* QuestManager.swift in Sources */,
 				4DC87F922C0ED8EF005F6F12 /* ForgotPasswordView.swift in Sources */,
 				4DC87FA42C10B021005F6F12 /* Utilities.swift in Sources */,
 				4DC87F8E2C0C5DB3005F6F12 /* SignInEmailView.swift in Sources */,
+				4D7558342C46BD5700A27C62 /* SinglePlayerView.swift in Sources */,
 				1980E6A22C2EF90D00AF846B /* CompleteQuest.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -528,6 +540,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -562,6 +575,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
