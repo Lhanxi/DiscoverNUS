@@ -107,7 +107,7 @@ struct CompleteQuest: View {
     @Binding var playerInfo: Player
     @State var navigateBackwards = false
     @State var navigateForward = false
-    @State var timer: Int
+    @State var timeLimit: Int
     @State var questImage: Image
     @State var selectedImage: Image?
     @State var alertToGoBack = false
@@ -122,7 +122,7 @@ struct CompleteQuest: View {
                 NavigationLink(destination: RootView(), isActive: $navigateForward) {
                 }
                 .hidden()
-                NavigationLink(destination: StartQuest(quest: quest, timer: timer, showSignInView: $showSignInView, playerInfo: self.playerInfo), isActive: $navigateBackwards) {
+                NavigationLink(destination: StartQuest(quest: quest, timeLimit: timeLimit, showSignInView: $showSignInView, playerInfo: self.playerInfo), isActive: $navigateBackwards) {
                 }
                 .hidden()
                 .navigationBarHidden(true)
@@ -161,7 +161,7 @@ struct CompleteQuest: View {
                     }
                     Spacer()
                 }
-                Text("\(timer)")
+                Text("\(timeLimit)")
                     .padding(10)
                     .onAppear() {
                         self.startTimer()
@@ -173,8 +173,8 @@ struct CompleteQuest: View {
     
     func startTimer() {
         Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { result in
-            if self.timer > 0 {
-                self.timer -= 1
+            if self.timeLimit > 0 {
+                self.timeLimit -= 1
             } else {
                 self.navigateForward = true
             }

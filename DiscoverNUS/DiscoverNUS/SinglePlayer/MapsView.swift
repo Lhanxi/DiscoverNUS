@@ -33,7 +33,9 @@ struct MapsView: UIViewRepresentable {
 
             func mapView(_ mapView: GMSMapView, didTap marker: GMSMarker) -> Bool {
                 if let clickedQuest = marker.userData as? Quest {
-                    parent.selectQuest.toggle()
+                    withAnimation {
+                        parent.selectQuest.toggle()
+                    }
                     if parent.selectQuest == true {
                         parent.selectedQuest = clickedQuest
                     }
@@ -112,6 +114,10 @@ struct MapsView: UIViewRepresentable {
         return canvas
     }
 }
+
+
+
+
 
 //Homepage UI + functions
 class QuestArrayManager: ObservableObject {

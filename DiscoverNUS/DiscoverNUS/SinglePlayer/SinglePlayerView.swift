@@ -19,9 +19,24 @@ struct SinglePlayerView: View {
             MapsView(selectQuest: $selectQuest, selectedQuest: $selectedQuest, questManager: userQuests)
                 .edgesIgnoringSafeArea(.all)
             
-            if selectQuest == true {
+            if selectQuest {
+                // Transparent overlay to detect taps and hide the menu
+                Color.black.opacity(0.3)
+                    .edgesIgnoringSafeArea(.all)
+                    .onTapGesture {
+                        withAnimation {
+                            selectQuest = false
+                        }
+                    }
+
                 if let quest = selectedQuest {
-                    QuestView(quest: quest, showSignInView: $showSignInView, playerInfo: playerInfo)
+                    QuestView(quest: quest, showSignInView: $showSignInView, playerInfo: playerInfo, isPresented: $selectQuest)
+                        .transition(.slideUp)
+                        .zIndex(1) // Ensures the QuestView is above the overlay
+                        .onTapGesture {
+                            // Prevents the QuestView itself from triggering the overlay tap gesture
+                            // Do nothing to handle the tap on the QuestView itself
+                        }
                 }
             }
         }.onAppear() {
@@ -30,8 +45,7 @@ struct SinglePlayerView: View {
                     self.playerInfo = result
                 }
             }
-            SinglePlayerView.getUserQuests(questIDList: playerInfo.quests) {
-                result in
+            SinglePlayerView.getUserQuests(questIDList: playerInfo.quests) { result in
                 self.userQuests.add(questList: result)
             }
         }
@@ -50,10 +64,8 @@ struct SinglePlayerView: View {
         }
         
         group.notify(queue: .main) {
-                print("All quests fetched")
-                completion(quests)
-            }
+            print("All quests fetched")
+            completion(quests)
+        }
     }
 }
-
-
