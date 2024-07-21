@@ -19,22 +19,6 @@ struct HomePage: View {
                 .opacity(0.8)
             
             VStack {
-                HStack {
-                    Spacer()
-                    NavigationLink(destination: PlayerModelView(showSignInView: $showSignInView, playerInfo: playerInfo)) {
-                        VStack {
-                            let diameter: CGFloat = 75
-                            playerInfo.image
-                                .resizable()
-                                .aspectRatio(contentMode: .fill)
-                                .frame(width: diameter, height: diameter)
-                                .clipShape(Circle())
-                                .overlay(Circle().stroke(Color.gray, lineWidth: 2))
-                                .padding(.top, 70) // Padding to simulate the offset
-                                .padding(.trailing, 120)
-                        }
-                    }
-                }
                 Spacer()
                 
                 VStack(spacing: 20) {
@@ -44,8 +28,8 @@ struct HomePage: View {
                         .foregroundColor(.white)
                         .padding(.bottom, 20)
                     
-                    NavigationLink(destination: SinglePlayerView(showSignInView: $showSignInView, playerInfo: playerInfo)) {
-                        Text("SinglePlayer")
+                    NavigationLink(destination: PlayView(showSignInView: $showSignInView, playerInfo: playerInfo)) {
+                        Text("Start Game")
                             .font(.headline)
                             .foregroundColor(Color.white)
                             .frame(height: 55)
@@ -57,8 +41,8 @@ struct HomePage: View {
                             .shadow(color: Color.black.opacity(0.2), radius: 10, x: 5, y: 5)
                     }
                     
-                    NavigationLink(destination: MultiPlayerView()) {
-                        Text("MultiPlayer")
+                    NavigationLink(destination: PlayerModelView(showSignInView: $showSignInView, playerInfo: playerInfo)) {
+                        Text("Settings")
                             .font(.headline)
                             .foregroundColor(Color.white)
                             .frame(height: 55)

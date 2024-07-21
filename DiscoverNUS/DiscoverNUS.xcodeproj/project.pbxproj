@@ -33,6 +33,7 @@
 		4D7558342C46BD5700A27C62 /* SinglePlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D7558332C46BD5700A27C62 /* SinglePlayerView.swift */; };
 		4D7558362C493F7A00A27C62 /* SlideUpModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D7558352C493F7A00A27C62 /* SlideUpModifier.swift */; };
 		4D7558382C49736D00A27C62 /* QuestSubmissionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D7558372C49736D00A27C62 /* QuestSubmissionView.swift */; };
+		4D75583A2C4D6F7A00A27C62 /* PlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D7558392C4D6F7A00A27C62 /* PlayView.swift */; };
 		4DA91C752C1B3199007433F4 /* HomePage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DA91C742C1B3199007433F4 /* HomePage.swift */; };
 		4DA91C772C1B31BC007433F4 /* PlayerGPS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DA91C762C1B31BC007433F4 /* PlayerGPS.swift */; };
 		4DA91C792C1B31DD007433F4 /* GoogleMapConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DA91C782C1B31DD007433F4 /* GoogleMapConfig.swift */; };
@@ -99,6 +100,7 @@
 		4D7558332C46BD5700A27C62 /* SinglePlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SinglePlayerView.swift; sourceTree = "<group>"; };
 		4D7558352C493F7A00A27C62 /* SlideUpModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideUpModifier.swift; sourceTree = "<group>"; };
 		4D7558372C49736D00A27C62 /* QuestSubmissionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestSubmissionView.swift; sourceTree = "<group>"; };
+		4D7558392C4D6F7A00A27C62 /* PlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayView.swift; sourceTree = "<group>"; };
 		4DA91C742C1B3199007433F4 /* HomePage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePage.swift; sourceTree = "<group>"; };
 		4DA91C762C1B31BC007433F4 /* PlayerGPS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerGPS.swift; sourceTree = "<group>"; };
 		4DA91C782C1B31DD007433F4 /* GoogleMapConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleMapConfig.swift; sourceTree = "<group>"; };
@@ -169,6 +171,7 @@
 				4D7558332C46BD5700A27C62 /* SinglePlayerView.swift */,
 				4D7558352C493F7A00A27C62 /* SlideUpModifier.swift */,
 				4D7558372C49736D00A27C62 /* QuestSubmissionView.swift */,
+				4D7558392C4D6F7A00A27C62 /* PlayView.swift */,
 			);
 			path = SinglePlayer;
 			sourceTree = "<group>";
@@ -383,6 +386,7 @@
 				4DC87FA62C10B70B005F6F12 /* SignInGoogle.swift in Sources */,
 				4DC87F652C0C5AB2005F6F12 /* ContentView.swift in Sources */,
 				4DA91C7D2C1B3219007433F4 /* QuestView.swift in Sources */,
+				4D75583A2C4D6F7A00A27C62 /* PlayView.swift in Sources */,
 				1907CB3E2C40F14C005739D9 /* LeaderBoardView.swift in Sources */,
 				4D7558302C46B82900A27C62 /* MapsView.swift in Sources */,
 				4DC928552C207F2C0044DDBA /* CreatePartyView.swift in Sources */,
@@ -536,9 +540,11 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = DiscoverNUS/Info.plist;
+				INFOPLIST_KEY_LSApplicationCategoryType = "";
 				INFOPLIST_KEY_NSCameraUsageDescription = "Assessing Camera to take picture of quest";
 				INFOPLIST_KEY_NSLocationUsageDescription = GPS;
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = GPS;
+				INFOPLIST_KEY_NSSpeechRecognitionUsageDescription = Sound;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -571,9 +577,11 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = DiscoverNUS/Info.plist;
+				INFOPLIST_KEY_LSApplicationCategoryType = "";
 				INFOPLIST_KEY_NSCameraUsageDescription = "Assessing Camera to take picture of quest";
 				INFOPLIST_KEY_NSLocationUsageDescription = GPS;
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = GPS;
+				INFOPLIST_KEY_NSSpeechRecognitionUsageDescription = Sound;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
