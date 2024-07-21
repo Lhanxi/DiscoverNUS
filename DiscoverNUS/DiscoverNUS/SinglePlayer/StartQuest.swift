@@ -21,6 +21,13 @@ struct StartQuest: View {
     @State private var fullText: String = ""
     @State private var timer: Timer? = nil
     @State private var isTextFullyRevealed = false
+    @State private var showAlert = false
+    @State private var timerMode: TimerMode = .textRevealing
+    
+    enum TimerMode {
+        case textRevealing
+        case countdown
+    }
     
     var body: some View {
         NavigationView {
@@ -49,45 +56,65 @@ struct StartQuest: View {
                         .scaledToFill()
                         .frame(width: 120, height: 120)
                         .padding(.trailing, 190)
-                        .offset(y: 75)
+                        .offset(y: 65)
                     
-                    Text(visibleText)
-                        .font(.system(size: 10))
-                        .lineLimit(nil)
-                        .multilineTextAlignment(.leading)
-                        .frame(maxWidth: 330, minHeight: 280)
-                        .onAppear {
-                            startRevealingText()
-                        }
-                    
-                    if isTextFullyRevealed {
-                        NavigationLink(destination: {
-                            QuestSubmissionView(quest: quest, timeLimit: quest.timelimit, showSignInView: $showSignInView, playerInfo: playerInfo)
-                        }) {
-                            Text("Tap to Continue")
-                                .foregroundColor(.black)
-                                .font(.system(size: 10))
-                                .opacity(isBlinking ? 0 : 1)
-                                .onAppear {
-                                    withAnimation(Animation.easeInOut(duration: 1).repeatForever(autoreverses: true)) {
-                                        isBlinking.toggle()
-                                    }
+                    VStack {
+                        Text(visibleText)
+                            .font(.system(size: 10))
+                            .lineLimit(nil)
+                            .multilineTextAlignment(.leading)
+                            .onAppear {
+                                startTimer()
+                            }
+                        
+                        if isTextFullyRevealed {
+                            HStack {
+                                Text("(\(timeLimit)s)")
+                                    .font(.system(size: 12))
+                                    .foregroundColor(.blue)
+                                    .padding(.bottom, 10)
+                                    .padding(.leading, 20)
+                                
+                                Spacer()
+                                
+                                NavigationLink(destination: CompleteQuest(quest: quest, showSignInView: $showSignInView, playerInfo: $playerInfo, timeLimit: timeLimit, questImage: Image(uiImage: quest.image)), isActive: $navigateForward) {
+                                    Text("Submit Quest >")
+                                        .foregroundColor(.red)
+                                        .font(.system(size: 10))
+                                        .opacity(isBlinking ? 0 : 1)
+                                        .onAppear {
+                                            withAnimation(Animation.easeInOut(duration: 1).repeatForever(autoreverses: true)) {
+                                                isBlinking.toggle()
+                                            }
+                                        }
                                 }
+                                .simultaneousGesture(TapGesture().onEnded {
+                                    navigateForward = true
+                                })
+                            }
                         }
-                        .simultaneousGesture(TapGesture().onEnded {
-                            navigateForward = true
-                        })
                     }
+                    .frame(maxWidth: 330, minHeight: 280)
                 }
             }
             .navigationBarItems(leading: Button(action: {
-                navigateBackToHomePage = true
+                showAlert = true
             }) {
                 Image(systemName: "chevron.left")
                     .foregroundColor(.blue)
                 Text("Back")
                     .foregroundColor(.blue)
             })
+            .alert(isPresented: $showAlert) {
+                Alert(
+                    title: Text("Cancel Quest"),
+                    message: Text("Are you sure you want to cancel the quest?"),
+                    primaryButton: .destructive(Text("Yes")) {
+                        navigateBackToHomePage = true
+                    },
+                    secondaryButton: .cancel()
+                )
+            }
             .background(
                 NavigationLink(destination: RootView(), isActive: $navigateBackToHomePage) {
                     EmptyView()
@@ -103,32 +130,51 @@ struct StartQuest: View {
             }
         }
         .background(
-            NavigationLink(destination: QuestSubmissionView(quest: quest, timeLimit: quest.timelimit, showSignInView: $showSignInView, playerInfo: playerInfo), isActive: $navigateForward) {
+            NavigationLink(destination: CompleteQuest(quest: quest, showSignInView: $showSignInView, playerInfo: $playerInfo, timeLimit: timeLimit, questImage: Image(uiImage: quest.image)), isActive: $navigateForward) {
                 EmptyView()
             }
         )
     }
     
-    func startRevealingText() {
+    func startTimer() {
         fullText = quest.description
         visibleText = ""
         isTextFullyRevealed = false
         
-        timer?.invalidate()
+        timerMode = .textRevealing
         timer = Timer.scheduledTimer(withTimeInterval: 0.02, repeats: true) { _ in
-            if visibleText.count < fullText.count {
-                let nextIndex = fullText.index(fullText.startIndex, offsetBy: visibleText.count)
-                visibleText.append(fullText[nextIndex])
+            switch timerMode {
+            case .textRevealing:
+                if visibleText.count < fullText.count {
+                    let nextIndex = fullText.index(fullText.startIndex, offsetBy: visibleText.count)
+                    visibleText.append(fullText[nextIndex])
+                } else {
+                    isTextFullyRevealed = true
+                    timerMode = .countdown
+                    timer?.invalidate()
+                    startCountdown()
+                }
+            case .countdown:
+                break // Do nothing in countdown mode here
+            }
+        }
+    }
+    
+    func startCountdown() {
+        timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { _ in
+            if timeLimit > 0 {
+                timeLimit -= 1
             } else {
+                navigateForward = true
                 timer?.invalidate()
-                isTextFullyRevealed = true
             }
         }
     }
     
     func revealFullText() {
-        timer?.invalidate()
         visibleText = fullText
         isTextFullyRevealed = true
+        timer?.invalidate()
+        startCountdown()
     }
 }
