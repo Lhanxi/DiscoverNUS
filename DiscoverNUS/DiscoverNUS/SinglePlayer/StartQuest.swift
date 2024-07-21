@@ -123,17 +123,8 @@ struct StartQuest: View {
         }
         .navigationBarHidden(true) // Hides the navigation bar
         .onTapGesture {
-            if isTextFullyRevealed {
-                navigateForward = true
-            } else {
-                revealFullText()
-            }
+            revealFullText()
         }
-        .background(
-            NavigationLink(destination: CompleteQuest(quest: quest, showSignInView: $showSignInView, playerInfo: $playerInfo, timeLimit: timeLimit, questImage: Image(uiImage: quest.image)), isActive: $navigateForward) {
-                EmptyView()
-            }
-        )
     }
     
     func startTimer() {

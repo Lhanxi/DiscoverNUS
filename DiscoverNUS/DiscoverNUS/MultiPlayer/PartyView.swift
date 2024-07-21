@@ -451,101 +451,123 @@ struct PartyView: View {
     }
 
     var body: some View {
-        VStack(spacing: 16) {
-            Text("\(viewModel.users.count)/4 Players")
-                .font(.title)
-                .padding(.top)
+        NavigationView {
+            VStack(spacing: 16) {
+                Text("\(viewModel.users.count)/4 Players")
+                    .font(.title)
+                    .padding(.top)
 
-            ZStack {
-                RoundedRectangle(cornerRadius: 15)
-                    .fill(Color.gray.opacity(0.2))
-                    .frame(width: 350, height: 250)
-                    .shadow(color: .gray, radius: 10, x: 10, y: 10) // Shadow on right and bottom
-                    .shadow(color: .clear, radius: 5, x: -5, y: -5) // No shadow on top and left
-                    .background(
-                        RoundedRectangle(cornerRadius: 15)
-                            .stroke(Color.black.opacity(0.1), lineWidth: 1)
-                            .shadow(color: Color.black.opacity(0.4), radius: 10, x: 2, y: 2)
-                            .clipShape(RoundedRectangle(cornerRadius: 15))
-                    )
-
-                VStack {
-                    if let qrCodeImage = viewModel.generateQRCode(from: viewModel.partyCode) {
-                        Image(uiImage: qrCodeImage)
-                            .resizable()
-                            .interpolation(.none)
-                            .scaledToFit()
-                            .frame(width: 150, height: 150)
-                            .padding()
-                    }
-
-                    Text("Party Code: \(viewModel.partyCode)")
-                        .font(.headline)
-                        .padding(.bottom)
-                }
-            }
-
-            List(viewModel.users, id: \.id) { user in
                 ZStack {
-                    RoundedRectangle(cornerRadius: 30)
+                    RoundedRectangle(cornerRadius: 15)
                         .fill(Color.gray.opacity(0.2))
-                        .frame(maxWidth: 350, minHeight: 40)
-                        .padding(.horizontal, 8)
+                        .frame(width: 350, height: 250)
+                        .shadow(color: .gray, radius: 10, x: 10, y: 10) // Shadow on right and bottom
+                        .shadow(color: .clear, radius: 5, x: -5, y: -5) // No shadow on top and left
+                        .background(
+                            RoundedRectangle(cornerRadius: 15)
+                                .stroke(Color.black.opacity(0.1), lineWidth: 1)
+                                .shadow(color: Color.black.opacity(0.4), radius: 10, x: 2, y: 2)
+                                .clipShape(RoundedRectangle(cornerRadius: 15))
+                        )
 
-                    HStack(spacing: 12) {
-                        Image(systemName: "person.circle.fill")
-                            .resizable()
-                            .frame(width: 36, height: 36)
-                            .clipShape(Circle())
-                            .padding(.leading, 12)
+                    VStack {
+                        if let qrCodeImage = viewModel.generateQRCode(from: viewModel.partyCode) {
+                            Image(uiImage: qrCodeImage)
+                                .resizable()
+                                .interpolation(.none)
+                                .scaledToFit()
+                                .frame(width: 150, height: 150)
+                                .padding()
+                        }
 
-                        Text(user.username)
-                            .font(.body)
-                            .lineLimit(1)
-                            .minimumScaleFactor(0.8)
+                        Text("Party Code: \(viewModel.partyCode)")
+                            .font(.headline)
+                            .padding(.bottom)
+                    }
+                }
 
-                        Spacer()
+                List(viewModel.users, id: \.id) { user in
+                    ZStack {
+                        RoundedRectangle(cornerRadius: 30)
+                            .fill(Color.gray.opacity(0.2))
+                            .frame(maxWidth: 350, minHeight: 40)
+                            .padding(.horizontal, 8)
 
-                        if user.isLeader {
-                            Image(systemName: "crown.fill")
-                                .foregroundColor(.yellow)
-                                .padding(.trailing, 12)
-                        } else {
-                            if viewModel.currentUser?.isLeader == true {
-                                Button(action: {
-                                    viewModel.kickUser(userID: user.id)
-                                }) {
-                                    Text("Kick")
-                                        .foregroundColor(.red)
-                                        .padding(.trailing, 12)
+                        HStack(spacing: 12) {
+                            Image(systemName: "person.circle.fill")
+                                .resizable()
+                                .frame(width: 36, height: 36)
+                                .clipShape(Circle())
+                                .padding(.leading, 12)
+
+                            Text(user.username)
+                                .font(.body)
+                                .lineLimit(1)
+                                .minimumScaleFactor(0.8)
+
+                            Spacer()
+
+                            if user.isLeader {
+                                Image(systemName: "crown.fill")
+                                    .foregroundColor(.yellow)
+                                    .padding(.trailing, 12)
+                            } else {
+                                if viewModel.currentUser?.isLeader == true {
+                                    Button(action: {
+                                        viewModel.kickUser(userID: user.id)
+                                    }) {
+                                        Text("Kick")
+                                            .foregroundColor(.red)
+                                            .padding(.trailing, 12)
+                                    }
                                 }
                             }
                         }
+                        .padding(.vertical, 12)
+                        .padding(.horizontal, 16)
                     }
-                    .padding(.vertical, 12)
-                    .padding(.horizontal, 16)
+                    .background(Color.white)
+                    .listRowInsets(EdgeInsets())
+                    .listRowSeparator(.hidden)
+                    .padding(.vertical, 8)
                 }
-                .background(Color.white)
-                .listRowInsets(EdgeInsets())
-                .listRowSeparator(.hidden)
-                .padding(.vertical, 8)
-            }
-            .listStyle(PlainListStyle())
+                .listStyle(PlainListStyle())
 
-            Spacer()
+                Spacer()
 
-            if viewModel.currentUser?.isLeader == true {
+                if viewModel.currentUser?.isLeader == true {
+                    Button(action: {
+                        viewModel.startQuiz()
+                    }) {
+                        Text("Start Quiz")
+                            .font(.headline)
+                            .foregroundColor(Color.white)
+                            .multilineTextAlignment(.center)
+                            .frame(height: 55)
+                            .frame(maxWidth: 250)
+                            .background(
+                                LinearGradient(gradient: Gradient(colors: [Color(hex: "#5687CE"), Color(hex: "#5687CE").opacity(0.8)]), startPoint: .topLeading, endPoint: .bottomTrailing)
+                            )
+                            .cornerRadius(20)
+                            .shadow(color: Color.black.opacity(0.2), radius: 10, x: 5, y: 5)
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 20)
+                                    .stroke(Color.white, lineWidth: 2)
+                            )
+                    }
+                }
+
                 Button(action: {
-                    viewModel.startQuiz()
+                    viewModel.leaveParty()
+                    navigateToJoinPartyView = true
                 }) {
-                    Text("Start Quiz")
+                    Text("Leave Party")
                         .font(.headline)
                         .foregroundColor(Color.white)
-                        .multilineTextAlignment(.center)
                         .frame(height: 55)
                         .frame(maxWidth: 250)
                         .background(
-                            LinearGradient(gradient: Gradient(colors: [Color(hex: "#5687CE"), Color(hex: "#5687CE").opacity(0.8)]), startPoint: .topLeading, endPoint: .bottomTrailing)
+                            LinearGradient(gradient: Gradient(colors: [Color.orange, Color.orange.opacity(0.8)]), startPoint: .topLeading, endPoint: .bottomTrailing)
                         )
                         .cornerRadius(20)
                         .shadow(color: Color.black.opacity(0.2), radius: 10, x: 5, y: 5)
@@ -555,43 +577,24 @@ struct PartyView: View {
                         )
                 }
             }
-
-            Button(action: {
-                viewModel.leaveParty()
-                navigateToJoinPartyView = true
-            }) {
-                Text("Leave Party")
-                    .font(.headline)
-                    .foregroundColor(Color.white)
-                    .frame(height: 55)
-                    .frame(maxWidth: 250)
-                    .background(
-                        LinearGradient(gradient: Gradient(colors: [Color.orange, Color.orange.opacity(0.8)]), startPoint: .topLeading, endPoint: .bottomTrailing)
-                    )
-                    .cornerRadius(20)
-                    .shadow(color: Color.black.opacity(0.2), radius: 10, x: 5, y: 5)
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 20)
-                            .stroke(Color.white, lineWidth: 2)
-                    )
+            .onChange(of: viewModel.isKicked) { isKicked in
+                if isKicked {
+                    navigateToJoinPartyView = true
+                }
+            }
+            .onChange(of: viewModel.navigateToQuiz) { navigateToQuiz in
+                if navigateToQuiz {
+                    navigateToJoinQuizView = true
+                }
+            }
+            .fullScreenCover(isPresented: $navigateToJoinPartyView) {
+                MultiPlayerView()
+            }
+            .fullScreenCover(isPresented: $navigateToJoinQuizView) {
+                QuizView(partyCode: viewModel.partyCode)
             }
         }
-        .onChange(of: viewModel.isKicked) { isKicked in
-            if isKicked {
-                navigateToJoinPartyView = true
-            }
-        }
-        .onChange(of: viewModel.navigateToQuiz) { navigateToQuiz in
-            if navigateToQuiz {
-                navigateToJoinQuizView = true
-            }
-        }
-        .fullScreenCover(isPresented: $navigateToJoinPartyView) {
-            MultiPlayerView()
-        }
-        .fullScreenCover(isPresented: $navigateToJoinQuizView) {
-            QuizView(partyCode: viewModel.partyCode)
-        }
+        .navigationBarHidden(true) // Hides the navigation bar
     }
 }
 
