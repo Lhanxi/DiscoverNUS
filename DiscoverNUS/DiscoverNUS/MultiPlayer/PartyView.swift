@@ -445,9 +445,13 @@ struct PartyView: View {
     @StateObject private var viewModel: PartyViewModel
     @State private var navigateToJoinPartyView = false
     @State private var navigateToJoinQuizView = false
+    @State var showSignInView: Bool
+    @State var playerInfo: Player
 
-    init(partyCode: String) {
+    init(partyCode: String, showSignInView: Bool, playerInfo:Player) {
         _viewModel = StateObject(wrappedValue: PartyViewModel(partyCode: partyCode))
+        _playerInfo = State(initialValue: playerInfo)
+        _showSignInView = State(initialValue: showSignInView)
     }
 
     var body: some View {
@@ -588,17 +592,12 @@ struct PartyView: View {
                 }
             }
             .fullScreenCover(isPresented: $navigateToJoinPartyView) {
-                MultiPlayerView()
+                MultiPlayerView(showSignInView: $showSignInView, playerInfo: playerInfo)
             }
             .fullScreenCover(isPresented: $navigateToJoinQuizView) {
-                QuizView(partyCode: viewModel.partyCode)
+                QuizView(partyCode: viewModel.partyCode, showSignInView: showSignInView, playerInfo: playerInfo)
             }
         }
         .navigationBarHidden(true) // Hides the navigation bar
     }
-}
-
-
-#Preview {
-    PartyView(partyCode: "testCode")
 }

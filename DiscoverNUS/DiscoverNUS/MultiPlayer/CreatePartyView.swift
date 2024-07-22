@@ -81,6 +81,8 @@ final class CreatePartyViewModel: ObservableObject {
 struct CreatePartyView: View {
     @ObservedObject var viewModel: CreatePartyViewModel
     @State private var navigateToPartyView = false
+    @State var showSignInView: Bool
+    @State var playerInfo: Player
     
     var body: some View {
         NavigationView {
@@ -130,7 +132,7 @@ struct CreatePartyView: View {
                             )
                     }
                     
-                    NavigationLink(destination: PartyView(partyCode: viewModel.partyCode), isActive: $navigateToPartyView) {
+                    NavigationLink(destination: PartyView(partyCode: viewModel.partyCode, showSignInView: showSignInView, playerInfo: playerInfo), isActive: $navigateToPartyView) {
                         EmptyView()
                     }
                 }
@@ -138,9 +140,5 @@ struct CreatePartyView: View {
             .padding(.top, -50) // Adjust this value to move upwards
         }
     }
-}
-
-#Preview {
-    CreatePartyView(viewModel: CreatePartyViewModel())
 }
 

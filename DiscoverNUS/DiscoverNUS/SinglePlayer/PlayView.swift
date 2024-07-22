@@ -12,6 +12,7 @@ import FirebaseFirestore
 struct PlayView: View {
     @Binding var showSignInView: Bool
     @State var playerInfo: Player
+    @State var navigateToHome: Bool = false
     
     var body: some View {
         NavigationView {
@@ -57,7 +58,7 @@ struct PlayView: View {
                             }
                         
                         
-                        NavigationLink(destination: MultiPlayerView()) {
+                        NavigationLink(destination: MultiPlayerView(showSignInView: $showSignInView, playerInfo: playerInfo)) {
                             Text("MultiPlayer")
                                 .font(.headline)
                                 .foregroundColor(Color.white)
@@ -80,7 +81,21 @@ struct PlayView: View {
                     Spacer()
                 }
             }
+            .navigationBarItems(leading: Button(action: {
+                navigateToHome = true
+            }) {
+                Image(systemName: "chevron.left")
+                    .foregroundColor(.blue)
+                Text("Back")
+                    .foregroundColor(.blue)
+            })
+            .background(
+                NavigationLink(destination: HomePage(showSignInView: $showSignInView, playerInfo: playerInfo), isActive: $navigateToHome) {
+                    EmptyView()
+                }
+            )
         }
+        .navigationBarHidden(true)
     }
 }
 

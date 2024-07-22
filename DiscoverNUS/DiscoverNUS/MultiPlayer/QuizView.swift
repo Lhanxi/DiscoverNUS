@@ -51,7 +51,7 @@ struct AnswerButton: View {
                     )
             }
         }
-        .disabled(anySelected)
+        .disabled(anySelected || isTimeUp)
     }
     
     private func determineBackgroundColor() -> Color {
@@ -69,15 +69,19 @@ struct AnswerButton: View {
 
 struct QuizView: View {
     @StateObject private var viewModel: QuizViewModel
+    @State var showSignInView: Bool
+    @State var playerInfo: Player
     
-    init(partyCode: String) {
+    init(partyCode: String, showSignInView: Bool, playerInfo: Player) {
         _viewModel = StateObject(wrappedValue: QuizViewModel(partyCode: partyCode))
+        _playerInfo = State(initialValue: playerInfo)
+        _showSignInView = State(initialValue: showSignInView)
     }
     
     var body: some View {
         NavigationView {
             if viewModel.showLeaderBoard {
-                LeaderBoardView(partyCode: viewModel.partyCode)
+                LeaderBoardView(partyCode: viewModel.partyCode, showSignInView: showSignInView, playerInfo: playerInfo)
                     .onAppear {
                         viewModel.updateMultiPlayerScores()
                     }
@@ -87,7 +91,7 @@ struct QuizView: View {
                         .font(.headline)
                         .padding(.top)
                     
-                    ProgressView(value: Double(viewModel.timeRemaining > 0 ? viewModel.timeRemaining : viewModel.transitionTime), total: 1.0)
+                    ProgressView(value: Double(viewModel.timeRemaining > 0 ? viewModel.timeRemaining : viewModel.transitionTime), total: 10.0)
                         .padding()
                     
                     Text("\(viewModel.currentQuestionIndex + 1)/\(viewModel.questions.count)")
@@ -128,8 +132,3 @@ struct QuizView: View {
     }
 }
 
-struct QuizView_Previews: PreviewProvider {
-    static var previews: some View {
-        QuizView(partyCode: "testCode")
-    }
-}

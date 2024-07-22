@@ -36,8 +36,8 @@ final class QuizViewModel: ObservableObject {
     @Published var currentQuestionIndex: Int = 0
     @Published var selectedAnswerIndex: Int? = nil
     @Published var isCorrect: Bool? = nil
-    @Published var timeRemaining: Int = 1
-    @Published var transitionTime: Int = 1
+    @Published var timeRemaining: Int = 10
+    @Published var transitionTime: Int = 10
     @Published var showLeaderBoard: Bool = false
     @Published var partyCode: String
     @Published var currentUser: UserRef?
@@ -97,7 +97,7 @@ final class QuizViewModel: ObservableObject {
     
     func startTimer() {
         timer?.cancel()
-        timeRemaining = 1
+        timeRemaining = 10
         timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect().sink { [weak self] _ in
             guard let self = self else { return }
             if self.timeRemaining > 0 {
@@ -111,7 +111,7 @@ final class QuizViewModel: ObservableObject {
     
     func startTransitionTimer() {
         timer?.cancel()
-        transitionTime = 1
+        transitionTime = 10
         timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect().sink { [weak self] _ in
             guard let self = self else { return }
             if self.transitionTime > 0 {
@@ -131,7 +131,7 @@ final class QuizViewModel: ObservableObject {
         }
         self.startTransitionTimer()
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 10) {
             self.moveToNextQuestion()
         }
     }

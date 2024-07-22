@@ -10,8 +10,11 @@ import Firebase
 import FirebaseFirestore
 
 struct MultiPlayerView: View {
+    @Binding var showSignInView: Bool
+    @State var playerInfo: Player
     @StateObject private var viewModel = CreatePartyViewModel()
     @State private var navigateToCreatePartyView = false
+    @State private var navigateToPlayView = false
     
     var body: some View {
         NavigationView {
@@ -38,7 +41,7 @@ struct MultiPlayerView: View {
                         .shadow(color: Color.black.opacity(0.2), radius: 4, x: 2, y: 2)
                     
                     VStack(spacing: 30) {
-                        NavigationLink(destination: CreatePartyView(viewModel: viewModel), isActive: $navigateToCreatePartyView) {
+                        NavigationLink(destination: CreatePartyView(viewModel: viewModel, showSignInView: showSignInView, playerInfo: playerInfo), isActive: $navigateToCreatePartyView) {
                             Button(action: {
                                 Task {
                                     await viewModel.createParty()
@@ -63,7 +66,7 @@ struct MultiPlayerView: View {
                             }
                         }
                         
-                        NavigationLink(destination: JoinPartyView()) {
+                        NavigationLink(destination: JoinPartyView(showSignInView: showSignInView, playerInfo: playerInfo)) {
                             Text("Join Party")
                                 .font(.headline)
                                 .foregroundColor(Color.white)
@@ -86,13 +89,24 @@ struct MultiPlayerView: View {
                     Spacer()
                 }
             }
+            .navigationBarItems(leading: Button(action: {
+                navigateToPlayView = true
+            }) {
+                Image(systemName: "chevron.left")
+                    .foregroundColor(.blue)
+                Text("Back")
+                    .foregroundColor(.blue)
+            })
+            .background(
+                NavigationLink(destination: PlayView(showSignInView: $showSignInView, playerInfo: playerInfo), isActive: $navigateToPlayView) {
+                    EmptyView()
+                }
+            )
         }
+        .navigationBarHidden(true)
     }
 }
 
-#Preview {
-    MultiPlayerView()
-}
 
 
 

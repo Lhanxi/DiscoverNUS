@@ -191,9 +191,13 @@ final class LeaderBoardViewModel: ObservableObject {
 struct LeaderBoardView: View {
     @StateObject var viewModel: LeaderBoardViewModel
     @State private var navigateToLeaveQuizView = false
+    @State var showSignInView: Bool
+    @State var playerInfo: Player
     
-    init(partyCode: String) {
+    init(partyCode: String, showSignInView: Bool, playerInfo: Player) {
         _viewModel = StateObject(wrappedValue: LeaderBoardViewModel(partyCode: partyCode))
+        _playerInfo = State(initialValue: playerInfo)
+        _showSignInView = State(initialValue: showSignInView)
     }
     
     var body: some View {
@@ -279,7 +283,7 @@ struct LeaderBoardView: View {
             }
         }
         .fullScreenCover(isPresented: $navigateToLeaveQuizView) {
-            PartyView(partyCode: viewModel.partyCode)
+            PartyView(partyCode: viewModel.partyCode, showSignInView: showSignInView, playerInfo: playerInfo)
         }
     }
     
@@ -313,6 +317,3 @@ struct LeaderBoardView: View {
     }
 }
 
-#Preview {
-    LeaderBoardView(partyCode: "testCode")
-}

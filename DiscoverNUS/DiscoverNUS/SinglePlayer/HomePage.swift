@@ -11,67 +11,70 @@ struct HomePage: View {
     @State var playerInfo: Player
     
     var body: some View {
-        ZStack {
-            Image("background")
-                .resizable()
-                .scaledToFill()
-                .edgesIgnoringSafeArea(.all)
-                .opacity(0.8)
-            
-            VStack {
-                Spacer()
+        NavigationView {
+            ZStack {
+                Image("background")
+                    .resizable()
+                    .scaledToFill()
+                    .edgesIgnoringSafeArea(.all)
+                    .opacity(0.8)
                 
-                VStack(spacing: 20) {
-                    Text("Welcome to NUS!")
-                        .font(.largeTitle)
-                        .fontWeight(.bold)
-                        .foregroundColor(.white)
-                        .padding(.bottom, 20)
+                VStack {
+                    Spacer()
                     
-                    NavigationLink(destination: PlayView(showSignInView: $showSignInView, playerInfo: playerInfo)) {
-                        Text("Start Game")
-                            .font(.headline)
-                            .foregroundColor(Color.white)
-                            .frame(height: 55)
-                            .frame(maxWidth: 250)
-                            .background(
-                                LinearGradient(gradient: Gradient(colors: [Color.orange, Color.orange.opacity(0.8)]), startPoint: .topLeading, endPoint: .bottomTrailing)
-                            )
-                            .cornerRadius(20)
-                            .shadow(color: Color.black.opacity(0.2), radius: 10, x: 5, y: 5)
+                    VStack(spacing: 20) {
+                        Text("Welcome to NUS!")
+                            .font(.largeTitle)
+                            .fontWeight(.bold)
+                            .foregroundColor(.white)
+                            .padding(.bottom, 20)
+                        
+                        NavigationLink(destination: PlayView(showSignInView: $showSignInView, playerInfo: playerInfo)) {
+                            Text("Start Game")
+                                .font(.headline)
+                                .foregroundColor(Color.white)
+                                .frame(height: 55)
+                                .frame(maxWidth: 250)
+                                .background(
+                                    LinearGradient(gradient: Gradient(colors: [Color.orange, Color.orange.opacity(0.8)]), startPoint: .topLeading, endPoint: .bottomTrailing)
+                                )
+                                .cornerRadius(20)
+                                .shadow(color: Color.black.opacity(0.2), radius: 10, x: 5, y: 5)
+                        }
+                        
+                        NavigationLink(destination: PlayerModelView(showSignInView: $showSignInView, playerInfo: playerInfo)) {
+                            Text("Settings")
+                                .font(.headline)
+                                .foregroundColor(Color.white)
+                                .frame(height: 55)
+                                .frame(maxWidth: 250)
+                                .background(
+                                    LinearGradient(gradient: Gradient(colors: [Color.blue, Color.blue.opacity(0.8)]), startPoint: .topLeading, endPoint: .bottomTrailing)
+                                )
+                                .cornerRadius(20)
+                                .shadow(color: Color.black.opacity(0.2), radius: 10, x: 5, y: 5)
+                        }
+                        
+                        Button(action: {
+                            // No action for now
+                        }) {
+                            Text("Leaderboard")
+                                .font(.headline)
+                                .foregroundColor(Color.white)
+                                .frame(height: 55)
+                                .frame(maxWidth: 250)
+                                .background(
+                                    LinearGradient(gradient: Gradient(colors: [Color.black, Color.black.opacity(0.8)]), startPoint: .topLeading, endPoint: .bottomTrailing)
+                                )
+                                .cornerRadius(20)
+                                .shadow(color: Color.black.opacity(0.2), radius: 10, x: 5, y: 5)
+                        }
                     }
-                    
-                    NavigationLink(destination: PlayerModelView(showSignInView: $showSignInView, playerInfo: playerInfo)) {
-                        Text("Settings")
-                            .font(.headline)
-                            .foregroundColor(Color.white)
-                            .frame(height: 55)
-                            .frame(maxWidth: 250)
-                            .background(
-                                LinearGradient(gradient: Gradient(colors: [Color.blue, Color.blue.opacity(0.8)]), startPoint: .topLeading, endPoint: .bottomTrailing)
-                            )
-                            .cornerRadius(20)
-                            .shadow(color: Color.black.opacity(0.2), radius: 10, x: 5, y: 5)
-                    }
-                    
-                    Button(action: {
-                        // No action for now
-                    }) {
-                        Text("Leaderboard")
-                            .font(.headline)
-                            .foregroundColor(Color.white)
-                            .frame(height: 55)
-                            .frame(maxWidth: 250)
-                            .background(
-                                LinearGradient(gradient: Gradient(colors: [Color.black, Color.black.opacity(0.8)]), startPoint: .topLeading, endPoint: .bottomTrailing)
-                            )
-                            .cornerRadius(20)
-                            .shadow(color: Color.black.opacity(0.2), radius: 10, x: 5, y: 5)
-                    }
+                    .offset(y:-70)
                 }
-                .offset(y:-70)
             }
         }
+        .navigationBarHidden(true)
     }
 }
 

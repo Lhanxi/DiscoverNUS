@@ -108,6 +108,8 @@ struct JoinPartyView: View {
     @StateObject private var viewModel = JoinPartyViewModel()
     @State private var navigateToPartyView = false
     @State private var showAlert = false
+    @State var showSignInView: Bool
+    @State var playerInfo: Player
     
     var body: some View {
         NavigationView {
@@ -187,7 +189,7 @@ struct JoinPartyView: View {
                         )
                     }
                     
-                    NavigationLink(destination: PartyView(partyCode: viewModel.partyCode), isActive: $navigateToPartyView) {
+                    NavigationLink(destination: PartyView(partyCode: viewModel.partyCode, showSignInView: showSignInView, playerInfo: playerInfo), isActive: $navigateToPartyView) {
                         EmptyView()
                     }
                     
@@ -247,6 +249,3 @@ struct CornerLinesOverlay: View {
     }
 }
 
-#Preview {
-    JoinPartyView()
-}
