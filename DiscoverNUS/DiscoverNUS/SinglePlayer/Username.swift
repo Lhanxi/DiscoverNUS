@@ -30,12 +30,36 @@ struct CreateUsername: View {
     @State var createdUsername = false
     
     var body: some View {
-        VStack {
+        VStack(spacing: 20) {
             Text("Select Username")
                 .padding()
-            TextField("Enter text here", text: $username)
+            
+            HStack {
+                Text("Set up a username")
+                    .padding(.leading, 20)
+                    .font(.title)
+                    .foregroundColor(Color.blue)
+                    .fontWeight(.bold)
+                
+                Image(systemName: "sparkles")
+                    .foregroundColor(Color.yellow)
+                
+                Spacer()
+            }
+            
+            HStack {
+                Text("You can always change your @username later.")
+                    .padding(.leading, 20)
+                
+                Spacer()
+            }
+
+            TextField("Username", text: $username)
                 .textFieldStyle(RoundedBorderTextFieldStyle())
-                .padding()
+                .padding(.horizontal, 20)
+                .cornerRadius(10)
+                .autocapitalization(/*@START_MENU_TOKEN@*/.none/*@END_MENU_TOKEN@*/)
+            
             Button() {
                 Task {
                     if username != "" {
@@ -52,18 +76,46 @@ struct CreateUsername: View {
             } label: {
                 HStack {
                     Spacer()
-                    Text("Submit")
+                    Text("Next")
                         .font(.headline)
-                        .foregroundColor(.white)
+                        .foregroundColor(Color.white)
+                        .multilineTextAlignment(.center)
                         .frame(height: 55)
-                        .frame(maxWidth: 150)
-                        .background(Color.orange)
-                        .cornerRadius(25)
+                        .frame(maxWidth: 200)
+                        .background(
+                            LinearGradient(gradient: Gradient(colors: [Color(hex: "#5687CE"), Color(hex: "#5687CE").opacity(0.8)]), startPoint: .topLeading, endPoint: .bottomTrailing)
+                        )
+                        .cornerRadius(20)
+                        .shadow(color: Color.black.opacity(0.2), radius: 10, x: 5, y: 5)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 20)
+                                .stroke(Color.white, lineWidth: 2)
+                        )
+                        .padding(.trailing, 10)
                 }
             }
             NavigationLink(destination: RootView(), isActive: $createdUsername){
             }.navigationBarHidden(true)
             Spacer()
         }
+    }
+}
+
+
+struct CreateUsername_Previews: PreviewProvider {
+    static var previews: some View {
+        // Create a sample player instance
+        let samplePlayer = Player(id: "Sample Player",
+                                  level: 0,
+                                  username: "John",
+                                  exp : 0,
+                                  image: Image(systemName: "person.fill"),
+                                  quests: [],
+                                  multiplayerGamesPlayed: 0,
+                                  multiplayerGamesWon: 0)
+        // Use State for the binding
+        @State var showSignInView = true
+        
+        return CreateUsername(showSignInView: $showSignInView, playerInfo: samplePlayer)
     }
 }

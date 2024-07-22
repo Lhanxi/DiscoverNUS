@@ -90,7 +90,7 @@ struct PlayView: View {
                     .foregroundColor(.blue)
             })
             .background(
-                NavigationLink(destination: HomePage(showSignInView: $showSignInView, playerInfo: playerInfo), isActive: $navigateToHome) {
+                NavigationLink(destination: RootView(), isActive: $navigateToHome) {
                     EmptyView()
                 }
             )
