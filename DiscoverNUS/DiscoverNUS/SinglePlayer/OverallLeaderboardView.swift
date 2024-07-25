@@ -20,7 +20,7 @@ struct OverallLeaderBoardView: View {
     @State var multiPlayerBoard = false
     
     var body: some View {
-        NavigationLink(destination: HomePage(showSignInView: $showSignInView, playerInfo: playerInfo), isActive: $backToHomePage) {
+        NavigationLink(destination: RootView(), isActive: $backToHomePage) {
         }
         .hidden()
         
@@ -31,23 +31,14 @@ struct OverallLeaderBoardView: View {
                         Button(action: {
                             self.backToHomePage = true
                         }) {
-                            Text("Back to Menu")
-                                .font(.system(size: 14))
-                                .foregroundColor(Color.white)
-                                .multilineTextAlignment(.center)
-                                .frame(height: 20)
-                                .frame(maxWidth: 100)
-                                .background(Color.orange)
-                                .cornerRadius(20)
-                                .shadow(color: Color.black.opacity(0.2), radius: 10, x: 5, y: 5)
-                                .overlay(
-                                    RoundedRectangle(cornerRadius: 20)
-                                        .stroke(Color.white, lineWidth: 2)
-                                )
+                            Image(systemName: "chevron.left")
+                                .foregroundColor(.blue)
+                            Text("Back")
+                                .foregroundColor(.blue)
                         }
                         .padding()
                         Spacer()
-                    }.frame(height: 30)
+                    }
                     
                     Text("Leaderboard")
                         .font(.largeTitle)
