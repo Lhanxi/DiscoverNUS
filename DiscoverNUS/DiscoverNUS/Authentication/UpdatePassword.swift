@@ -80,12 +80,10 @@ struct UpdatePasswordView: View {
                         SecureField("Current Password:", text: $currentPassword)
                             .textFieldStyle(PlainTextFieldStyle())
                             .foregroundColor(Color.black)
-                            .cornerRadius(20)
                     } else {
                         TextField("Current Password:", text: $currentPassword)
                             .textFieldStyle(PlainTextFieldStyle())
                             .foregroundColor(Color.black)
-                            .cornerRadius(20)
                     }
                     Spacer()
                     Button(action: {
@@ -105,12 +103,10 @@ struct UpdatePasswordView: View {
                         SecureField("New Password:", text: $newPassword)
                             .textFieldStyle(PlainTextFieldStyle())
                             .foregroundColor(Color.black)
-                            .cornerRadius(20)
                     } else {
                         TextField("New Password:", text: $newPassword)
                             .textFieldStyle(PlainTextFieldStyle())
                             .foregroundColor(Color.black)
-                            .cornerRadius(20)
                     }
                     Spacer()
                     Button(action: {
@@ -130,12 +126,10 @@ struct UpdatePasswordView: View {
                         SecureField("Confirm Password:", text: $confirmPassword)
                             .textFieldStyle(PlainTextFieldStyle())
                             .foregroundColor(Color.black)
-                            .cornerRadius(20)
                     } else {
                         TextField("Confirm Password:", text: $confirmPassword)
                             .textFieldStyle(PlainTextFieldStyle())
                             .foregroundColor(Color.black)
-                            .cornerRadius(20)
                     }
                     Spacer()
                     Button(action: {

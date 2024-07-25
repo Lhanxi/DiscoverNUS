@@ -11,14 +11,23 @@ import SwiftUI
 final class SignUpEmailViewModel: ObservableObject {
     @Published var email = ""
     @Published var password = ""
+    @Published var errorMessage: String? // New property for error messages
     
-    func signUp() async throws {
+    func signUp() async {
         guard !email.isEmpty, !password.isEmpty else {
-            print("No email or password found.")
+            errorMessage = "No email or password found."
             return
         }
         
-        let _ = try await AuthenticationManager.shared.createUser(email: email, password: password)
+        do {
+            let _ = try await AuthenticationManager.shared.createUser(email: email, password: password)
+        } catch {
+            if let authError = error as NSError?, authError.code == 17007 {
+                errorMessage = "This email is already in use."
+            } else {
+                errorMessage = error.localizedDescription
+            }
+        }
     }
 }
 
@@ -28,6 +37,7 @@ struct SignUpEmailView: View {
     @Binding var showSignInView: Bool
     @State var completedSignUp = false
     @State var navigateBack = false
+    @State var showAlert = false
     
     var body: some View {
         VStack(spacing: 20) {
@@ -39,7 +49,7 @@ struct SignUpEmailView: View {
                      .background(Color.gray.opacity(0.4))
                      .cornerRadius(10)
                      .foregroundColor(.gray)
-                     .autocapitalization(/*@START_MENU_TOKEN@*/.none/*@END_MENU_TOKEN@*/)
+                     .autocapitalization(.none)
              }
              
              VStack(alignment: .leading, spacing: 5) {
@@ -50,17 +60,16 @@ struct SignUpEmailView: View {
                      .background(Color.gray.opacity(0.4))
                      .cornerRadius(10)
                      .foregroundColor(.gray)
-                     .autocapitalization(/*@START_MENU_TOKEN@*/.none/*@END_MENU_TOKEN@*/)
+                     .autocapitalization(.none)
              }
-            
             
             Button {
                 Task {
-                    do {
-                        try await viewModel.signUp()
-                        self.completedSignUp = true
-                    } catch {
-                        print(error)
+                    await viewModel.signUp()
+                    if viewModel.errorMessage != nil {
+                        showAlert = true
+                    } else {
+                        completedSignUp = true
                     }
                 }
                 
@@ -85,6 +94,13 @@ struct SignUpEmailView: View {
                         self.navigateBack = true
                     })
             }
+            .alert(isPresented: $showAlert) {
+                Alert(
+                    title: Text("Error"),
+                    message: Text(viewModel.errorMessage ?? "Unknown error"),
+                    dismissButton: .default(Text("OK")))
+            }
+            
             Spacer()
         }
         .padding()

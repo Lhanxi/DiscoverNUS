@@ -67,7 +67,7 @@ struct QuestView: View {
                         .foregroundColor(.black)
                         .font(.system(size: 15))
                     
-                    Text("\(quest.timelimit) min")
+                    Text("\(quest.timelimit) secs")
                         .foregroundColor(.black)
                         .font(.system(size: 10))
                     Spacer()

@@ -81,7 +81,6 @@ struct SettingsView: View {
     @State var image: Image
     @State var username: String
     var userID: String
-    @State var edit: Bool = false
     
     var body: some View {
         VStack {
@@ -99,39 +98,21 @@ struct SettingsView: View {
                 .padding(.bottom,30)
             
             VStack(spacing: 30) {
-                HStack {
-                    if self.edit {
-                        TextField("Username", text: $username)
-                            .padding()
-                            .multilineTextAlignment(.leading)
-                    } else {
-                        Text(username)
-                            .padding()
-                            .multilineTextAlignment(.leading)
-                    }
-                    Spacer()
-                    Image(systemName: "pencil.line")
-                        .padding(.trailing,15)
-                        .foregroundColor(.blue)
-                        .onTapGesture {
-                            self.edit.toggle()
-                        }
-                }
-                .background(Color(UIColor.systemGray6))
-                .frame(maxWidth: 330)
-                .cornerRadius(20)
-                .onChange(of: edit) { edit in
-                    if username != "" && edit == false {
-                        UsernameHandler.inputUsername(username: username, userID: userID) { error in
-                            if let error = error {
-                                print(error)
-                            } else {
-                                print("successfully created username")
-                            }
-                        }
-                    }
-                }
                 
+                NavigationLink(destination: UpdateUsernameView(showSignInView: $showSignInView, image: image, username: username, userID: userID)) {
+                    HStack {
+                        Text("Update Username")
+                            .foregroundColor(.black)
+                        Spacer()
+                        Image(systemName: "pencil.line")
+                            .foregroundColor(.blue)
+                    }
+                    .padding()
+                    .frame(maxWidth: 330)
+                    .background(Color(UIColor.systemGray6))
+                    .cornerRadius(20)
+                }
+
                 if viewModel.authProviders.contains(.email) {
                     NavigationLink(destination: UpdatePasswordView(showSignInView: $showSignInView, image: image, username: username, userID: userID)) {
                         HStack {
@@ -147,7 +128,6 @@ struct SettingsView: View {
                         .cornerRadius(20)
                     }
                 }
-                
             }
         }
         .padding()

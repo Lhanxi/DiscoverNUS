@@ -55,9 +55,7 @@ struct HomePage: View {
                                 .shadow(color: Color.black.opacity(0.2), radius: 10, x: 5, y: 5)
                         }
                         
-                        Button(action: {
-                            // No action for now
-                        }) {
+                        NavigationLink(destination: OverallLeaderBoardView(showSignInView: $showSignInView, playerInfo: playerInfo)) {
                             Text("Leaderboard")
                                 .font(.headline)
                                 .foregroundColor(Color.white)

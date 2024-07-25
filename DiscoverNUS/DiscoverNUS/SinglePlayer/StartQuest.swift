@@ -66,6 +66,7 @@ struct StartQuest: View {
                             .onAppear {
                                 startTimer()
                             }
+                            .offset(y:5)
                         
                         if isTextFullyRevealed {
                             HStack {
@@ -74,10 +75,11 @@ struct StartQuest: View {
                                     .foregroundColor(.blue)
                                     .padding(.bottom, 10)
                                     .padding(.leading, 20)
+                                    .offset(y:5)
                                 
                                 Spacer()
                                 
-                                NavigationLink(destination: CompleteQuest(quest: quest, showSignInView: $showSignInView, playerInfo: $playerInfo, timeLimit: timeLimit, questImage: Image(uiImage: quest.image)), isActive: $navigateForward) {
+                                NavigationLink(destination: CompleteQuest(quest: quest, showSignInView: $showSignInView, playerInfo: $playerInfo, timeLimit: timeLimit, questImage: Image(uiImage: quest.image), currentExp: playerInfo.exp), isActive: $navigateForward) {
                                     Text("Submit Quest >")
                                         .foregroundColor(.red)
                                         .font(.system(size: 10))
@@ -116,7 +118,7 @@ struct StartQuest: View {
                 )
             }
             .background(
-                NavigationLink(destination: RootView(), isActive: $navigateBackToHomePage) {
+                NavigationLink(destination: QuestFailureView(quest: quest, timeLimit: quest.timelimit, showSignInView: $showSignInView, playerInfo: playerInfo), isActive: $navigateBackToHomePage) {
                     EmptyView()
                 }
             )
@@ -156,7 +158,7 @@ struct StartQuest: View {
             if timeLimit > 0 {
                 timeLimit -= 1
             } else {
-                navigateForward = true
+                navigateBackToHomePage = true
                 timer?.invalidate()
             }
         }
