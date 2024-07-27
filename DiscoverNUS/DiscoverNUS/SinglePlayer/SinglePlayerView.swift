@@ -40,13 +40,19 @@ struct SinglePlayerView: View {
                 }
             }
         }.onAppear() {
+            let group = DispatchGroup()
             if self.playerInfo.quests.count < 3 {
+                group.enter()
                 QuestManager.newQuest(count: self.playerInfo.quests.count, playerInfo: playerInfo) { result in
                     self.playerInfo = result
+                    group.leave()
                 }
             }
-            SinglePlayerView.getUserQuests(questIDList: playerInfo.quests) { result in
-                self.userQuests.add(questList: result)
+            
+            group.notify(queue: .main) {
+                SinglePlayerView.getUserQuests(questIDList: playerInfo.quests) { result in
+                    self.userQuests.add(questList: result)
+                }
             }
         }
     }

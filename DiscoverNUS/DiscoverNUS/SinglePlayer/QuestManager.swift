@@ -36,7 +36,7 @@ class QuestManager {
             }
             dispatchGroup.leave()
         }
-        
+    
         questRef.getDocument {(document, error) in
             if let error = error {
                 fatalError("Firestore Error: \(error.localizedDescription)")
@@ -76,60 +76,6 @@ class QuestManager {
     ///daily quest logic might need new implementation cuz need to change daily? and is repetitive. this should be only for main quests
     
     //need prevent same quest from repeting also in the future
-    /*
-     static func newQuest(count: Int, playerInfo: Player, completion: @escaping(Player) -> Void) {
-     let db = Firestore.firestore()
-     let questCollection = db.collection("quests")
-     var questIDArray: [String] = []
-     var playerInfo: Player = playerInfo
-     var count = count
-     
-     questCollection.getDocuments { querySnapshot, error in
-     if let error = error {
-     //prolly throw some error here later on
-     print("error getting quest info")
-     } else {
-     for quest in querySnapshot!.documents {
-     questIDArray.append(quest.documentID)
-     }
-     
-     while count < 3 {
-     while true {
-     var rng = SystemRandomNumberGenerator()
-     let index: Int = Int.random(in: 0..<questIDArray.count, using: &rng)
-     if !playerInfo.quests.contains(questIDArray[index]) {
-     playerInfo.quests.append(questIDArray[index])
-     break
-     }
-     }
-     count += 1
-     }
-     
-     let userRef = db.collection("users").document(playerInfo.id!)
-     
-     let data: [String: Any] = [
-     "id": playerInfo.id,
-     "level": playerInfo.level,
-     "username": playerInfo.username,
-     "exp": playerInfo.exp,
-     "quests": playerInfo.quests,
-     "GamesPlayed": playerInfo.multiplayerGamesPlayed,
-     "GamesWon": playerInfo.multiplayerGamesWon
-     ]
-     
-     userRef.setData(data) { error in
-     if let error = error {
-     //throw error in the future
-     print("error")
-     } else {
-     completion(playerInfo)
-     }
-     }
-     }
-     }
-     }
-     */
-    
     static func newQuest(count: Int, playerInfo: Player, completion: @escaping(Player) -> Void) {
         let db = Firestore.firestore()
         let questCollection = db.collection("quests")
@@ -137,26 +83,47 @@ class QuestManager {
         var playerInfo: Player = playerInfo
         var count = count
         
-        let userRef = db.collection("users").document(playerInfo.id!)
-        
-        playerInfo.quests = ["Cosmic Caffeine Quest", "Frontier Feast", "Medicine & Science Hub"]
-        
-        let data: [String: Any] = [
-            "id": playerInfo.id,
-            "level": playerInfo.level,
-            "username": playerInfo.username,
-            "exp": playerInfo.exp,
-            "quests": playerInfo.quests,
-            "GamesPlayed": playerInfo.multiplayerGamesPlayed,
-            "GamesWon": playerInfo.multiplayerGamesWon
-        ]
-        
-        userRef.setData(data) { error in
+        questCollection.getDocuments { querySnapshot, error in
             if let error = error {
-                //throw error in the future
-                print("error")
+                //prolly throw some error here later on
+                print("error getting quest info")
             } else {
-                completion(playerInfo)
+                for quest in querySnapshot!.documents {
+                    questIDArray.append(quest.documentID)
+                }
+                
+                while count < 3 {
+                    while true {
+                        var rng = SystemRandomNumberGenerator()
+                        let index: Int = Int.random(in: 0..<questIDArray.count, using: &rng)
+                        if !playerInfo.quests.contains(questIDArray[index]) {
+                            playerInfo.quests.append(questIDArray[index])
+                            break
+                        }
+                    }
+                    count += 1
+                }
+                
+                let userRef = db.collection("users").document(playerInfo.id!)
+                
+                let data: [String: Any] = [
+                    "id": playerInfo.id,
+                    "level": playerInfo.level,
+                    "username": playerInfo.username,
+                    "exp": playerInfo.exp,
+                    "quests": playerInfo.quests,
+                    "GamesPlayed": playerInfo.multiplayerGamesPlayed,
+                    "GamesWon": playerInfo.multiplayerGamesWon
+                ]
+                
+                userRef.setData(data) { error in
+                    if let error = error {
+                        //throw error in the future
+                        print("error")
+                    } else {
+                        completion(playerInfo)
+                    }
+                }
             }
         }
     }

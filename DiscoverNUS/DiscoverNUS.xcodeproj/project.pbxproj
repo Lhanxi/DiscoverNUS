@@ -38,6 +38,7 @@
 		4D8F4FAB2C513A400071638E /* LevelUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D8F4FAA2C513A400071638E /* LevelUpView.swift */; };
 		4D8F4FAD2C5186030071638E /* UpdateUsernameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D8F4FAC2C5186030071638E /* UpdateUsernameView.swift */; };
 		4D8F4FB02C53E2B00071638E /* SignInAppleHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D8F4FAF2C53E2B00071638E /* SignInAppleHelper.swift */; };
+		4D8F4FB82C554B6C0071638E /* DiscoverNUSTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D8F4FB72C554B6C0071638E /* DiscoverNUSTests.swift */; };
 		4DA91C752C1B3199007433F4 /* HomePage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DA91C742C1B3199007433F4 /* HomePage.swift */; };
 		4DA91C772C1B31BC007433F4 /* PlayerGPS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DA91C762C1B31BC007433F4 /* PlayerGPS.swift */; };
 		4DA91C792C1B31DD007433F4 /* GoogleMapConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DA91C782C1B31DD007433F4 /* GoogleMapConfig.swift */; };
@@ -71,6 +72,16 @@
 		4DCFBDF92C50B71D0057235A /* OverallLeaderboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DCFBDF82C50B71D0057235A /* OverallLeaderboardView.swift */; };
 		4DCFBDFB2C50B7860057235A /* LeaderboardHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DCFBDFA2C50B7860057235A /* LeaderboardHandler.swift */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		4D8F4FB92C554B6C0071638E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4DC87F572C0C5AB2005F6F12 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 4DC87F5E2C0C5AB2005F6F12;
+			remoteInfo = DiscoverNUS;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
 		19B0F11F2C44F9D200F0D66C /* Embed Frameworks */ = {
@@ -112,6 +123,8 @@
 		4D8F4FAC2C5186030071638E /* UpdateUsernameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateUsernameView.swift; sourceTree = "<group>"; };
 		4D8F4FAE2C521FD40071638E /* DiscoverNUS.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = DiscoverNUS.entitlements; sourceTree = "<group>"; };
 		4D8F4FAF2C53E2B00071638E /* SignInAppleHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInAppleHelper.swift; sourceTree = "<group>"; };
+		4D8F4FB52C554B6C0071638E /* DiscoverNUSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DiscoverNUSTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		4D8F4FB72C554B6C0071638E /* DiscoverNUSTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverNUSTests.swift; sourceTree = "<group>"; };
 		4DA91C742C1B3199007433F4 /* HomePage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePage.swift; sourceTree = "<group>"; };
 		4DA91C762C1B31BC007433F4 /* PlayerGPS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerGPS.swift; sourceTree = "<group>"; };
 		4DA91C782C1B31DD007433F4 /* GoogleMapConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleMapConfig.swift; sourceTree = "<group>"; };
@@ -142,6 +155,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		4D8F4FB22C554B6C0071638E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		4DC87F5C2C0C5AB2005F6F12 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -195,6 +215,14 @@
 			path = SinglePlayer;
 			sourceTree = "<group>";
 		};
+		4D8F4FB62C554B6C0071638E /* DiscoverNUSTests */ = {
+			isa = PBXGroup;
+			children = (
+				4D8F4FB72C554B6C0071638E /* DiscoverNUSTests.swift */,
+			);
+			path = DiscoverNUSTests;
+			sourceTree = "<group>";
+		};
 		4DA91C7E2C1B3337007433F4 /* MultiPlayer */ = {
 			isa = PBXGroup;
 			children = (
@@ -214,6 +242,7 @@
 			isa = PBXGroup;
 			children = (
 				4DC87F612C0C5AB2005F6F12 /* DiscoverNUS */,
+				4D8F4FB62C554B6C0071638E /* DiscoverNUSTests */,
 				4DC87F602C0C5AB2005F6F12 /* Products */,
 				4DC87F932C0EE6FB005F6F12 /* Frameworks */,
 			);
@@ -223,6 +252,7 @@
 			isa = PBXGroup;
 			children = (
 				4DC87F5F2C0C5AB2005F6F12 /* DiscoverNUS.app */,
+				4D8F4FB52C554B6C0071638E /* DiscoverNUSTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -292,6 +322,24 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		4D8F4FB42C554B6C0071638E /* DiscoverNUSTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4D8F4FBB2C554B6C0071638E /* Build configuration list for PBXNativeTarget "DiscoverNUSTests" */;
+			buildPhases = (
+				4D8F4FB12C554B6C0071638E /* Sources */,
+				4D8F4FB22C554B6C0071638E /* Frameworks */,
+				4D8F4FB32C554B6C0071638E /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				4D8F4FBA2C554B6C0071638E /* PBXTargetDependency */,
+			);
+			name = DiscoverNUSTests;
+			productName = DiscoverNUSTests;
+			productReference = 4D8F4FB52C554B6C0071638E /* DiscoverNUSTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		4DC87F5E2C0C5AB2005F6F12 /* DiscoverNUS */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 4DC87F6D2C0C5AB4005F6F12 /* Build configuration list for PBXNativeTarget "DiscoverNUS" */;
@@ -335,6 +383,10 @@
 				LastSwiftUpdateCheck = 1540;
 				LastUpgradeCheck = 1540;
 				TargetAttributes = {
+					4D8F4FB42C554B6C0071638E = {
+						CreatedOnToolsVersion = 15.4;
+						TestTargetID = 4DC87F5E2C0C5AB2005F6F12;
+					};
 					4DC87F5E2C0C5AB2005F6F12 = {
 						CreatedOnToolsVersion = 15.4;
 					};
@@ -361,11 +413,19 @@
 			projectRoot = "";
 			targets = (
 				4DC87F5E2C0C5AB2005F6F12 /* DiscoverNUS */,
+				4D8F4FB42C554B6C0071638E /* DiscoverNUSTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		4D8F4FB32C554B6C0071638E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		4DC87F5D2C0C5AB2005F6F12 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -380,6 +440,14 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		4D8F4FB12C554B6C0071638E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4D8F4FB82C554B6C0071638E /* DiscoverNUSTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		4DC87F5B2C0C5AB2005F6F12 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -438,7 +506,55 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		4D8F4FBA2C554B6C0071638E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 4DC87F5E2C0C5AB2005F6F12 /* DiscoverNUS */;
+			targetProxy = 4D8F4FB92C554B6C0071638E /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin XCBuildConfiguration section */
+		4D8F4FBC2C554B6C0071638E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 2TY7JKMP2B;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.NUS.DiscoverNUS.orbital;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/DiscoverNUS.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/DiscoverNUS";
+			};
+			name = Debug;
+		};
+		4D8F4FBD2C554B6C0071638E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 2TY7JKMP2B;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.NUS.DiscoverNUS.orbital;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/DiscoverNUS.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/DiscoverNUS";
+			};
+			name = Release;
+		};
 		4DC87F6B2C0C5AB4005F6F12 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -639,6 +755,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		4D8F4FBB2C554B6C0071638E /* Build configuration list for PBXNativeTarget "DiscoverNUSTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4D8F4FBC2C554B6C0071638E /* Debug */,
+				4D8F4FBD2C554B6C0071638E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		4DC87F5A2C0C5AB2005F6F12 /* Build configuration list for PBXProject "DiscoverNUS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
