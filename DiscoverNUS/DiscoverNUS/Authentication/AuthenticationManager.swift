@@ -58,6 +58,9 @@ final class AuthenticationManager {
     }
     
     func signOut() throws {
+        let defaults = UserDefaults.standard
+        defaults.set(false, forKey: "isUserSignedIn")
+        defaults.removeObject(forKey: "userSpecificKey")
         try Auth.auth().signOut()
     }
     

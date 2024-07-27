@@ -11,7 +11,8 @@ import SwiftUI
 final class SignUpEmailViewModel: ObservableObject {
     @Published var email = ""
     @Published var password = ""
-    @Published var errorMessage: String? // New property for error messages
+    @Published var errorMessage: String?
+    @Published var emailInUse = false
     
     func signUp() async {
         guard !email.isEmpty, !password.isEmpty else {
@@ -22,8 +23,9 @@ final class SignUpEmailViewModel: ObservableObject {
         do {
             let _ = try await AuthenticationManager.shared.createUser(email: email, password: password)
         } catch {
+            print(error)
             if let authError = error as NSError?, authError.code == 17007 {
-                errorMessage = "This email is already in use."
+                emailInUse = true
             } else {
                 errorMessage = error.localizedDescription
             }
@@ -32,12 +34,12 @@ final class SignUpEmailViewModel: ObservableObject {
 }
 
 struct SignUpEmailView: View {
-    
     @StateObject private var viewModel = SignUpEmailViewModel()
     @Binding var showSignInView: Bool
-    @State var completedSignUp = false
-    @State var navigateBack = false
-    @State var showAlert = false
+    @State private var showAlert = false
+    @State private var alertMessage = ""
+    @State private var alertTitle = ""
+    @State private var navigateToRootView = false
     
     var body: some View {
         VStack(spacing: 20) {
@@ -66,13 +68,21 @@ struct SignUpEmailView: View {
             Button {
                 Task {
                     await viewModel.signUp()
-                    if viewModel.errorMessage != nil {
+                    if viewModel.emailInUse {
+                        alertTitle = "Email In Use"
+                        alertMessage = "This email is already in use."
+                        showAlert = true
+                    } else if let errorMessage = viewModel.errorMessage {
+                        alertTitle = "Error"
+                        alertMessage = errorMessage
                         showAlert = true
                     } else {
-                        completedSignUp = true
+                        alertTitle = "Success"
+                        alertMessage = "Account Created!"
+                        showAlert = true
+                        navigateToRootView = true
                     }
                 }
-                
             } label: {
                 HStack {
                     Spacer()
@@ -84,29 +94,29 @@ struct SignUpEmailView: View {
                         .background(Color.orange)
                         .cornerRadius(25)
                 }
-                
-            }
-            .alert(isPresented: $completedSignUp) {
-                Alert(
-                    title: Text("Success"),
-                    message: Text("Account Created!"),
-                    dismissButton: .default(Text("OK")){
-                        self.navigateBack = true
-                    })
             }
             .alert(isPresented: $showAlert) {
                 Alert(
-                    title: Text("Error"),
-                    message: Text(viewModel.errorMessage ?? "Unknown error"),
-                    dismissButton: .default(Text("OK")))
+                    title: Text(alertTitle),
+                    message: Text(alertMessage),
+                    dismissButton: .default(Text("OK")) {
+                        if navigateToRootView {
+                            navigateToRootView = true
+                        }
+                    }
+                )
             }
             
             Spacer()
         }
         .padding()
         .navigationTitle("Sign Up With Email")
-        
-        NavigationLink(destination: RootView(), isActive: $navigateBack){}
+        .background(
+            NavigationLink(destination: RootView(), isActive: $navigateToRootView) {
+                EmptyView()
+            }
+            .hidden() // Hide the link from the view hierarchy
+        )
     }
 }
 
