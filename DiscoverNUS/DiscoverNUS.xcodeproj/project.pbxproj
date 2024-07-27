@@ -37,6 +37,7 @@
 		4D8F4FA92C50F1AF0071638E /* QuestFailureView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D8F4FA82C50F1AF0071638E /* QuestFailureView.swift */; };
 		4D8F4FAB2C513A400071638E /* LevelUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D8F4FAA2C513A400071638E /* LevelUpView.swift */; };
 		4D8F4FAD2C5186030071638E /* UpdateUsernameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D8F4FAC2C5186030071638E /* UpdateUsernameView.swift */; };
+		4D8F4FB02C53E2B00071638E /* SignInAppleHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D8F4FAF2C53E2B00071638E /* SignInAppleHelper.swift */; };
 		4DA91C752C1B3199007433F4 /* HomePage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DA91C742C1B3199007433F4 /* HomePage.swift */; };
 		4DA91C772C1B31BC007433F4 /* PlayerGPS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DA91C762C1B31BC007433F4 /* PlayerGPS.swift */; };
 		4DA91C792C1B31DD007433F4 /* GoogleMapConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DA91C782C1B31DD007433F4 /* GoogleMapConfig.swift */; };
@@ -109,6 +110,8 @@
 		4D8F4FA82C50F1AF0071638E /* QuestFailureView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestFailureView.swift; sourceTree = "<group>"; };
 		4D8F4FAA2C513A400071638E /* LevelUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelUpView.swift; sourceTree = "<group>"; };
 		4D8F4FAC2C5186030071638E /* UpdateUsernameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateUsernameView.swift; sourceTree = "<group>"; };
+		4D8F4FAE2C521FD40071638E /* DiscoverNUS.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = DiscoverNUS.entitlements; sourceTree = "<group>"; };
+		4D8F4FAF2C53E2B00071638E /* SignInAppleHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInAppleHelper.swift; sourceTree = "<group>"; };
 		4DA91C742C1B3199007433F4 /* HomePage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePage.swift; sourceTree = "<group>"; };
 		4DA91C762C1B31BC007433F4 /* PlayerGPS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerGPS.swift; sourceTree = "<group>"; };
 		4DA91C782C1B31DD007433F4 /* GoogleMapConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleMapConfig.swift; sourceTree = "<group>"; };
@@ -227,6 +230,7 @@
 		4DC87F612C0C5AB2005F6F12 /* DiscoverNUS */ = {
 			isa = PBXGroup;
 			children = (
+				4D8F4FAE2C521FD40071638E /* DiscoverNUS.entitlements */,
 				4DCFBDF62C500F520057235A /* GoogleService-Info.plist */,
 				4DA91C7E2C1B3337007433F4 /* MultiPlayer */,
 				19D16CC42C140C8C00133B59 /* SinglePlayer */,
@@ -263,6 +267,7 @@
 				4DC87FA52C10B70B005F6F12 /* SignInGoogle.swift */,
 				19D16CDB2C14634F00133B59 /* ImageHandler.swift */,
 				4D8F4FAC2C5186030071638E /* UpdateUsernameView.swift */,
+				4D8F4FAF2C53E2B00071638E /* SignInAppleHelper.swift */,
 			);
 			path = Authentication;
 			sourceTree = "<group>";
@@ -383,6 +388,7 @@
 				4DC87F902C0C9C8D005F6F12 /* SignUpEmailView.swift in Sources */,
 				19CA88CF2C42A8D50003BC94 /* Photopicker.swift in Sources */,
 				4DC87FA62C10B70B005F6F12 /* SignInGoogle.swift in Sources */,
+				4D8F4FB02C53E2B00071638E /* SignInAppleHelper.swift in Sources */,
 				4DC9284F2C1FF70F0044DDBA /* MultiPlayerView.swift in Sources */,
 				19B0F1142C44F27F00F0D66C /* QRScannerView.swift in Sources */,
 				4DC87F652C0C5AB2005F6F12 /* ContentView.swift in Sources */,
@@ -557,6 +563,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = DiscoverNUS/DiscoverNUS.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -595,6 +602,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = DiscoverNUS/DiscoverNUS.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;

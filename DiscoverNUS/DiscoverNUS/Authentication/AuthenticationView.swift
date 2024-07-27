@@ -8,15 +8,22 @@
 import SwiftUI
 import GoogleSignIn
 import GoogleSignInSwift
+import AuthenticationServices
+import CryptoKit
 
 @MainActor
 final class AuthenticationViewModel: ObservableObject {
-    
     
     func signInGoogle() async throws{
         let helper = SignInGoogle()
         let tokens = try await helper.signIn()
         try await AuthenticationManager.shared.signInWithGoogle(tokens: tokens)
+    }
+    
+    func signInApple() async throws {
+        let helper = SignInAppleHelper()
+        let tokens = try await helper.startSignInWithAppleFlow()
+        try await AuthenticationManager.shared.signInWithApple(tokens: tokens)
     }
 }
 
@@ -68,15 +75,45 @@ struct AuthenticationView: View {
                                 .stroke(Color.orange, lineWidth: 2)
                         )
                 }
-                
-                GoogleSignInButton(viewModel: GoogleSignInButtonViewModel(scheme: .dark, style: .icon, state: .normal)) {
-                    Task {
-                        do {
-                            try await viewModel.signInGoogle()
-                            self.navigateBack = true
-                        } catch {
-                            print(error)
+                HStack(spacing:20) {
+                    GoogleSignInButton(viewModel: GoogleSignInButtonViewModel(scheme: .dark, style: .icon, state: .normal)) {
+                        Task {
+                            do {
+                                try await viewModel.signInGoogle()
+                                self.navigateBack = true
+                            } catch {
+                                print(error)
+                            }
                         }
+                    }
+                    
+                    Button(action: {
+                        Task {
+                            do {
+                                try await viewModel.signInApple()
+                                self.navigateBack = true
+                            } catch {
+                                print(error)
+                            }
+                        }
+                    }) {
+                        Image(systemName: "apple.logo")
+                            .foregroundColor(Color.black)
+                            .frame(width: 40, height: 40)
+                            .background(
+                                ZStack {
+                                    Color.white
+                                    RoundedRectangle(cornerRadius: 2)
+                                        .stroke(Color.black.opacity(0.1), lineWidth: 1)
+                                        .shadow(color: Color.black.opacity(0.1), radius: 2, x: 1, y: 1)
+                                }
+                            )
+                            .clipShape(RoundedRectangle(cornerRadius: 2))
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 2)
+                                    .stroke(Color.black, lineWidth: 1)
+                            )
+                            .shadow(color: Color.black.opacity(0.3), radius: 3, x: 0, y: 4)
                     }
                 }
             }
