@@ -69,13 +69,6 @@ class QuestManager {
         }
     }
     
-    //this function needs to take into account whether the user has completed the quests or not so a list needs to be stored in each user with quest completed.
-    
-    //also need error handling later on if there are no more available quests or there are errors (basically minimise the number of dots if there are no more quests)
-    
-    ///daily quest logic might need new implementation cuz need to change daily? and is repetitive. this should be only for main quests
-    
-    //need prevent same quest from repeting also in the future
     static func newQuest(count: Int, playerInfo: Player, completion: @escaping(Player) -> Void) {
         let db = Firestore.firestore()
         let questCollection = db.collection("quests")
