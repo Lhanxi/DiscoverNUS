@@ -10,8 +10,11 @@ import Firebase
 import FirebaseFirestore
 
 struct MultiPlayerView: View {
+    @Binding var showSignInView: Bool
+    @State var playerInfo: Player
     @StateObject private var viewModel = CreatePartyViewModel()
     @State private var navigateToCreatePartyView = false
+    @State private var navigateToPlayView = false
     
     var body: some View {
         NavigationView {
@@ -38,7 +41,7 @@ struct MultiPlayerView: View {
                         .shadow(color: Color.black.opacity(0.2), radius: 4, x: 2, y: 2)
                     
                     VStack(spacing: 30) {
-                        NavigationLink(destination: CreatePartyView(viewModel: viewModel), isActive: $navigateToCreatePartyView) {
+                        NavigationLink(destination: CreatePartyView(viewModel: viewModel, showSignInView: showSignInView, playerInfo: playerInfo), isActive: $navigateToCreatePartyView) {
                             Button(action: {
                                 Task {
                                     await viewModel.createParty()
@@ -63,7 +66,7 @@ struct MultiPlayerView: View {
                             }
                         }
                         
-                        NavigationLink(destination: JoinPartyView()) {
+                        NavigationLink(destination: JoinPartyView(showSignInView: showSignInView, playerInfo: playerInfo)) {
                             Text("Join Party")
                                 .font(.headline)
                                 .foregroundColor(Color.white)
@@ -86,39 +89,24 @@ struct MultiPlayerView: View {
                     Spacer()
                 }
             }
+            .navigationBarItems(leading: Button(action: {
+                navigateToPlayView = true
+            }) {
+                Image(systemName: "chevron.left")
+                    .foregroundColor(.blue)
+                Text("Back")
+                    .foregroundColor(.blue)
+            })
+            .background(
+                NavigationLink(destination: PlayView(showSignInView: $showSignInView, playerInfo: playerInfo), isActive: $navigateToPlayView) {
+                    EmptyView()
+                }
+            )
         }
+        .navigationBarHidden(true)
     }
 }
 
-extension Color {
-    init(hex: String) {
-        let hex = hex.trimmingCharacters(in: CharacterSet.alphanumerics.inverted)
-        var int: UInt64 = 0
-        Scanner(string: hex).scanHexInt64(&int)
-        let a, r, g, b: UInt64
-        switch hex.count {
-        case 3: // RGB (12-bit)
-            (a, r, g, b) = (255, (int >> 8 * 17) & 0xFF, (int >> 4 * 17) & 0xFF, (int * 17) & 0xFF)
-        case 6: // RGB (24-bit)
-            (a, r, g, b) = (255, (int >> 16) & 0xFF, (int >> 8) & 0xFF, int & 0xFF)
-        case 8: // ARGB (32-bit)
-            (a, r, g, b) = ((int >> 24) & 0xFF, (int >> 16) & 0xFF, (int >> 8) & 0xFF, int & 0xFF)
-        default:
-            (a, r, g, b) = (255, 0, 0, 0)
-        }
-        self.init(
-            .sRGB,
-            red: Double(r) / 255,
-            green: Double(g) / 255,
-            blue: Double(b) / 255,
-            opacity: Double(a) / 255
-        )
-    }
-}
-
-#Preview {
-    MultiPlayerView()
-}
 
 
 

@@ -22,13 +22,23 @@
 		19B0F1192C44F9B100F0D66C /* QRCodeDetector in Frameworks */ = {isa = PBXBuildFile; productRef = 19B0F1182C44F9B100F0D66C /* QRCodeDetector */; };
 		19B0F11D2C44F9B100F0D66C /* QRCodeStatic in Frameworks */ = {isa = PBXBuildFile; productRef = 19B0F11C2C44F9B100F0D66C /* QRCodeStatic */; };
 		19B0F11E2C44F9D200F0D66C /* QRCodeDetector in Embed Frameworks */ = {isa = PBXBuildFile; productRef = 19B0F1182C44F9B100F0D66C /* QRCodeDetector */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		19C96CB82C3F96AE0060332D /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 19C96CB72C3F96AD0060332D /* GoogleService-Info.plist */; };
 		19C96CBC2C3FFE2B0060332D /* Username.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19C96CBB2C3FFE2B0060332D /* Username.swift */; };
 		19CA88CF2C42A8D50003BC94 /* Photopicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19CA88CE2C42A8D50003BC94 /* Photopicker.swift */; };
 		19D16CD12C140EA200133B59 /* GoogleMaps in Frameworks */ = {isa = PBXBuildFile; productRef = 19D16CD02C140EA200133B59 /* GoogleMaps */; };
 		19D16CD62C1419EC00133B59 /* ARKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 19D16CD42C1419C800133B59 /* ARKit.framework */; };
 		19D16CDA2C142BC400133B59 /* PlayerModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19D16CD92C142BC400133B59 /* PlayerModel.swift */; };
 		19D16CDC2C14634F00133B59 /* ImageHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19D16CDB2C14634F00133B59 /* ImageHandler.swift */; };
+		4D7558302C46B82900A27C62 /* MapsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D75582F2C46B82900A27C62 /* MapsView.swift */; };
+		4D7558342C46BD5700A27C62 /* SinglePlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D7558332C46BD5700A27C62 /* SinglePlayerView.swift */; };
+		4D7558362C493F7A00A27C62 /* SlideUpModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D7558352C493F7A00A27C62 /* SlideUpModifier.swift */; };
+		4D75583A2C4D6F7A00A27C62 /* PlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D7558392C4D6F7A00A27C62 /* PlayView.swift */; };
+		4D8F4FA42C50E3CE0071638E /* QuestSuccessfulView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D8F4FA32C50E3CE0071638E /* QuestSuccessfulView.swift */; };
+		4D8F4FA72C50E8E30071638E /* ConfettiSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 4D8F4FA62C50E8E30071638E /* ConfettiSwiftUI */; };
+		4D8F4FA92C50F1AF0071638E /* QuestFailureView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D8F4FA82C50F1AF0071638E /* QuestFailureView.swift */; };
+		4D8F4FAB2C513A400071638E /* LevelUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D8F4FAA2C513A400071638E /* LevelUpView.swift */; };
+		4D8F4FAD2C5186030071638E /* UpdateUsernameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D8F4FAC2C5186030071638E /* UpdateUsernameView.swift */; };
+		4D8F4FB02C53E2B00071638E /* SignInAppleHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D8F4FAF2C53E2B00071638E /* SignInAppleHelper.swift */; };
+		4D8F4FB82C554B6C0071638E /* DiscoverNUSTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D8F4FB72C554B6C0071638E /* DiscoverNUSTests.swift */; };
 		4DA91C752C1B3199007433F4 /* HomePage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DA91C742C1B3199007433F4 /* HomePage.swift */; };
 		4DA91C772C1B31BC007433F4 /* PlayerGPS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DA91C762C1B31BC007433F4 /* PlayerGPS.swift */; };
 		4DA91C792C1B31DD007433F4 /* GoogleMapConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DA91C782C1B31DD007433F4 /* GoogleMapConfig.swift */; };
@@ -58,7 +68,20 @@
 		4DC928552C207F2C0044DDBA /* CreatePartyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DC928542C207F2C0044DDBA /* CreatePartyView.swift */; };
 		4DC928592C24252A0044DDBA /* PartyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DC928582C24252A0044DDBA /* PartyView.swift */; };
 		4DC9285B2C2425880044DDBA /* JoinPartyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DC9285A2C2425880044DDBA /* JoinPartyView.swift */; };
+		4DCFBDF72C500F520057235A /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4DCFBDF62C500F520057235A /* GoogleService-Info.plist */; };
+		4DCFBDF92C50B71D0057235A /* OverallLeaderboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DCFBDF82C50B71D0057235A /* OverallLeaderboardView.swift */; };
+		4DCFBDFB2C50B7860057235A /* LeaderboardHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DCFBDFA2C50B7860057235A /* LeaderboardHandler.swift */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		4D8F4FB92C554B6C0071638E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4DC87F572C0C5AB2005F6F12 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 4DC87F5E2C0C5AB2005F6F12;
+			remoteInfo = DiscoverNUS;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
 		19B0F11F2C44F9D200F0D66C /* Embed Frameworks */ = {
@@ -85,12 +108,23 @@
 		1980E6A32C2EFA0200AF846B /* UpdatePassword.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdatePassword.swift; sourceTree = "<group>"; };
 		199F92AD2C43DB850036CB9E /* Vision.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Vision.framework; path = System/Library/Frameworks/Vision.framework; sourceTree = SDKROOT; };
 		19B0F1132C44F27F00F0D66C /* QRScannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRScannerView.swift; sourceTree = "<group>"; };
-		19C96CB72C3F96AD0060332D /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		19C96CBB2C3FFE2B0060332D /* Username.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Username.swift; sourceTree = "<group>"; };
 		19CA88CE2C42A8D50003BC94 /* Photopicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Photopicker.swift; sourceTree = "<group>"; };
 		19D16CD42C1419C800133B59 /* ARKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ARKit.framework; path = System/Library/Frameworks/ARKit.framework; sourceTree = SDKROOT; };
 		19D16CD92C142BC400133B59 /* PlayerModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerModel.swift; sourceTree = "<group>"; };
 		19D16CDB2C14634F00133B59 /* ImageHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageHandler.swift; sourceTree = "<group>"; };
+		4D75582F2C46B82900A27C62 /* MapsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapsView.swift; sourceTree = "<group>"; };
+		4D7558332C46BD5700A27C62 /* SinglePlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SinglePlayerView.swift; sourceTree = "<group>"; };
+		4D7558352C493F7A00A27C62 /* SlideUpModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideUpModifier.swift; sourceTree = "<group>"; };
+		4D7558392C4D6F7A00A27C62 /* PlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayView.swift; sourceTree = "<group>"; };
+		4D8F4FA32C50E3CE0071638E /* QuestSuccessfulView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestSuccessfulView.swift; sourceTree = "<group>"; };
+		4D8F4FA82C50F1AF0071638E /* QuestFailureView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestFailureView.swift; sourceTree = "<group>"; };
+		4D8F4FAA2C513A400071638E /* LevelUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelUpView.swift; sourceTree = "<group>"; };
+		4D8F4FAC2C5186030071638E /* UpdateUsernameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateUsernameView.swift; sourceTree = "<group>"; };
+		4D8F4FAE2C521FD40071638E /* DiscoverNUS.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = DiscoverNUS.entitlements; sourceTree = "<group>"; };
+		4D8F4FAF2C53E2B00071638E /* SignInAppleHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInAppleHelper.swift; sourceTree = "<group>"; };
+		4D8F4FB52C554B6C0071638E /* DiscoverNUSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DiscoverNUSTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		4D8F4FB72C554B6C0071638E /* DiscoverNUSTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverNUSTests.swift; sourceTree = "<group>"; };
 		4DA91C742C1B3199007433F4 /* HomePage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePage.swift; sourceTree = "<group>"; };
 		4DA91C762C1B31BC007433F4 /* PlayerGPS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerGPS.swift; sourceTree = "<group>"; };
 		4DA91C782C1B31DD007433F4 /* GoogleMapConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleMapConfig.swift; sourceTree = "<group>"; };
@@ -115,13 +149,24 @@
 		4DC928542C207F2C0044DDBA /* CreatePartyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatePartyView.swift; sourceTree = "<group>"; };
 		4DC928582C24252A0044DDBA /* PartyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PartyView.swift; sourceTree = "<group>"; };
 		4DC9285A2C2425880044DDBA /* JoinPartyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoinPartyView.swift; sourceTree = "<group>"; };
+		4DCFBDF62C500F520057235A /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
+		4DCFBDF82C50B71D0057235A /* OverallLeaderboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverallLeaderboardView.swift; sourceTree = "<group>"; };
+		4DCFBDFA2C50B7860057235A /* LeaderboardHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeaderboardHandler.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		4D8F4FB22C554B6C0071638E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		4DC87F5C2C0C5AB2005F6F12 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4D8F4FA72C50E8E30071638E /* ConfettiSwiftUI in Frameworks */,
 				19D16CD12C140EA200133B59 /* GoogleMaps in Frameworks */,
 				4DC87F972C0EE705005F6F12 /* FirebaseFirestoreSwift in Frameworks */,
 				4DC87F762C0C5C82005F6F12 /* FirebaseAnalyticsSwift in Frameworks */,
@@ -154,11 +199,28 @@
 				1980E69F2C2EF8FF00AF846B /* StartQuest.swift */,
 				1980E6A12C2EF90D00AF846B /* CompleteQuest.swift */,
 				19C96CBB2C3FFE2B0060332D /* Username.swift */,
-				1907CB3F2C412B27005739D9 /* Level System.swift */,
 				1907CB412C413ED7005739D9 /* UserStatistics.swift */,
 				19CA88CE2C42A8D50003BC94 /* Photopicker.swift */,
+				4D75582F2C46B82900A27C62 /* MapsView.swift */,
+				4D7558332C46BD5700A27C62 /* SinglePlayerView.swift */,
+				1907CB3F2C412B27005739D9 /* Level System.swift */,
+				4D7558352C493F7A00A27C62 /* SlideUpModifier.swift */,
+				4D7558392C4D6F7A00A27C62 /* PlayView.swift */,
+				4DCFBDF82C50B71D0057235A /* OverallLeaderboardView.swift */,
+				4DCFBDFA2C50B7860057235A /* LeaderboardHandler.swift */,
+				4D8F4FA32C50E3CE0071638E /* QuestSuccessfulView.swift */,
+				4D8F4FA82C50F1AF0071638E /* QuestFailureView.swift */,
+				4D8F4FAA2C513A400071638E /* LevelUpView.swift */,
 			);
 			path = SinglePlayer;
+			sourceTree = "<group>";
+		};
+		4D8F4FB62C554B6C0071638E /* DiscoverNUSTests */ = {
+			isa = PBXGroup;
+			children = (
+				4D8F4FB72C554B6C0071638E /* DiscoverNUSTests.swift */,
+			);
+			path = DiscoverNUSTests;
 			sourceTree = "<group>";
 		};
 		4DA91C7E2C1B3337007433F4 /* MultiPlayer */ = {
@@ -180,6 +242,7 @@
 			isa = PBXGroup;
 			children = (
 				4DC87F612C0C5AB2005F6F12 /* DiscoverNUS */,
+				4D8F4FB62C554B6C0071638E /* DiscoverNUSTests */,
 				4DC87F602C0C5AB2005F6F12 /* Products */,
 				4DC87F932C0EE6FB005F6F12 /* Frameworks */,
 			);
@@ -189,6 +252,7 @@
 			isa = PBXGroup;
 			children = (
 				4DC87F5F2C0C5AB2005F6F12 /* DiscoverNUS.app */,
+				4D8F4FB52C554B6C0071638E /* DiscoverNUSTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -196,7 +260,8 @@
 		4DC87F612C0C5AB2005F6F12 /* DiscoverNUS */ = {
 			isa = PBXGroup;
 			children = (
-				19C96CB72C3F96AD0060332D /* GoogleService-Info.plist */,
+				4D8F4FAE2C521FD40071638E /* DiscoverNUS.entitlements */,
+				4DCFBDF62C500F520057235A /* GoogleService-Info.plist */,
 				4DA91C7E2C1B3337007433F4 /* MultiPlayer */,
 				19D16CC42C140C8C00133B59 /* SinglePlayer */,
 				4DC87FA22C10AFE8005F6F12 /* Utilities */,
@@ -231,6 +296,8 @@
 				4DC87F882C0C5DB2005F6F12 /* SignInEmailView.swift */,
 				4DC87FA52C10B70B005F6F12 /* SignInGoogle.swift */,
 				19D16CDB2C14634F00133B59 /* ImageHandler.swift */,
+				4D8F4FAC2C5186030071638E /* UpdateUsernameView.swift */,
+				4D8F4FAF2C53E2B00071638E /* SignInAppleHelper.swift */,
 			);
 			path = Authentication;
 			sourceTree = "<group>";
@@ -255,6 +322,24 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		4D8F4FB42C554B6C0071638E /* DiscoverNUSTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4D8F4FBB2C554B6C0071638E /* Build configuration list for PBXNativeTarget "DiscoverNUSTests" */;
+			buildPhases = (
+				4D8F4FB12C554B6C0071638E /* Sources */,
+				4D8F4FB22C554B6C0071638E /* Frameworks */,
+				4D8F4FB32C554B6C0071638E /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				4D8F4FBA2C554B6C0071638E /* PBXTargetDependency */,
+			);
+			name = DiscoverNUSTests;
+			productName = DiscoverNUSTests;
+			productReference = 4D8F4FB52C554B6C0071638E /* DiscoverNUSTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		4DC87F5E2C0C5AB2005F6F12 /* DiscoverNUS */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 4DC87F6D2C0C5AB4005F6F12 /* Build configuration list for PBXNativeTarget "DiscoverNUS" */;
@@ -282,6 +367,7 @@
 				19B0F1162C44F9B100F0D66C /* QRCode */,
 				19B0F1182C44F9B100F0D66C /* QRCodeDetector */,
 				19B0F11C2C44F9B100F0D66C /* QRCodeStatic */,
+				4D8F4FA62C50E8E30071638E /* ConfettiSwiftUI */,
 			);
 			productName = DiscoverNUS;
 			productReference = 4DC87F5F2C0C5AB2005F6F12 /* DiscoverNUS.app */;
@@ -297,6 +383,10 @@
 				LastSwiftUpdateCheck = 1540;
 				LastUpgradeCheck = 1540;
 				TargetAttributes = {
+					4D8F4FB42C554B6C0071638E = {
+						CreatedOnToolsVersion = 15.4;
+						TestTargetID = 4DC87F5E2C0C5AB2005F6F12;
+					};
 					4DC87F5E2C0C5AB2005F6F12 = {
 						CreatedOnToolsVersion = 15.4;
 					};
@@ -316,23 +406,32 @@
 				4DC87F9A2C10AB0F005F6F12 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */,
 				19D16CCF2C140EA200133B59 /* XCRemoteSwiftPackageReference "ios-maps-sdk" */,
 				19B0F1152C44F9B100F0D66C /* XCRemoteSwiftPackageReference "QRCode" */,
+				4D8F4FA52C50E8E30071638E /* XCRemoteSwiftPackageReference "ConfettiSwiftUI" */,
 			);
 			productRefGroup = 4DC87F602C0C5AB2005F6F12 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
 				4DC87F5E2C0C5AB2005F6F12 /* DiscoverNUS */,
+				4D8F4FB42C554B6C0071638E /* DiscoverNUSTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		4D8F4FB32C554B6C0071638E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		4DC87F5D2C0C5AB2005F6F12 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				4DC87F6A2C0C5AB4005F6F12 /* Preview Assets.xcassets in Resources */,
-				19C96CB82C3F96AE0060332D /* GoogleService-Info.plist in Resources */,
+				4DCFBDF72C500F520057235A /* GoogleService-Info.plist in Resources */,
 				4DC87F672C0C5AB4005F6F12 /* Assets.xcassets in Resources */,
 				4DC87F672C0C5AB4005F6F12 /* Assets.xcassets in Resources */,
 			);
@@ -341,6 +440,14 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		4D8F4FB12C554B6C0071638E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4D8F4FB82C554B6C0071638E /* DiscoverNUSTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		4DC87F5B2C0C5AB2005F6F12 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -349,6 +456,7 @@
 				4DC87F902C0C9C8D005F6F12 /* SignUpEmailView.swift in Sources */,
 				19CA88CF2C42A8D50003BC94 /* Photopicker.swift in Sources */,
 				4DC87FA62C10B70B005F6F12 /* SignInGoogle.swift in Sources */,
+				4D8F4FB02C53E2B00071638E /* SignInAppleHelper.swift in Sources */,
 				4DC9284F2C1FF70F0044DDBA /* MultiPlayerView.swift in Sources */,
 				19B0F1142C44F27F00F0D66C /* QRScannerView.swift in Sources */,
 				4DC87F652C0C5AB2005F6F12 /* ContentView.swift in Sources */,
@@ -357,10 +465,15 @@
 				1907CB3C2C40F128005739D9 /* QuizViewModel.swift in Sources */,
 				4DC9285B2C2425880044DDBA /* JoinPartyView.swift in Sources */,
 				4DC87F8B2C0C5DB3005F6F12 /* AuthenticationView.swift in Sources */,
+				4D7558362C493F7A00A27C62 /* SlideUpModifier.swift in Sources */,
 				4DC87F8D2C0C5DB3005F6F12 /* SettingsView.swift in Sources */,
+				4D8F4FA42C50E3CE0071638E /* QuestSuccessfulView.swift in Sources */,
 				19C96CBC2C3FFE2B0060332D /* Username.swift in Sources */,
 				19D16CDC2C14634F00133B59 /* ImageHandler.swift in Sources */,
+				4DCFBDFB2C50B7860057235A /* LeaderboardHandler.swift in Sources */,
 				1907CB422C413ED7005739D9 /* UserStatistics.swift in Sources */,
+				4D8F4FAD2C5186030071638E /* UpdateUsernameView.swift in Sources */,
+				4D8F4FAB2C513A400071638E /* LevelUpView.swift in Sources */,
 				19D16CDA2C142BC400133B59 /* PlayerModel.swift in Sources */,
 				4DA91C752C1B3199007433F4 /* HomePage.swift in Sources */,
 				1907CB3A2C40F0D7005739D9 /* QuizView.swift in Sources */,
@@ -369,10 +482,14 @@
 				4DC87FA62C10B70B005F6F12 /* SignInGoogle.swift in Sources */,
 				4DC87F652C0C5AB2005F6F12 /* ContentView.swift in Sources */,
 				4DA91C7D2C1B3219007433F4 /* QuestView.swift in Sources */,
+				4D75583A2C4D6F7A00A27C62 /* PlayView.swift in Sources */,
 				1907CB3E2C40F14C005739D9 /* LeaderBoardView.swift in Sources */,
+				4D7558302C46B82900A27C62 /* MapsView.swift in Sources */,
 				4DC928552C207F2C0044DDBA /* CreatePartyView.swift in Sources */,
 				4DC87F8B2C0C5DB3005F6F12 /* AuthenticationView.swift in Sources */,
+				4D8F4FA92C50F1AF0071638E /* QuestFailureView.swift in Sources */,
 				4DA91C772C1B31BC007433F4 /* PlayerGPS.swift in Sources */,
+				4DCFBDF92C50B71D0057235A /* OverallLeaderboardView.swift in Sources */,
 				1980E6A02C2EF8FF00AF846B /* StartQuest.swift in Sources */,
 				4DC87F8D2C0C5DB3005F6F12 /* SettingsView.swift in Sources */,
 				4DC87F632C0C5AB2005F6F12 /* DiscoverNUSApp.swift in Sources */,
@@ -382,13 +499,62 @@
 				4DC87F922C0ED8EF005F6F12 /* ForgotPasswordView.swift in Sources */,
 				4DC87FA42C10B021005F6F12 /* Utilities.swift in Sources */,
 				4DC87F8E2C0C5DB3005F6F12 /* SignInEmailView.swift in Sources */,
+				4D7558342C46BD5700A27C62 /* SinglePlayerView.swift in Sources */,
 				1980E6A22C2EF90D00AF846B /* CompleteQuest.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		4D8F4FBA2C554B6C0071638E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 4DC87F5E2C0C5AB2005F6F12 /* DiscoverNUS */;
+			targetProxy = 4D8F4FB92C554B6C0071638E /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin XCBuildConfiguration section */
+		4D8F4FBC2C554B6C0071638E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 2TY7JKMP2B;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.NUS.DiscoverNUS.orbital;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/DiscoverNUS.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/DiscoverNUS";
+			};
+			name = Debug;
+		};
+		4D8F4FBD2C554B6C0071638E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 2TY7JKMP2B;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.NUS.DiscoverNUS.orbital;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/DiscoverNUS.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/DiscoverNUS";
+			};
+			name = Release;
+		};
 		4DC87F6B2C0C5AB4005F6F12 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -513,29 +679,34 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = DiscoverNUS/DiscoverNUS.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"DiscoverNUS/Preview Content\"";
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 2TY7JKMP2B;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = DiscoverNUS/Info.plist;
+				INFOPLIST_KEY_LSApplicationCategoryType = "";
 				INFOPLIST_KEY_NSCameraUsageDescription = "Assessing Camera to take picture of quest";
-				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = GPS;
 				INFOPLIST_KEY_NSLocationUsageDescription = GPS;
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = GPS;
+				INFOPLIST_KEY_NSSpeechRecognitionUsageDescription = Sound;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = NUS.DiscoverNUS;
+				PRODUCT_BUNDLE_IDENTIFIER = com.NUS.DiscoverNUS.orbital;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -547,29 +718,34 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = DiscoverNUS/DiscoverNUS.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"DiscoverNUS/Preview Content\"";
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 2TY7JKMP2B;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = DiscoverNUS/Info.plist;
+				INFOPLIST_KEY_LSApplicationCategoryType = "";
 				INFOPLIST_KEY_NSCameraUsageDescription = "Assessing Camera to take picture of quest";
-				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = GPS;
 				INFOPLIST_KEY_NSLocationUsageDescription = GPS;
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = GPS;
+				INFOPLIST_KEY_NSSpeechRecognitionUsageDescription = Sound;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = NUS.DiscoverNUS;
+				PRODUCT_BUNDLE_IDENTIFIER = com.NUS.DiscoverNUS.orbital;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -579,6 +755,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		4D8F4FBB2C554B6C0071638E /* Build configuration list for PBXNativeTarget "DiscoverNUSTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4D8F4FBC2C554B6C0071638E /* Debug */,
+				4D8F4FBD2C554B6C0071638E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		4DC87F5A2C0C5AB2005F6F12 /* Build configuration list for PBXProject "DiscoverNUS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -614,6 +799,14 @@
 			requirement = {
 				kind = exactVersion;
 				version = 9.0.0;
+			};
+		};
+		4D8F4FA52C50E8E30071638E /* XCRemoteSwiftPackageReference "ConfettiSwiftUI" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/simibac/ConfettiSwiftUI.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.1.0;
 			};
 		};
 		4DC87F722C0C5C82005F6F12 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
@@ -659,6 +852,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 19D16CCF2C140EA200133B59 /* XCRemoteSwiftPackageReference "ios-maps-sdk" */;
 			productName = GoogleMaps;
+		};
+		4D8F4FA62C50E8E30071638E /* ConfettiSwiftUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4D8F4FA52C50E8E30071638E /* XCRemoteSwiftPackageReference "ConfettiSwiftUI" */;
+			productName = ConfettiSwiftUI;
 		};
 		4DC87F732C0C5C82005F6F12 /* FirebaseAnalytics */ = {
 			isa = XCSwiftPackageProductDependency;

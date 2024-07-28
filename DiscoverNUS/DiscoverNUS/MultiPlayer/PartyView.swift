@@ -18,6 +18,7 @@ final class PartyViewModel: ObservableObject {
     @Published var currentUser: UserRef?
     @Published var isKicked: Bool = false
     @Published var navigateToQuiz: Bool = false
+    @Published var questions: [QuestionModel] = []
 
     private var listener: ListenerRegistration?
     private var currentUserListener: ListenerRegistration?
@@ -34,11 +35,24 @@ final class PartyViewModel: ObservableObject {
         var inQuiz: Bool
         var playerScore: Int
     }
+    
+    struct QuestionModel: Identifiable {
+        var id: String
+        var question: String
+        var answers: [String]
+        var correctAnswer: Int
+    }
 
     init(partyCode: String) {
         self.partyCode = partyCode
-        fetchCurrentUser()
-        fetchUsers()
+        fetchCurrentUser { [weak self] in
+            guard let self = self else { return }
+            if let currentUser = self.currentUser, currentUser.isLeader {
+                print("generateAndStoreQuestions")
+                self.generateAndStoreQuestions()
+            }
+            self.fetchUsers()
+        }
     }
 
     deinit {
@@ -46,9 +60,10 @@ final class PartyViewModel: ObservableObject {
         currentUserListener?.remove()
     }
 
-    func fetchCurrentUser() {
+    func fetchCurrentUser(completion: @escaping () -> Void) {
         guard let user = Auth.auth().currentUser else {
             print("No authenticated user found.")
+            completion()
             return
         }
 
@@ -56,14 +71,17 @@ final class PartyViewModel: ObservableObject {
         let db = Firestore.firestore()
         let userRef = db.collection("Teams").document("DefaultTeam").collection("Parties").document(partyCode).collection("Users").document(userID)
 
-        userRef.getDocument { document, error in
+        userRef.getDocument { [weak self] document, error in
+            guard let self = self else { return }
             if let error = error {
                 print("Error fetching current user: \(error.localizedDescription)")
+                completion()
                 return
             }
 
             guard let document = document, document.exists, let data = document.data() else {
                 print("Current user document does not exist.")
+                completion()
                 return
             }
 
@@ -82,6 +100,107 @@ final class PartyViewModel: ObservableObject {
 
             self.listenForKickedStatus()
             self.listenForQuizStatus()
+            completion()
+        }
+    }
+    
+    func generateAndStoreQuestions() {
+        let db = Firestore.firestore()
+        let partyRef = db.collection("Teams").document("DefaultTeam").collection("Parties").document(partyCode)
+        let questionsCollectionRef = partyRef.collection("questions")
+        
+        // Delete existing questions first (if any)
+        questionsCollectionRef.getDocuments { snapshot, error in
+            if let error = error {
+                print("Error fetching documents: \(error.localizedDescription)")
+                return
+            }
+            
+            guard let documents = snapshot?.documents else {
+                print("No documents found to delete")
+                // Proceed to load new questions even if none exist
+                self.loadQuestionsIntoParty(partyRef: partyRef, questionsCollectionRef: questionsCollectionRef)
+                return
+            }
+            
+            // Delete existing questions
+            let batch = db.batch()
+            documents.forEach { batch.deleteDocument($0.reference) }
+            
+            batch.commit { error in
+                if let error = error {
+                    print("Error deleting documents: \(error.localizedDescription)")
+                } else {
+                    print("Successfully deleted existing questions")
+                    // Proceed to load new questions after deletion
+                    self.loadQuestionsIntoParty(partyRef: partyRef, questionsCollectionRef: questionsCollectionRef)
+                }
+            }
+        }
+    }
+
+    func loadQuestionsIntoParty(partyRef: DocumentReference, questionsCollectionRef: CollectionReference) {
+        let db = Firestore.firestore()
+        let partyRef = db.collection("Teams").document("DefaultTeam").collection("Parties").document(partyCode)
+        // Load new questions and store them
+        db.collection("questions").getDocuments { snapshot, error in
+            if let error = error {
+                print("Error fetching questions: \(error.localizedDescription)")
+                return
+            }
+
+            guard let documents = snapshot?.documents else {
+                print("No documents found")
+                return
+            }
+
+            let selectedDocuments = documents.shuffled().prefix(10) // Randomly select 10 questions
+
+            let questions: [QuestionModel] = selectedDocuments.compactMap { doc in
+                let data = doc.data()
+                let question = data["question"] as? String ?? ""
+                let answerOne = data["answerOne"] as? String ?? ""
+                let answerTwo = data["answerTwo"] as? String ?? ""
+                let answerThree = data["answerThree"] as? String ?? ""
+                let correctAnswer = data["correctAnswer"] as? String ?? ""
+                let answers = [answerOne, answerTwo, answerThree, correctAnswer].shuffled()
+                let correctAnswerIndex = answers.firstIndex(of: correctAnswer) ?? 0
+                return QuestionModel(id: doc.documentID, question: question, answers: answers, correctAnswer: correctAnswerIndex)
+            }
+
+            // Run transaction to store new questions
+            db.runTransaction({ transaction, errorPointer in
+                do {
+                    let partySnapshot = try transaction.getDocument(partyRef)
+
+                    guard partySnapshot.exists else {
+                        throw NSError(domain: "PartyDocumentNotExist", code: 0, userInfo: nil)
+                    }
+
+                    for question in questions {
+                        let questionData: [String: Any] = [
+                            "id": question.id,
+                            "question": question.question,
+                            "answers": question.answers,
+                            "correctAnswer": question.correctAnswer
+                        ]
+
+                        let questionDocRef = questionsCollectionRef.document(question.id)
+                        transaction.setData(questionData, forDocument: questionDocRef)
+                    }
+
+                    return nil // Return nil to indicate successful transaction
+                } catch {
+                    errorPointer?.pointee = error as NSError // Set the error pointer if there's an error
+                    return nil // Return nil to indicate failure
+                }
+            }) { _, error in
+                if let error = error {
+                    print("Transaction failed: \(error.localizedDescription)")
+                } else {
+                    print("Successfully stored game questions")
+                }
+            }
         }
     }
 
@@ -326,107 +445,133 @@ struct PartyView: View {
     @StateObject private var viewModel: PartyViewModel
     @State private var navigateToJoinPartyView = false
     @State private var navigateToJoinQuizView = false
+    @State var showSignInView: Bool
+    @State var playerInfo: Player
 
-    init(partyCode: String) {
+    init(partyCode: String, showSignInView: Bool, playerInfo:Player) {
         _viewModel = StateObject(wrappedValue: PartyViewModel(partyCode: partyCode))
+        _playerInfo = State(initialValue: playerInfo)
+        _showSignInView = State(initialValue: showSignInView)
     }
 
     var body: some View {
-        VStack(spacing: 16) {
-            Text("Waiting for Players...")
-                .font(.title)
-                .padding(.top)
+        NavigationView {
+            VStack(spacing: 16) {
+                Text("\(viewModel.users.count)/4 Players")
+                    .font(.title)
+                    .padding(.top)
 
-            ZStack {
-                RoundedRectangle(cornerRadius: 15)
-                    .fill(Color.gray.opacity(0.2))
-                    .frame(width: 350, height: 250)
-                    .shadow(color: .gray, radius: 10, x: 10, y: 10) // Shadow on right and bottom
-                    .shadow(color: .clear, radius: 5, x: -5, y: -5) // No shadow on top and left
-                    .background(
-                        RoundedRectangle(cornerRadius: 15)
-                            .stroke(Color.black.opacity(0.1), lineWidth: 1)
-                            .shadow(color: Color.black.opacity(0.4), radius: 10, x: 2, y: 2)
-                            .clipShape(RoundedRectangle(cornerRadius: 15))
-                    )
-
-                VStack {
-                    if let qrCodeImage = viewModel.generateQRCode(from: viewModel.partyCode) {
-                        Image(uiImage: qrCodeImage)
-                            .resizable()
-                            .interpolation(.none)
-                            .scaledToFit()
-                            .frame(width: 150, height: 150)
-                            .padding()
-                    }
-
-                    Text("Party Code: \(viewModel.partyCode)")
-                        .font(.headline)
-                        .padding(.bottom)
-                }
-            }
-
-            List(viewModel.users, id: \.id) { user in
                 ZStack {
-                    RoundedRectangle(cornerRadius: 30)
+                    RoundedRectangle(cornerRadius: 15)
                         .fill(Color.gray.opacity(0.2))
-                        .frame(maxWidth: 350, minHeight: 40)
-                        .padding(.horizontal, 8)
+                        .frame(width: 350, height: 250)
+                        .shadow(color: .gray, radius: 10, x: 10, y: 10) // Shadow on right and bottom
+                        .shadow(color: .clear, radius: 5, x: -5, y: -5) // No shadow on top and left
+                        .background(
+                            RoundedRectangle(cornerRadius: 15)
+                                .stroke(Color.black.opacity(0.1), lineWidth: 1)
+                                .shadow(color: Color.black.opacity(0.4), radius: 10, x: 2, y: 2)
+                                .clipShape(RoundedRectangle(cornerRadius: 15))
+                        )
 
-                    HStack(spacing: 12) {
-                        Image(systemName: "person.circle.fill")
-                            .resizable()
-                            .frame(width: 36, height: 36)
-                            .clipShape(Circle())
-                            .padding(.leading, 12)
+                    VStack {
+                        if let qrCodeImage = viewModel.generateQRCode(from: viewModel.partyCode) {
+                            Image(uiImage: qrCodeImage)
+                                .resizable()
+                                .interpolation(.none)
+                                .scaledToFit()
+                                .frame(width: 150, height: 150)
+                                .padding()
+                        }
 
-                        Text(user.username)
-                            .font(.body)
-                            .lineLimit(1)
-                            .minimumScaleFactor(0.8)
+                        Text("Party Code: \(viewModel.partyCode)")
+                            .font(.headline)
+                            .padding(.bottom)
+                    }
+                }
 
-                        Spacer()
+                List(viewModel.users, id: \.id) { user in
+                    ZStack {
+                        RoundedRectangle(cornerRadius: 30)
+                            .fill(Color.gray.opacity(0.2))
+                            .frame(maxWidth: 350, minHeight: 40)
+                            .padding(.horizontal, 8)
 
-                        if user.isLeader {
-                            Image(systemName: "crown.fill")
-                                .foregroundColor(.yellow)
-                                .padding(.trailing, 12)
-                        } else {
-                            if viewModel.currentUser?.isLeader == true {
-                                Button(action: {
-                                    viewModel.kickUser(userID: user.id)
-                                }) {
-                                    Text("Kick")
-                                        .foregroundColor(.red)
-                                        .padding(.trailing, 12)
+                        HStack(spacing: 12) {
+                            Image(systemName: "person.circle.fill")
+                                .resizable()
+                                .frame(width: 36, height: 36)
+                                .clipShape(Circle())
+                                .padding(.leading, 12)
+
+                            Text(user.username)
+                                .font(.body)
+                                .lineLimit(1)
+                                .minimumScaleFactor(0.8)
+
+                            Spacer()
+
+                            if user.isLeader {
+                                Image(systemName: "crown.fill")
+                                    .foregroundColor(.yellow)
+                                    .padding(.trailing, 12)
+                            } else {
+                                if viewModel.currentUser?.isLeader == true {
+                                    Button(action: {
+                                        viewModel.kickUser(userID: user.id)
+                                    }) {
+                                        Text("Kick")
+                                            .foregroundColor(.red)
+                                            .padding(.trailing, 12)
+                                    }
                                 }
                             }
                         }
+                        .padding(.vertical, 12)
+                        .padding(.horizontal, 16)
                     }
-                    .padding(.vertical, 12)
-                    .padding(.horizontal, 16)
+                    .background(Color.white)
+                    .listRowInsets(EdgeInsets())
+                    .listRowSeparator(.hidden)
+                    .padding(.vertical, 8)
                 }
-                .background(Color.white)
-                .listRowInsets(EdgeInsets())
-                .listRowSeparator(.hidden)
-                .padding(.vertical, 8)
-            }
-            .listStyle(PlainListStyle())
+                .listStyle(PlainListStyle())
 
-            Spacer()
+                Spacer()
 
-            if viewModel.currentUser?.isLeader == true {
+                if viewModel.currentUser?.isLeader == true {
+                    Button(action: {
+                        viewModel.startQuiz()
+                    }) {
+                        Text("Start Quiz")
+                            .font(.headline)
+                            .foregroundColor(Color.white)
+                            .multilineTextAlignment(.center)
+                            .frame(height: 55)
+                            .frame(maxWidth: 250)
+                            .background(
+                                LinearGradient(gradient: Gradient(colors: [Color(hex: "#5687CE"), Color(hex: "#5687CE").opacity(0.8)]), startPoint: .topLeading, endPoint: .bottomTrailing)
+                            )
+                            .cornerRadius(20)
+                            .shadow(color: Color.black.opacity(0.2), radius: 10, x: 5, y: 5)
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 20)
+                                    .stroke(Color.white, lineWidth: 2)
+                            )
+                    }
+                }
+
                 Button(action: {
-                    viewModel.startQuiz()
+                    viewModel.leaveParty()
+                    navigateToJoinPartyView = true
                 }) {
-                    Text("Start Quiz")
+                    Text("Leave Party")
                         .font(.headline)
                         .foregroundColor(Color.white)
-                        .multilineTextAlignment(.center)
                         .frame(height: 55)
                         .frame(maxWidth: 250)
                         .background(
-                            LinearGradient(gradient: Gradient(colors: [Color(hex: "#5687CE"), Color(hex: "#5687CE").opacity(0.8)]), startPoint: .topLeading, endPoint: .bottomTrailing)
+                            LinearGradient(gradient: Gradient(colors: [Color.orange, Color.orange.opacity(0.8)]), startPoint: .topLeading, endPoint: .bottomTrailing)
                         )
                         .cornerRadius(20)
                         .shadow(color: Color.black.opacity(0.2), radius: 10, x: 5, y: 5)
@@ -436,47 +581,23 @@ struct PartyView: View {
                         )
                 }
             }
-
-            Button(action: {
-                viewModel.leaveParty()
-                navigateToJoinPartyView = true
-            }) {
-                Text("Leave Party")
-                    .font(.headline)
-                    .foregroundColor(Color.white)
-                    .frame(height: 55)
-                    .frame(maxWidth: 250)
-                    .background(
-                        LinearGradient(gradient: Gradient(colors: [Color.orange, Color.orange.opacity(0.8)]), startPoint: .topLeading, endPoint: .bottomTrailing)
-                    )
-                    .cornerRadius(20)
-                    .shadow(color: Color.black.opacity(0.2), radius: 10, x: 5, y: 5)
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 20)
-                            .stroke(Color.white, lineWidth: 2)
-                    )
+            .onChange(of: viewModel.isKicked) { isKicked in
+                if isKicked {
+                    navigateToJoinPartyView = true
+                }
+            }
+            .onChange(of: viewModel.navigateToQuiz) { navigateToQuiz in
+                if navigateToQuiz {
+                    navigateToJoinQuizView = true
+                }
+            }
+            .fullScreenCover(isPresented: $navigateToJoinPartyView) {
+                MultiPlayerView(showSignInView: $showSignInView, playerInfo: playerInfo)
+            }
+            .fullScreenCover(isPresented: $navigateToJoinQuizView) {
+                QuizView(partyCode: viewModel.partyCode, showSignInView: showSignInView, playerInfo: playerInfo)
             }
         }
-        .onChange(of: viewModel.isKicked) { isKicked in
-            if isKicked {
-                navigateToJoinPartyView = true
-            }
-        }
-        .onChange(of: viewModel.navigateToQuiz) { navigateToQuiz in
-            if navigateToQuiz {
-                navigateToJoinQuizView = true
-            }
-        }
-        .fullScreenCover(isPresented: $navigateToJoinPartyView) {
-            MultiPlayerView()
-        }
-        .fullScreenCover(isPresented: $navigateToJoinQuizView) {
-            QuizView(partyCode: viewModel.partyCode)
-        }
+        .navigationBarHidden(true) // Hides the navigation bar
     }
-}
-
-
-#Preview {
-    PartyView(partyCode: "testCode")
 }

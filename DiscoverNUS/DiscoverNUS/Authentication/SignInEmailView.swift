@@ -11,20 +11,26 @@ import SwiftUI
 final class SignInEmailViewModel: ObservableObject {
     @Published var email = ""
     @Published var password = ""
-    
+    @Published var showAlert = false
+    @Published var alertMessage = ""
+
     func signIn() async throws {
         guard !email.isEmpty, !password.isEmpty else {
-            print("No email or password found.")
+            alertMessage = "Your email or password is incorrect. Please try again."
+            showAlert = true
             return
         }
         
-        let _ = try await AuthenticationManager.shared.signInUser(email: email, password: password)
+        do {
+            let _ = try await AuthenticationManager.shared.signInUser(email: email, password: password)
+        } catch {
+            alertMessage = "Your email or password is incorrect. Please try again."
+            showAlert = true
+        }
     }
 }
 
-
 struct SignInEmailView: View {
-    
     @StateObject private var viewModel = SignInEmailViewModel()
     @Binding var showSignInView: Bool
     @State private var navigateToForgotPassword = false
@@ -70,14 +76,14 @@ struct SignInEmailView: View {
                         }
                     Spacer()
                 }
-
                 
                 Button {
                     Task {
                         do {
                             try await viewModel.signIn()
-                            showSignInView = false
-                            return
+                            if !viewModel.showAlert {
+                                showSignInView = false
+                            }
                         } catch {
                             print(error)
                         }
@@ -99,6 +105,13 @@ struct SignInEmailView: View {
             }
             .padding()
             .navigationTitle("Sign In With Email")
+            .alert(isPresented: $viewModel.showAlert) {
+                Alert(
+                    title: Text("Login Failed"),
+                    message: Text(viewModel.alertMessage),
+                    dismissButton: .default(Text("OK"))
+                )
+            }
         }
         .onAppear {
             navigateToForgotPassword = false

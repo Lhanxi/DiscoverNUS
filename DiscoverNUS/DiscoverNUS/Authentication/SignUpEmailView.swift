@@ -11,23 +11,35 @@ import SwiftUI
 final class SignUpEmailViewModel: ObservableObject {
     @Published var email = ""
     @Published var password = ""
+    @Published var errorMessage: String?
+    @Published var emailInUse = false
     
-    func signUp() async throws {
+    func signUp() async {
         guard !email.isEmpty, !password.isEmpty else {
-            print("No email or password found.")
+            errorMessage = "No email or password found."
             return
         }
         
-        let _ = try await AuthenticationManager.shared.createUser(email: email, password: password)
+        do {
+            let _ = try await AuthenticationManager.shared.createUser(email: email, password: password)
+        } catch {
+            print(error)
+            if let authError = error as NSError?, authError.code == 17007 {
+                emailInUse = true
+            } else {
+                errorMessage = error.localizedDescription
+            }
+        }
     }
 }
 
 struct SignUpEmailView: View {
-    
     @StateObject private var viewModel = SignUpEmailViewModel()
     @Binding var showSignInView: Bool
-    @State var completedSignUp = false
-    @State var navigateBack = false
+    @State private var showAlert = false
+    @State private var alertMessage = ""
+    @State private var alertTitle = ""
+    @State private var navigateToRootView = false
     
     var body: some View {
         VStack(spacing: 20) {
@@ -39,7 +51,7 @@ struct SignUpEmailView: View {
                      .background(Color.gray.opacity(0.4))
                      .cornerRadius(10)
                      .foregroundColor(.gray)
-                     .autocapitalization(/*@START_MENU_TOKEN@*/.none/*@END_MENU_TOKEN@*/)
+                     .autocapitalization(.none)
              }
              
              VStack(alignment: .leading, spacing: 5) {
@@ -50,20 +62,27 @@ struct SignUpEmailView: View {
                      .background(Color.gray.opacity(0.4))
                      .cornerRadius(10)
                      .foregroundColor(.gray)
-                     .autocapitalization(/*@START_MENU_TOKEN@*/.none/*@END_MENU_TOKEN@*/)
+                     .autocapitalization(.none)
              }
-            
             
             Button {
                 Task {
-                    do {
-                        try await viewModel.signUp()
-                        self.completedSignUp = true
-                    } catch {
-                        print(error)
+                    await viewModel.signUp()
+                    if viewModel.emailInUse {
+                        alertTitle = "Email In Use"
+                        alertMessage = "This email is already in use."
+                        showAlert = true
+                    } else if let errorMessage = viewModel.errorMessage {
+                        alertTitle = "Error"
+                        alertMessage = errorMessage
+                        showAlert = true
+                    } else {
+                        alertTitle = "Success"
+                        alertMessage = "Account Created!"
+                        showAlert = true
+                        navigateToRootView = true
                     }
                 }
-                
             } label: {
                 HStack {
                     Spacer()
@@ -75,22 +94,29 @@ struct SignUpEmailView: View {
                         .background(Color.orange)
                         .cornerRadius(25)
                 }
-                
             }
-            .alert(isPresented: $completedSignUp) {
+            .alert(isPresented: $showAlert) {
                 Alert(
-                    title: Text("Success"),
-                    message: Text("Account Created!"),
-                    dismissButton: .default(Text("OK")){
-                        self.navigateBack = true
-                    })
+                    title: Text(alertTitle),
+                    message: Text(alertMessage),
+                    dismissButton: .default(Text("OK")) {
+                        if navigateToRootView {
+                            navigateToRootView = true
+                        }
+                    }
+                )
             }
+            
             Spacer()
         }
         .padding()
         .navigationTitle("Sign Up With Email")
-        
-        NavigationLink(destination: RootView(), isActive: $navigateBack){}
+        .background(
+            NavigationLink(destination: RootView(), isActive: $navigateToRootView) {
+                EmptyView()
+            }
+            .hidden() // Hide the link from the view hierarchy
+        )
     }
 }
 

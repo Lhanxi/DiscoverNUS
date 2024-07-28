@@ -24,17 +24,17 @@ class ImageComparison {
         
         group.enter()
         ImageComparison.process(image: image2) { feature in
-            feature2 = feature
+            feature2 = feature 
             group.leave()
         }
         
         var featureDistance:Float = .infinity
-        
+         
         group.notify(queue: .main) {
             do {
                 try feature1?.computeDistance(&featureDistance, to: feature2!)
                 print(featureDistance)
-                completion(featureDistance < 20)
+                completion(featureDistance < 0.82)
             } catch {
                 print("error: \(error.localizedDescription)")
                 completion(false)
@@ -107,10 +107,13 @@ struct CompleteQuest: View {
     @Binding var playerInfo: Player
     @State var navigateBackwards = false
     @State var navigateForward = false
-    @State var timer: Int
+    @State var timeLimit: Int
     @State var questImage: Image
     @State var selectedImage: Image?
     @State var alertToGoBack = false
+    @State var levelUp = false
+    @State var currentExp: Int
+    
 
     var body: some View {
         ZStack{
@@ -119,10 +122,10 @@ struct CompleteQuest: View {
                     .edgesIgnoringSafeArea(.all)
                     .statusBar(hidden: true)
                 
-                NavigationLink(destination: RootView(), isActive: $navigateForward) {
+                NavigationLink(destination: QuestSuccessfulView(quest: quest, timeLimit: quest.timelimit, showSignInView: $showSignInView, playerInfo: playerInfo, levelUp: levelUp, expGained: quest.expGained, currentExp: currentExp), isActive: $navigateForward) {
                 }
                 .hidden()
-                NavigationLink(destination: StartQuest(quest: quest, timer: timer, showSignInView: $showSignInView, playerInfo: self.playerInfo), isActive: $navigateBackwards) {
+                NavigationLink(destination: StartQuest(quest: quest, timeLimit: timeLimit, showSignInView: $showSignInView, playerInfo: self.playerInfo), isActive: $navigateBackwards) {
                 }
                 .hidden()
                 .navigationBarHidden(true)
@@ -133,6 +136,9 @@ struct CompleteQuest: View {
                             LevelSystem.expGainManager(userID: playerInfo.id!, level: playerInfo.level, expGained: quest.expGained, currentExp: playerInfo.exp, questID: quest.name, questIDArray: playerInfo.quests) { error in
                                 if let error = error {
                                     print("error")
+                                } else if LevelSystem.levelUp {
+                                    self.levelUp = true
+                                    self.navigateForward = true
                                 } else {
                                     self.navigateForward = true
                                 }
@@ -161,7 +167,7 @@ struct CompleteQuest: View {
                     }
                     Spacer()
                 }
-                Text("\(timer)")
+                Text("\(timeLimit)")
                     .padding(10)
                     .onAppear() {
                         self.startTimer()
@@ -173,10 +179,10 @@ struct CompleteQuest: View {
     
     func startTimer() {
         Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { result in
-            if self.timer > 0 {
-                self.timer -= 1
+            if self.timeLimit > 0 {
+                self.timeLimit -= 1
             } else {
-                self.navigateForward = true
+                self.navigateBackwards = true
             }
         }
     }

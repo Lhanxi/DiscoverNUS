@@ -14,9 +14,52 @@ import AVFoundation
 final class JoinPartyViewModel: ObservableObject {
     @Published var partyCode = ""
     @Published var errorMessage: String?
+    @Published var partyConnection: Bool = true
+    @Published var users: [UserRef] = []
+    private var listener: ListenerRegistration?
+    
+    func fetchUsers() {
+        let db = Firestore.firestore()
+        let partyRef = db.collection("Teams").document("DefaultTeam").collection("Parties").document(partyCode).collection("Users")
+
+        listener = partyRef.addSnapshotListener { querySnapshot, error in
+            if let error = error {
+                print("Error fetching users: \(error.localizedDescription)")
+                return
+            }
+
+            guard let documents = querySnapshot?.documents else {
+                print("No documents found")
+                return
+            }
+
+            var fetchedUsers = documents.compactMap { document in
+                let data = document.data()
+                return UserRef(
+                    id: data["userID"] as? String ?? "",
+                    level: data["level"] as? Int ?? 0,
+                    username: data["username"] as? String ?? "",
+                    quests: data["quests"] as? [String] ?? [],
+                    multiplayerGamesPlayed: data["multiplayerGamesPlayed"] as? Int ?? 0,
+                    multiplayerGamesWon: data["multiplayerGamesWon"] as? Int ?? 0,
+                    isLeader: data["isLeader"] as? Bool ?? false,
+                    isKicked: data["isKicked"] as? Bool ?? false,
+                    inQuiz: data["inQuiz"] as? Bool ?? false,
+                    playerScore: data["playerScore"] as? Int ?? 0
+                )
+            }
+            self.users = fetchedUsers
+        }
+    }
     
     func joinParty() async {
         do {
+            self.partyConnection = true
+            fetchUsers()
+            if self.users.count > 4 {
+                self.partyConnection = false
+            }
+            
             let user = try AuthenticationManager.shared.getAuthenticatedUser()
             let userID = user.uid
             
@@ -64,11 +107,13 @@ final class JoinPartyViewModel: ObservableObject {
 struct JoinPartyView: View {
     @StateObject private var viewModel = JoinPartyViewModel()
     @State private var navigateToPartyView = false
+    @State private var showAlert = false
+    @State var showSignInView: Bool
+    @State var playerInfo: Player
     
     var body: some View {
         NavigationView {
             ZStack {
-                // Background image
                 Image(.background)
                     .resizable()
                     .scaledToFill()
@@ -76,45 +121,45 @@ struct JoinPartyView: View {
                     .opacity(0.8)
                 
                 VStack(spacing: 30) {
-                    Spacer().frame(height: 50) // Shift everything upwards
+                    Spacer().frame(height: 50)
                     
                     Text("Join Game")
                         .font(.title2)
                     
                     TextField("Enter Party Code", text: $viewModel.partyCode)
-                         .frame(height: 55)
-                         .padding(.leading, 10)
-                         .background(RoundedRectangle(cornerRadius: 30).fill(Color.white))
-                         .frame(height: 55)
-                         .frame(maxWidth: 350)
-                         .overlay(
-                             RoundedRectangle(cornerRadius: 30)
-                                 .stroke(Color.gray, lineWidth: 1)
-                         )
-                         .textFieldStyle(PlainTextFieldStyle())
-
-                         .overlay(
-                             Button(action: {
-                                 Task {
-                                     await viewModel.joinParty()
-                                     if viewModel.errorMessage == nil {
-                                         navigateToPartyView = true
-                                     }
-                                 }
-                             }) {
-                                 Text("Enter Code")
-                                     .font(.headline)
-                                     .foregroundColor(Color.white)
-                                     .frame(height: 50)
-                                     .frame(maxWidth: 100)
-                                     .background(
-                                         LinearGradient(gradient: Gradient(colors: [Color.orange, Color(red: 1.0, green: 0.5, blue: 0.0)]), startPoint: .topLeading, endPoint: .bottomTrailing)
-                                     )
-                                     .cornerRadius(30)
-                             }
-                                 .padding(.trailing, 5),
-                                 alignment: .trailing
-                         )
+                        .frame(height: 55)
+                        .padding(.leading, 10)
+                        .background(RoundedRectangle(cornerRadius: 30).fill(Color.white))
+                        .frame(maxWidth: 350)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 30)
+                                .stroke(Color.gray, lineWidth: 1)
+                        )
+                        .textFieldStyle(PlainTextFieldStyle())
+                        .overlay(
+                            Button(action: {
+                                Task {
+                                    await viewModel.joinParty()
+                                    if viewModel.errorMessage == nil && viewModel.partyConnection {
+                                        navigateToPartyView = true
+                                    } else {
+                                        showAlert = !viewModel.partyConnection
+                                    }
+                                }
+                            }) {
+                                Text("Enter Code")
+                                    .font(.headline)
+                                    .foregroundColor(Color.white)
+                                    .frame(height: 50)
+                                    .frame(maxWidth: 100)
+                                    .background(
+                                        LinearGradient(gradient: Gradient(colors: [Color.orange, Color(red: 1.0, green: 0.5, blue: 0.0)]), startPoint: .topLeading, endPoint: .bottomTrailing)
+                                    )
+                                    .cornerRadius(30)
+                            }
+                            .padding(.trailing, 5),
+                            alignment: .trailing
+                        )
                     
                     if let errorMessage = viewModel.errorMessage {
                         Text(errorMessage)
@@ -127,8 +172,10 @@ struct JoinPartyView: View {
                             viewModel.partyCode = code
                             Task {
                                 await viewModel.joinParty()
-                                if viewModel.errorMessage == nil {
+                                if viewModel.errorMessage == nil && viewModel.partyConnection {
                                     navigateToPartyView = true
+                                } else {
+                                    showAlert = !viewModel.partyConnection
                                 }
                             }
                         }
@@ -142,17 +189,25 @@ struct JoinPartyView: View {
                         )
                     }
                     
-                    NavigationLink(destination: PartyView(partyCode: viewModel.partyCode), isActive: $navigateToPartyView) {
+                    NavigationLink(destination: PartyView(partyCode: viewModel.partyCode, showSignInView: showSignInView, playerInfo: playerInfo), isActive: $navigateToPartyView) {
                         EmptyView()
                     }
                     
-                    Spacer()  // Add a spacer to push everything up
+                    Spacer() // Add a spacer to push everything up
                 }
-                .padding(.top, -70)  // Adjust the padding to shift everything upwards
+                .padding(.top, -70) // Adjust the padding to shift everything upwards
             }
+        }
+        .alert(isPresented: $showAlert) {
+            Alert(
+                title: Text("Party is Full"),
+                message: Text("You cannot join the party as it is full."),
+                dismissButton: .default(Text("OK"))
+            )
         }
     }
 }
+
 
 struct Line: View {
     var body: some View {
@@ -194,6 +249,3 @@ struct CornerLinesOverlay: View {
     }
 }
 
-#Preview {
-    JoinPartyView()
-}

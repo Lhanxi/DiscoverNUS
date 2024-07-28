@@ -10,8 +10,21 @@ import FirebaseAuth
 
 @MainActor
 final class SettingsViewModel: ObservableObject {
-    
+    @Published var email: String = ""
     @Published var authProviders: [AuthProviderOption] = []
+    
+    init() {
+        self.getEmail()
+    }
+    
+    func getEmail() {
+        if let userEmail = try? AuthenticationManager.shared.getAuthenticatedUser().email {
+            self.email = userEmail
+        } else {
+
+            self.email = ""
+        }
+    }
     
     func loadAuthProviders() {
         if let providers =  try? AuthenticationManager.shared.getProvider() {
@@ -33,7 +46,7 @@ final class SettingsViewModel: ObservableObject {
         let credential = EmailAuthProvider.credential(withEmail: userEmail, password: currentPassword)
         
         authUser.reauthenticate(with: credential) { authResult, error in
-            if let error = error {
+            if let _ = error {
                 //throw error for user authentication error
                 print("unable to authenticate user")
             } else if confirmPassword != newPassword {
@@ -68,70 +81,59 @@ struct SettingsView: View {
     @State var image: Image
     @State var username: String
     var userID: String
-    @State var edit: Bool = false
     
     var body: some View {
         VStack {
-            HStack{
-                NavigationLink(destination: RootView()){
-                    Text("Back")
-                        .padding(10)
-                }
-                Spacer()
-            }
+            UserPhotoPicker(userImage: image, userID: userID)
             
-            VStack{
-                UserPhotoPicker(userImage: image, userID: userID)
-            }
+            Text(username)
+                .foregroundColor(Color.black)
+                .font(.title2)
+                .fontWeight(.bold)
+                .padding(10)
             
-            ZStack {
-                if self.edit {
-                    TextField("Username", text: $username)
-                        .padding()
-                        .multilineTextAlignment(.leading)
-                } else {
-                    Text(username)
-                        .padding()
-                        .multilineTextAlignment(.leading)
-                }
+            Text(viewModel.email)
+                .foregroundColor(Color.black)
+                .font(.system(size: 15))
+                .padding(.bottom,30)
+            
+            VStack(spacing: 30) {
                 
-                HStack {
-                    Spacer()
-                    Image(systemName: "pencil")
-                        .onTapGesture{
-                            self.edit.toggle()
+                NavigationLink(destination: UpdateUsernameView(showSignInView: $showSignInView, image: image, username: username, userID: userID)) {
+                    HStack {
+                        Text("Update Username")
+                            .foregroundColor(.black)
+                        Spacer()
+                        Image(systemName: "pencil.line")
+                            .foregroundColor(.blue)
+                    }
+                    .padding()
+                    .frame(maxWidth: 330)
+                    .background(Color(UIColor.systemGray6))
+                    .cornerRadius(20)
+                }
+
+                if viewModel.authProviders.contains(.email) {
+                    NavigationLink(destination: UpdatePasswordView(showSignInView: $showSignInView, image: image, username: username, userID: userID)) {
+                        HStack {
+                            Text("Update Password")
+                                .foregroundColor(.black)
+                            Spacer()
+                            Image(systemName: "pencil.line")
+                                .foregroundColor(.blue)
                         }
                         .padding()
-                }.onChange(of: edit) { edit in
-                    if username != "" && edit == false {
-                        UsernameHandler.inputUsername(username: username, userID: userID) { error in
-                            if let error = error {
-                                print(error)
-                            } else {
-                                print("successfully created username")
-                            }
-                        }
+                        .frame(maxWidth: 330)
+                        .background(Color(UIColor.systemGray6))
+                        .cornerRadius(20)
                     }
                 }
             }
-            
-            List {
-                if viewModel.authProviders.contains(.email) {
-                    NavigationLink(destination: UpdatePasswordView()) {
-                        Text("Update Password")
-                    }
-                }
-            }
-            .onAppear {
-                viewModel.loadAuthProviders()
-            }
-            .navigationBarHidden(true)
         }
+        .padding()
+        .onAppear {
+            viewModel.loadAuthProviders()
+        }
+        .offset(y:-140)
     }
 }
-
-/*
-#Preview {
-    SettingsView(showSignInView: .constant(false))
-}
-*/

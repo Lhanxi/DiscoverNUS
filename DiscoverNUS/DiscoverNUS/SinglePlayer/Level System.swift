@@ -9,8 +9,15 @@ import Foundation
 import FirebaseFirestore
 
 class LevelSystem {
+    static var levelUp: Bool = false
+    
     static func expToNext(level: Int) -> Int {
         return 50 * level + 500
+    }
+    
+    static func totalExp(level: Int, currentExp: Int) -> Int {
+        let level = level - 1
+        return 500 * level +  level * (level + 1) * 25 + currentExp
     }
     
     static func expGainManager(userID: String, level: Int, expGained: Int, currentExp: Int, questID: String, questIDArray: [String], completion: @escaping (Error?) -> Void) {
@@ -19,6 +26,7 @@ class LevelSystem {
         while expTotal >= expToNext(level: level) {
             expTotal -= expToNext(level: level)
             level += 1
+            LevelSystem.levelUp = true
         }
         
         var removedQuestArray = questIDArray

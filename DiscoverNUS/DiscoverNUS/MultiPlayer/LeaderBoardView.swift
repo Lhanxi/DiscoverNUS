@@ -15,8 +15,8 @@ final class LeaderBoardViewModel: ObservableObject {
     @Published var users: [UserRef] = []
     @Published var navigateLeaveQuiz: Bool = false
     @Published var currentUser: UserRef?
-    
     @Published var partyCode: String
+    @Published var remainingTime: Int = 10
     
     struct UserRef: Identifiable {
         var id: String
@@ -32,15 +32,18 @@ final class LeaderBoardViewModel: ObservableObject {
     }
     
     private var listener: ListenerRegistration?
+    private var timerCancellable: AnyCancellable?
     
     init(partyCode: String) {
         self.partyCode = partyCode
         fetchCurrentUser()
         fetchUsers()
+        startTimer()
     }
     
     deinit {
         listener?.remove()
+        timerCancellable?.cancel()
     }
     
     func fetchCurrentUser() {
@@ -135,13 +138,28 @@ final class LeaderBoardViewModel: ObservableObject {
         }
     }
     
+    func startTimer() {
+        timerCancellable = Timer.publish(every: 1, on: .main, in: .common)
+            .autoconnect()
+            .sink { [weak self] _ in
+                guard let self = self else { return }
+                if self.remainingTime > 0 {
+                    self.remainingTime -= 1
+                } else {
+                    self.timerCancellable?.cancel()
+                    self.endQuiz()
+                    self.navigateLeaveQuiz = true
+                }
+            }
+    }
+    
     func endQuiz() {
         let db = Firestore.firestore()
         let partyRef = db.collection("Teams").document("DefaultTeam").collection("Parties").document(partyCode).collection("Users")
 
         partyRef.getDocuments { (querySnapshot, error) in
             if let error = error {
-                print("Error starting quiz: \(error.localizedDescription)")
+                print("Error ending quiz: \(error.localizedDescription)")
                 return
             }
 
@@ -173,9 +191,13 @@ final class LeaderBoardViewModel: ObservableObject {
 struct LeaderBoardView: View {
     @StateObject var viewModel: LeaderBoardViewModel
     @State private var navigateToLeaveQuizView = false
+    @State var showSignInView: Bool
+    @State var playerInfo: Player
     
-    init(partyCode: String) {
+    init(partyCode: String, showSignInView: Bool, playerInfo: Player) {
         _viewModel = StateObject(wrappedValue: LeaderBoardViewModel(partyCode: partyCode))
+        _playerInfo = State(initialValue: playerInfo)
+        _showSignInView = State(initialValue: showSignInView)
     }
     
     var body: some View {
@@ -226,6 +248,11 @@ struct LeaderBoardView: View {
             .cornerRadius(10)
             .listStyle(PlainListStyle())
             
+            Text("Returning to menu in: \(viewModel.remainingTime) seconds")
+                .font(.headline)
+                .foregroundColor(.red)
+                .padding()
+            
             if viewModel.currentUser?.isLeader == true {
                 Button(action: {
                     viewModel.endQuiz()
@@ -248,6 +275,7 @@ struct LeaderBoardView: View {
                 }
                 .padding()
             }
+            
         }
         .onChange(of: viewModel.navigateLeaveQuiz) { navigateLeaveQuiz in
             if navigateLeaveQuiz {
@@ -255,7 +283,7 @@ struct LeaderBoardView: View {
             }
         }
         .fullScreenCover(isPresented: $navigateToLeaveQuizView) {
-            PartyView(partyCode: viewModel.partyCode)
+            PartyView(partyCode: viewModel.partyCode, showSignInView: showSignInView, playerInfo: playerInfo)
         }
     }
     
@@ -289,6 +317,3 @@ struct LeaderBoardView: View {
     }
 }
 
-#Preview {
-    LeaderBoardView(partyCode: "testCode")
-}
