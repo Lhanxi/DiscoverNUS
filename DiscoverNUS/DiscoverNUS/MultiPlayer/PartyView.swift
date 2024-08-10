@@ -176,7 +176,9 @@ final class PartyViewModel: ObservableObject {
                     guard partySnapshot.exists else {
                         throw NSError(domain: "PartyDocumentNotExist", code: 0, userInfo: nil)
                     }
-
+                    
+                    print("Loaded \(questions.count) questions")
+                    
                     for question in questions {
                         let questionData: [String: Any] = [
                             "id": question.id,
@@ -539,7 +541,7 @@ struct PartyView: View {
 
                 Spacer()
 
-                if viewModel.currentUser?.isLeader == true {
+                if viewModel.currentUser?.isLeader == true && viewModel.users.count > 1{
                     Button(action: {
                         viewModel.startQuiz()
                     }) {
