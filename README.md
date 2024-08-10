@@ -20,5 +20,9 @@ Swift - Swift is the official language for macOS and iOS development. Due to the
 Firebase - Firebase is a real-time NoSQL database, which provides email/password authentication solutions, and is highly compatible with Swift. <br>
 
 ## Agile
+<img width="1433" alt="image" src="https://github.com/user-attachments/assets/8280b867-c4bd-44c5-8a77-7284fe5d2573">
+<img width="1331" alt="image" src="https://github.com/user-attachments/assets/efa698c7-5ce2-4830-92e6-e480ffa6c992">
+
+
 Link to our timeline:
 https://airtable.com/invite/l?inviteId=invoS1ZUTnRjzvJF8&inviteToken=9189bbfd6f2d3d8f34906188f379af6c5757e386fe95924fad25ad605e39c968&utm_medium=email&utm_source=product_team&utm_content=transactional-alerts
